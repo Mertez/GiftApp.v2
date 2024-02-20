@@ -1,0 +1,35 @@
+<?xml version="1.0"?><svg width="80" height="26.000000000000004" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>confirm button</title>
+ <defs>
+  <filter height="1.293538" y="-0.146769" width="1.0954" x="-0.0477" id="filter3201">
+   <feGaussianBlur id="feGaussianBlur3203" stdDeviation="1.59"/>
+  </filter>
+  <filter id="filter3249">
+   <feGaussianBlur id="feGaussianBlur3251" stdDeviation="0.108208"/>
+  </filter>
+  <linearGradient id="linearGradient3229">
+   <stop stop-color="#ffffff" id="stop3231" offset="0"/>
+   <stop stop-color="#ffffff" stop-opacity="0" id="stop3233" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3159">
+   <stop stop-color="#373ea3" id="stop3161" offset="0"/>
+   <stop stop-color="#94ddf6" id="stop3163" offset="1"/>
+  </linearGradient>
+  <linearGradient y2="1.083333" x2="0.5" y1="-0.083333" x1="0.5" id="linearGradient3263" xlink:href="#linearGradient3229"/>
+  <linearGradient y2="1" x2="0.5" y1="-0.038462" x1="0.5" id="linearGradient3266" xlink:href="#linearGradient3159"/>
+ </defs>
+ <metadata id="metadata7">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g id="layer1">
+   <g id="g3271">
+    <path opacity="0.69" fill="#000000" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" filter="url(#filter3201)" d="m21.251589,-7.925924l90.496817,0c11.773384,0 21.251595,12.02548 21.251595,26.962963c0,14.937479 -9.47821,26.962961 -21.251595,26.962961l-90.496817,0c-11.773377,0 -21.251589,-12.025482 -21.251589,-26.962961c0,-14.937482 9.478211,-26.962963 21.251589,-26.962963z" id="rect3167"/>
+    <path fill="url(#linearGradient3266)" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" d="m21.251589,-9.999998l90.496817,0c11.773384,0 21.251595,12.025481 21.251595,26.962963c0,14.937483 -9.47821,26.962965 -21.251595,26.962965l-90.496817,0c-11.773377,0 -21.251589,-12.025482 -21.251589,-26.962965c0,-14.937483 9.478211,-26.962963 21.251589,-26.962963z" id="rect2387"/>
+    <path opacity="0.8" fill="url(#linearGradient3263)" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" filter="url(#filter3249)" d="m21.248829,-7.925924c-11.226165,0 -21.248829,12.444444 -14.598829,24.888889l119.699998,0c6.650002,-12.444445 -3.37265,-24.888889 -14.598824,-24.888889l-90.502346,0z" id="rect3220"/>
+   </g>
+  </g>
+  <text xml:space="preserve" text-anchor="middle" font-family="Verdana" font-size="24" id="svg_7" y="4" x="40" stroke-width="0" stroke="#000000" fill="#ffffff"/>
+  <text transform="matrix(3.95954, 0, 0, 1.71072, -117.977, 7.60411)" xml:space="preserve" text-anchor="middle" font-family="Verdana" font-size="24" id="svg_45" y="13" x="50" stroke-width="0" stroke="#000000" fill="#ffffff"/>
+  <text transform="matrix(0.957972, 0, 0, 1.04271, 33.9332, 12.8078)" xml:space="preserve" text-anchor="middle" font-family="Verdana" font-size="24" id="svg_46" y="14" x="34" stroke-width="0" stroke="#000000" fill="#ffffff">CONFIRM</text>
+ </g>
+</svg>
