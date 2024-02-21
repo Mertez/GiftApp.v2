@@ -43,6 +43,12 @@
         "projectId": "0140c8f5-137c-4b95-946d-ab62e7144779"
       }
     },
-    "owner": "mertez"
+    "owner": "mertez",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0140c8f5-137c-4b95-946d-ab62e7144779"
+    }
   }
 }

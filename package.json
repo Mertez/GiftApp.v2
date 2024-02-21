@@ -24,6 +24,7 @@
     "expo-blur": "^12.9.1",
     "expo-camera": "^14.0.2",
     "expo-status-bar": "~1.11.1",
+    "expo-updates": "~0.24.11",
     "lottie-react-native": "^6.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

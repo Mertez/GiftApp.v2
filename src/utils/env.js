@@ -2,10 +2,11 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Dimensions, Platform, LogBox } from 'react-native';
 
 const localHost = 'http://192.168.2.104:5000/api';
+const globalHost = 'https://9179-2003-eb-8f19-6c72-9f6-38f1-3968-55cb.ngrok-free.app/api'
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export const useFirebaseAuthentication = false;
-export const host = localHost; //App.host;
+export const host = globalHost; //App.host;
 export const isAndroid = (Platform.OS === "android");
 export const isDevelopment = process.env.NODE_ENV === "development";
 //export const host = isDevelopment ? localHost : liveHost;
