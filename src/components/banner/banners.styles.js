@@ -8,19 +8,19 @@ export const BannerImage = styled.Image`
   width: 100%;
   height: ${bannerHeight}px;
   overflow:hidden;
-  background-color: '#000000';
+  background-color: black;
 `;
 
 export const SwiperWrapper = styled(Swiper)`
     height:${bannerHeight}px;
-    background-color: '#000000';
+    background-color: black;
 `;
 
 export const SwiperSlide = styled.View`
     flex:1;
     justify-content: center;
     align-items: center;
-    background-color: '#000000';
+    background-color: black;
 `;
 
 export const SwiperDot = styled.View`

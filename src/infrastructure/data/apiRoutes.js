@@ -29,7 +29,6 @@ module.exports = {
     getProductsSpecial: getProductsUrl(productTypeEnum.Product, -1, 1, -1, ''),
 
     getProductsHotByCategory: (categoryId) => getProductsUrl(productTypeEnum.Product, -1, -1, categoryId, ''),
-    getProductsHotByCategory: (categoryId) => getProductsUrl(productTypeEnum.Product, -1, -1, categoryId, ''),
     getProductsSpecialByCategory: (categoryId) => getProductsUrl(productTypeEnum.Product, -1, -1, categoryId, ''),
 
     getProductsByBrand: (brandId) => getProductsUrl(productTypeEnum.Product, -1, -1, -1, brandId),
