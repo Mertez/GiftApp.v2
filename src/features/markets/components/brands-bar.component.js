@@ -8,11 +8,14 @@ import { Text } from "../../../components/typography/text.component";
 import { BrandDetailScreen } from "../screens/brand-detail.screen";
 import { GiftsNavigator } from "../../../infrastructure/navigation/gifts.navigator";
 import { IgnoreWarnings } from "../../../utils/env";
+import { standardcolors } from "../../../infrastructure/theme/colors";
 
 const BrandsWrapper = styled(Card)`
   padding: 5px;
   z-index: 999;
-  
+  background-color: ${standardcolors.t60};
+  border-radius:0;
+  shadow:none;
 `;
 export const BrandsHotBar = ({ brands, onNavigate }) => {
 

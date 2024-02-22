@@ -37,8 +37,10 @@ export const GiftCardCard = styled(Card)`
 export const GiftCardsWrapper = styled(Card)`
   padding: 5px;
   z-index: 999;
-  padding-bottom:100px;
-  background-color: ${standardcolors.transparentwcc};
+  background-color: ${standardcolors.t60};
+  border-radius:0;
+  shadow:none;
+  padding-bottom:70px;
 `;
 
 export const GiftCardCardCover = styled(Image)`

@@ -24,7 +24,7 @@ import styled from "styled-components/native";
 import { blackMenu } from "../../utils/env";
 import { Search } from "../../components/search/search.component";
 import { WishesContextProvider } from "../../services/wishes/wishes.context";
-
+import { WidthPercent as W, HeightPercent } from "../../utils/env";
 
 
 const Tab = createBottomTabNavigator();
@@ -38,11 +38,75 @@ const TAB_ICON = {
     Map: "map-outline",
 };
 
+const TAB_NAMES = {
+    Home: "Home",
+    Gift: "Gifts",
+    WishList: "Wish List",
+    Market: "Market",
+    Settings: "Settings",
+    Map: "Map",
+};
+
+const backColor = blackMenu ? 'black' : standardcolors.t100;
+const menuForecolors = ["white", "black"];
+const iconSize = W(15);
+var styles = StyleSheet.create({
+    shadow: {
+        shadowColor: standardcolors.black,
+        shadowOffset: {
+            width: 0,
+            height: 10
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4.5,
+        elevation: 5,
+    },
+    transShadow: {},
+    botIcons: {},
+    botView: { alignContent: 'center', alignSelf: 'center', width: W(10) }
+});
 
 const CustomTabBarButton = (props) => {
     //console.log(props.accessibilityState.selected);
 
-    var btn = props.accessibilityState.selected ? require("../../../assets/redsp2.png") : require("../../../assets/redsp2b.png");
+    var btn = props.accessibilityState.selected ? require("../../../assets/redsp2.png") : require("../../../assets/redsp2n.png");
+    var circle = props.accessibilityState.selected ? backColor : standardcolors.transparent;
+
+    styles = StyleSheet.create({
+        transShadow: {
+            top: -15,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: W(18),
+            height: W(18),
+            borderRadius: W(10),
+            marginRight: W(.35),
+            marginLeft: W(.36),
+            backgroundColor: circle,
+            shadowColor: standardcolors.red,
+            shadowOffset: {
+                width: 0,
+                height: 0
+            },
+            shadowOpacity: 0,
+            shadowRadius: 0,
+            elevation: 0,
+        },
+        botIcons: {
+            top: props.accessibilityState.selected ? W(1.8) : 0,
+            fontSize: props.accessibilityState.selected ? 32 : 22,
+            color: props.accessibilityState.selected ? menuForecolors[0] : menuForecolors[1],
+            alignSelf: 'center',
+        },
+        botText: {
+            //top: props.accessibilityState.selected ? 7 : 0,
+            //fontSize: props.accessibilityState.selected ? 32 : 22,
+            color: props.accessibilityState.selected ? menuForecolors[0] : menuForecolors[1],
+            opacity: props.accessibilityState.selected ? 0 : 1,
+            alignSelf: 'center',
+        }
+    })
+
 
     return (
         <View
@@ -55,18 +119,18 @@ const CustomTabBarButton = (props) => {
                 onPress={props.onPress}
             >
                 <View style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
+                    width: iconSize,
+                    height: iconSize,
+                    borderRadius: W(10),
                     //backgroundColor: textColor(props.accessibilityState.selected),
-                    margin: 10,
+                    margin: 0,
                     ...props.accessibilityState.selected ? styles.shadow : null,
                 }}
 
                 >
                     <Image source={btn} style={{
-                        width: 70,
-                        height: 70,
+                        width: iconSize,
+                        height: iconSize,
                         position: "absolute"
                     }} />
                     {props.children}</View>
@@ -87,13 +151,13 @@ const createScreenOptions = ({ route }) => {
             {
                 "display": "flex",
                 "position": "absolute",
-                "bottom": isAndroid ? 10 : -10,
-                "left": 10,
-                "right": 10,
+                "bottom": isAndroid ? 10 : W(5),
+                "left": W(3),
+                "right": W(3),
                 "elevation": 0,
-                "borderRadius": 15,
-                "height": 70,
-                backgroundColor: blackMenu ? "black" : "white",
+                "borderRadius": W(3),
+                "height": W(12),
+                backgroundColor: backColor,
                 ...styles.shadow
             },
             null
@@ -104,14 +168,6 @@ const createScreenOptions = ({ route }) => {
     };
 };
 
-const fontSize = (focused) => {
-    return focused ? 28 : 25;
-}
-
-const textColor = (focused, home = false) => {
-    if (home) return "white";
-    return focused ? '#e32f45' : '#748c94';
-}
 
 const textVariant = (focused) => {
     return focused ? 'button' : 'caption';
@@ -153,25 +209,31 @@ export const AppNavigator = (route) => {
 
                             <Tab.Screen name="Gift" component={GiftsNavigator} options={{
                                 tabBarIcon: ({ focused }) => (
-                                    <View style={{ alignContent: 'center', alignSelf: 'center', width: 100 }}>
-                                        <Ionicons name={TAB_ICON["Gift"]} size={fontSize(focused)} color={textColor(focused)} style={{ alignSelf: 'center', ...focused ? styles.shadow : null }} />
-                                        <Text variant={textVariant(focused)} style={{ alignSelf: 'center', color: textColor(focused) }}>Gift</Text>
+                                    <View style={styles.botView}>
+                                        <Ionicons name={TAB_ICON["Gift"]} style={styles.botIcons} />
+                                        <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Gift"]}</Text>
                                     </View>
-                                )
+                                ),
+                                tabBarButton: (props, focused) => <CustomTabBarButton {...props}
+                                //isFocused={focused} 
+                                />
                             }} />
                             <Tab.Screen name="WishList" component={WishlistsNavigator} options={{
                                 tabBarIcon: ({ focused }) => (
-                                    <View style={{ alignContent: 'center', alignSelf: 'center', width: 100 }}>
-                                        <Ionicons name={TAB_ICON["WishList"]} size={fontSize(focused)} color={textColor(focused)} style={{ alignSelf: 'center', ...focused ? styles.shadow : null }} />
-                                        <Text variant={textVariant(focused)} style={{ alignSelf: 'center', color: textColor(focused) }}>WishList</Text>
+                                    <View style={styles.botView}>
+                                        <Ionicons name={TAB_ICON["WishList"]} style={styles.botIcons} />
+                                        <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["WishList"]}</Text>
                                     </View>
-                                )
+                                ),
+                                tabBarButton: (props, focused) => <CustomTabBarButton {...props}
+                                //isFocused={focused} 
+                                />
                             }} />
                             <Tab.Screen name="Home" component={HomesNavigator} options={{
                                 tabBarIcon: ({ focused }) => (
-                                    <View style={{ alignContent: 'center', alignSelf: 'center', width: 100 }}>
-                                        <Ionicons name={TAB_ICON["Home"]} size={fontSize(focused)} color={textColor(!focused, true)} style={{ alignSelf: 'center', opacity: .9, ...focused ? styles.shadow : null }} />
-                                        {/* <Text variant={textVariant(focused)} style={{ alignSelf: 'center', color: textColor(focused) }}>Home</Text> */}
+                                    <View style={styles.botView}>
+                                        <Ionicons name={TAB_ICON["Home"]} style={styles.botIcons} />
+                                        <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Home"]}</Text>
                                     </View>
                                 ),
                                 tabBarButton: (props, focused) => <CustomTabBarButton {...props}
@@ -180,24 +242,30 @@ export const AppNavigator = (route) => {
                             }} />
                             <Tab.Screen name="Markets" component={MarketsNavigator} options={{
                                 tabBarIcon: ({ focused }) => (
-                                    <View style={{ alignContent: 'center', alignSelf: 'center', width: 100 }}>
-                                        <Ionicons name={TAB_ICON["Market"]} size={fontSize(focused)} color={textColor(focused, false)} style={{ alignSelf: 'center', ...focused ? styles.shadow : null }} />
-                                        <Text variant={textVariant(focused)} style={{ alignSelf: 'center', color: textColor(focused) }}>Market</Text>
+                                    <View style={styles.botView}>
+                                        <Ionicons name={TAB_ICON["Market"]} style={styles.botIcons} />
+                                        <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Market"]}</Text>
                                     </View>
-                                )
+                                ),
+                                tabBarButton: (props, focused) => <CustomTabBarButton {...props}
+                                //isFocused={focused} 
+                                />
                             }} />
                             <Tab.Screen name="Settings" component={SettingsNavigator} options={{
-                                tabBarBadge: `${isDevelopment ? "D" : "P"}${appVersion}`,
+                                //tabBarBadge: `${isDevelopment ? "D" : "P"}${appVersion}`,
                                 tabBarIcon: ({ focused }) => (
-                                    <View style={{ alignContent: 'center', alignSelf: 'center', width: 100 }}>
-                                        <Ionicons name={TAB_ICON["Settings"]} size={fontSize(focused)} color={textColor(focused)} style={{ alignSelf: 'center', ...focused ? styles.shadow : null }} />
-                                        <Text variant={textVariant(focused)} style={{ alignSelf: 'center', color: textColor(focused) }}>Settings</Text>
+                                    <View style={styles.botView}>
+                                        <Ionicons name={TAB_ICON["Settings"]} style={styles.botIcons} />
+                                        <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Settings"]}</Text>
                                     </View>
-                                )
+                                ),
+                                tabBarButton: (props, focused) => <CustomTabBarButton {...props}
+                                //isFocused={focused} 
+                                //onPhotoUpdated={() => alert("oh")}
+                                />
+                            }} />
 
-                            }}
-                            //onPhotoUpdated={() => alert("oh")}
-                            />
+
                             {/* <Tab.Screen name="Settings" component={SettingsNavigator}/> */}
                         </Tab.Navigator>
                     </GiftCardsContextProvider>
@@ -207,33 +275,3 @@ export const AppNavigator = (route) => {
         // </FavouritesContextProvider>
     )
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: standardcolors.black,
-        shadowOffset: {
-            width: 0,
-            height: 7
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4.5,
-        elevation: 5,
-    },
-    transShadow: {
-        top: -20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 90,
-        height: 90,
-        borderRadius: 45,
-        backgroundColor: blackMenu ? 'black' : 'white',
-        shadowColor: standardcolors.transparent,
-        shadowOffset: {
-            width: 0,
-            height: 0
-        },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 0,
-    },
-})

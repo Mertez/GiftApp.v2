@@ -47,7 +47,7 @@ export const SettingScreen = ({ navigation, route }) => {
     //console.log("settings screen:", route);
 
     const getProfilePicture = async () => {
-        const photoUri = await AsyncStorage.getItem(`${user.uid}-photo`);
+        const photoUri = await AsyncStorage.getItem(`${user.userId}-photo`);
         //console.log(photoUri);
         setPhoto(photoUri);
         //setPhoto(`${host}/images/users/${user?.uid ?? 'null'}.png`);

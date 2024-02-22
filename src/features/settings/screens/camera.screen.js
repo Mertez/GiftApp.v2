@@ -9,6 +9,7 @@ import { WidthPercent } from "../../../utils/env";
 import { postFile } from "../../../infrastructure/data/apiCalls";
 import ApiRoutes from '../../../infrastructure/data/apiRoutes';
 import { FadeInView } from "../../../components/animations/fade.animation";
+import { Text } from 'react-native-paper';
 
 const Row = styled.View`
     width: 100%;
@@ -25,7 +26,7 @@ const Btn = styled(Button)`
   margin-left: ${WidthPercent(5)}px;
   margin-right: ${WidthPercent(5)}px;
   background-color: #00000066;
-  border: 1px solid red;
+  //border: 1px solid red;
   border-radius: 10px;
 `;
 
@@ -61,12 +62,18 @@ export const CameraScreen = ({ navigation }) => {
                 //await cameraRef.current.pausePreview();
                 //setIsPreview(true);
                 //console.log("picture", data);
-                AsyncStorage.setItem(`${user.uid}-photo`, source);
+                //console.log("user", user.userId);
+                AsyncStorage.removeItem(`${user.userId}-photo`);
+                AsyncStorage.setItem(`${user.userId}-photo`, source);
 
-                postFile(ApiRoutes.uploadUserPicture, source, `${user.uid}.jpg`, 'image/jpg');
+                postFile(ApiRoutes.uploadUserPicture, source, `${user.userId}.jpg`, 'image/jpg');
 
+            } else {
+                return <Text>Not Source</Text>
             }
             navigation.navigate("Setting", { 'updatePhoto': 1 });
+        } else {
+            return <Text>cameraRef.current</Text>
         }
     };
 
@@ -74,11 +81,20 @@ export const CameraScreen = ({ navigation }) => {
         setIsCameraReady(true);
     };
 
-
     useEffect(() => {
         (async () => {
+
+            console.log(type);
+            console.log(cameraRef);
+
             const { status } = await Camera.requestCameraPermissionsAsync();
+            console.log(status);
+
             setHasPermission(status === 'granted');
+            console.log(hasPermission);
+
+            console.log(error);
+
         })();
     }, []);
 
@@ -86,11 +102,11 @@ export const CameraScreen = ({ navigation }) => {
         setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
     }
 
-
-
     return (
         <View style={{ flex: 1 }}>
+
             <Camera
+                style={{ flex: 1 }}
                 type={type}
                 ref={cameraRef}
                 onCameraReady={onCameraReady}
@@ -101,17 +117,17 @@ export const CameraScreen = ({ navigation }) => {
                 <FadeInView style={{ flex: 1 }} duration={1000}>
                     <Row>
 
-                        <Btn mode="contained" color={"white"}
+                        <Btn mode="contained" textColor={"white"}
                             onPress={() => { navigation.goBack(); }} >
                             {/* <Text variant="label" style={{ color: standardcolors.black }}>Cancel</Text> */}
                             <CameraIcon source={require("../../../../assets/cc.png")} />
                         </Btn>
-                        <Btn mode="contained" color={null} style={{ backgroundColor: '#ff000099', paddingLeft: 20, paddingRight: 20 }}
+                        <Btn mode="contained" textColor={null} style={{ backgroundColor: '#ff000099', paddingLeft: 20, paddingRight: 20 }}
                             onPress={snap} >
                             {/* <Text variant="label" style={{ color: standardcolors.white }}>Shoot</Text> */}
                             <CameraIcon source={require("../../../../assets/cs.png")} />
                         </Btn>
-                        <Btn mode="contained" color={"white"}
+                        <Btn mode="contained" textColor={"white"}
                             onPress={toggleCameraType} >
                             {/* <Text variant="label" style={{ color: standardcolors.black }}>Rotate</Text> */}
                             <CameraIcon source={require("../../../../assets/cr.png")} />
@@ -120,6 +136,6 @@ export const CameraScreen = ({ navigation }) => {
                     </Row>
                 </FadeInView>
             </Camera>
-        </View>
+        </View >
     );
 }

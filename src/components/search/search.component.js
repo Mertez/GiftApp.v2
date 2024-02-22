@@ -124,7 +124,7 @@ export const Search = (props) => {
 
         // }}
         >
-          <AvatarImage size={38} source={{ uri: `${host}/images/users/${user?.uid ?? 'null'}.jpg?time=${new Date().toLocaleString()}` }} icon="folder" />
+          <AvatarImage size={38} source={{ uri: `${host}/images/users/${user?.userId ?? 'null'}.jpg?time=${new Date().toLocaleString()}` }} icon="folder" />
         </FloatBtn>
 
       </SearchContainer >

@@ -16,6 +16,7 @@ import { host, height, width } from "../../../utils/env";
 import { HomeHeaderBanner } from "../../../components/banner/banners.component";
 import { standardcolors } from "../../../infrastructure/theme/colors";
 import { Loading, SafeArea, LoadingContainer } from "../components/home.styles";
+import { BrandBar } from "../../markets/components/brands.bar.component";
 
 const isToggled = false;
 
@@ -25,11 +26,12 @@ export const HomeScreen = ({ navigation }) => {
     const { isLoading: isCategoriesLoading, categories, error: categoriesError } = useContext(CategoriesContext);
     const { isLoading: isGiftCardsLoading, giftCards, error: giftcardError } = useContext(GiftCardsContext);
     const { isLoading: isProductHotsLoading, productHots: productHots, error: productHotsError, onGetProductsHot } = useContext(ProductsContext);
+    const { isLoading: isDealBrandsLoading, dealBrands, error: dealBrandsError, onGetDealBrands } = useContext(ProductsContext);
 
     const banners = [`b1.webp`, `b2.webp`];
 
     useEffect(() => {
-
+        onGetDealBrands();
         onGetProductsHot();
     }, []);
 
@@ -100,7 +102,7 @@ export const HomeScreen = ({ navigation }) => {
                         <Text variant="error">Something went wrong retrieving the hot product </Text>
                     </Spacer>
                 )}
-                {!productHotsError && (
+                {false && !productHotsError && (
                     <>
                         <ProductsHotBar
                             products={productHots && productHots.result}
@@ -108,6 +110,11 @@ export const HomeScreen = ({ navigation }) => {
                         />
                     </>
                 )}
+                <BrandBar
+                    brands={dealBrands && dealBrands.result}
+                    onNavigate={navigation.navigate}
+                //onBrandPressed={onBrandPressed}
+                />
                 {giftcardError && (
                     <Spacer position="left" size="large">
                         <Text variant="error">Something went wrong retrieving the giftcards</Text>

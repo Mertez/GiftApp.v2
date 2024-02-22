@@ -14,7 +14,7 @@ export const useMock = "true";
 export const appVersion = 1;
 export const { width, height } = Dimensions.get('window');
 export const bannerHeight = Math.round(width / 2.95);
-export const blackMenu = true;
+export const blackMenu = false;
 
 export function WidthPercent(percent, fix = 0) { return Math.round(width * percent / 100) + fix; }
 export function HeightPercent(percent, fix = 0) { return Math.round(height * percent / 100) + fix; }

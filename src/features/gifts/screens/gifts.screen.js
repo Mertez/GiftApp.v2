@@ -248,7 +248,7 @@ export const GiftsScreen = ({ navigation }) => {
                     <Dialog.Button label="Delete" onPress={handleDelete} />
                 </Dialog.Container> */}
 
-                <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099' }} >XXX</Button>
+                <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099' }} >Select one of my friends</Button>
 
                 {(step1Answer == "to others") && (<>
 

@@ -9,6 +9,19 @@ export const standardcolors = {
   transparentb66: "#00000066",
   transparentbaa: "#000000aa",
   transparentbcc: "#000000cc",
+
+  t100: "#ddd1ba",
+  t90: "#e0d6c1",
+  t80: "#e4dac8",
+  t70: "#e7dfcf",
+  t60: "#ebe3d6",
+  t50: "#eee8dc",
+  t40: "#f1ede3",
+  t30: "#f5f1ea",
+  t20: "#f8f6f1",
+  t10: "#fcfaf8",
+
+
   muted: "#6c757d",
   white: "#fff",
   lightestgray: "#eee",

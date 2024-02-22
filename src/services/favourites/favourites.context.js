@@ -42,12 +42,12 @@ export const FavouritesContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (user)
-            loadFavourites(user.uid);
+            loadFavourites(user.userId);
     }, [user]);
 
     useEffect(() => {
         if (user)
-            saveFavourites(favourites, user.uid);
+            saveFavourites(favourites, user.userId);
     }, [favourites, user]);
 
     return (

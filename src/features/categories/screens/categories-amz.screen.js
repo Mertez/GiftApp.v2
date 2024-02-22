@@ -350,7 +350,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
               })
             }}
           >
-            {/* <CheckLogo source={CheckLogoFile} resizeMode='contain' /> */}
+            <CheckLogo source={CheckLogoFile} resizeMode='contain' />
             <LottieCheckLogo
               key="animation"
               autoPlay
