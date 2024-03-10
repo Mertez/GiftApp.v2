@@ -175,6 +175,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
   const ProCode = (ev) => {
 
+    //console.log("ev: ", ev);
     //console.log("ProCode: " + ev.url.match(/(?:[/dp/]|$)([A-Z0-9]{10})/));
 
     if (ev.loading == false) {
@@ -184,10 +185,11 @@ export const CategoriesAmazon = ({ route, navigation }) => {
       //if (index > -1) {
       if (ev.url.match(/(?:[/dp/]|$)([A-Z0-9]{10})/) != null) {
         var result = ev.url.match(/(?:[/dp/]|$)([A-Z0-9]{10})/);
+        //console.log("result: ", result);
         const asi = result[0].replace("/", "")
         setAsin(asi);
         // setAsin(.substring(1, 10));
-        // console.log(`https://amazon.com/dp/${asin}`);
+        console.log(`https://amazon.com/dp/${asi}`);
         const img = `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asi}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL250`
         setImgSrc(img);
       }
@@ -199,7 +201,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
 
   _onMessage = event => {
-    //console.log("Messag received", event.nativeEvent);
+    console.log("Messag received", event.nativeEvent);
     try {
       var values = JSON.parse(event.nativeEvent.data)
       setTitle(values.title);

@@ -250,7 +250,7 @@ export const GiftsScreen = ({ navigation }) => {
 
                 <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099' }} >Select one of my friends</Button>
 
-                {(step1Answer == "to others") && (<>
+                {(step1Answer == "to others") && (
 
                     <Row>
 
@@ -279,7 +279,7 @@ export const GiftsScreen = ({ navigation }) => {
 
 
 
-                </>)}
+                )}
             </>
         )
     }

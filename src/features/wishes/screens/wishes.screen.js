@@ -59,7 +59,7 @@ export const WishesScreen = ({ navigation }) => {
                 <BannerContainer>
                     <HomeHeaderBanner userBanners={[`samsung1.jpg`, `walmart1.jpg`, `amazonsmile.jpg`]} />
                 </BannerContainer>
-                <PiggyBank refreshing={refreshing} onRefreshingFinished={() => setRefreshing(false)} />
+                <PiggyBank variant={"full"} refreshing={refreshing} onRefreshingFinished={() => setRefreshing(false)} />
 
 
                 <Spacer position="bottom" size="xxl" />
