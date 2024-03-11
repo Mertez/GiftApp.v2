@@ -17,6 +17,7 @@ import { HomeHeaderBanner } from "../../../components/banner/banners.component";
 import { standardcolors } from "../../../infrastructure/theme/colors";
 import { Loading, SafeArea, LoadingContainer } from "../components/home.styles";
 import { BrandBar } from "../../markets/components/brands.bar.component";
+import { PiggyBank } from "../../../components/piggyBank/piggyBank.component";
 
 const isToggled = false;
 
@@ -38,7 +39,7 @@ export const HomeScreen = ({ navigation }) => {
     //console.log("Loadings: ", isCategoriesLoading, isGiftCardsLoading, isProductHotsLoading);
     return (
         <SafeArea>
-
+            <PiggyBank variant={"mini"} refreshing={false} onRefreshingFinished={() => { }} />
             <ScrollView>
 
                 {(isCategoriesLoading || isGiftCardsLoading || isProductHotsLoading) ? (

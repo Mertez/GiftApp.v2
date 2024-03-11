@@ -5,12 +5,15 @@ import styled from "styled-components/native";
 import { Search } from "../components/search.component";
 import { giftInfoCard } from "../components/gift-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
-import { giftsContext } from "../../../services/gifts/gifts.context";
+
 //import { FavouritesContext } from "../../../services/favourites/favourites.context";
 import { standardcolors } from "../../../infrastructure/theme/colors";
 import { Text } from "../../../components/typography/text.component";
+
 import { CategoriesContext } from "../../../services/categories/categories.context";
 import { ProductsContext } from "../../../services/products/products.context";
+import { GiftsContext } from "../../../services/gifts/gifts.context";
+
 import { ProductsHotBar } from "../../products/components/products-hot-bar.component";
 import { SafeArea } from "../../home/components/home.styles";
 import { giftList, Row, Col, LoadingContainer, BuyAGiftButton, BuyAGiftSection, Space50, BuyAGiftIcon, Lottie, BuyAGiftIconS } from "../components/gift-screen.styles";
@@ -18,6 +21,8 @@ import { CategoriesCol } from "../../categories/components/categories-col.compon
 import CurrencyInput from 'react-native-currency-input';
 import { WidthPercent } from "../../../utils/env";
 import { BlurView } from "expo-blur";
+import MultilineTextInput from "../../../components/controls/MultilineTextInput";
+import { PersonGifCat } from "../components/gift-personCategories";
 
 const InputCurrency = styled(CurrencyInput)`
         font-size: 20px;
@@ -45,6 +50,7 @@ export const GiftsScreen = ({ navigation }) => {
     }, []);
 
     const { isLoading: isCategoriesLoading, categories, error: categoriesError } = useContext(CategoriesContext);
+    //const { isLoading: isGiftCatsLoading, cats: onGetPersonToBuyGiftCategories, error: catsError } = useContext(GiftsContext);
     const { isLoading: isProductHotsLoading, productHots: productHots, error: productHotsError, onGetProductsHot } = useContext(ProductsContext);
     const [isToggled, setIsToggled] = useState(false);
     const [giftStep, setGiftStep] = useState(0);
@@ -58,7 +64,13 @@ export const GiftsScreen = ({ navigation }) => {
     const [step3Answer, setStep3Answer] = useState(null);
     const [step1AddGiftType, setStep1AddGiftType] = useState("NoGiftCode");
     const [modalVisible, setModalVisible] = useState(false);
+    const [personDescription, setPersonDescription] = useState('My mom, she is a 65 year old spanish traditional woman, she loves cooking, cleaning and playing with her cat and her dog.');
 
+    const { onGetPersonToBuyGiftCategories, personToBuyGiftCategories, error: giftsError, isLoading: isGiftsIsLoading } = useContext(GiftsContext);
+
+    const getPersonToBuyGiftCategories = () => {
+        setModalVisible(true);
+    };
 
     const showDialog = () => {
         setModalVisible(true);
@@ -73,6 +85,16 @@ export const GiftsScreen = ({ navigation }) => {
         // ...Your logic
         setModalVisible(false);
     };
+
+    const handlePersonDescription = (description) => {
+        console.log(description);
+        onGetPersonToBuyGiftCategories(description);
+    }
+
+
+    useEffect(() => {
+        console.log("personToBuyGiftCategories: ", personToBuyGiftCategories);
+    }, [personToBuyGiftCategories]);
 
     const scrollViewRef = useRef();
     var Step0, Step1, Step2, Step3 = '';
@@ -250,36 +272,53 @@ export const GiftsScreen = ({ navigation }) => {
 
                 <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099' }} >Select one of my friends</Button>
 
-                {(step1Answer == "to others") && (
+                {(step1Answer == "to others") && (<View style={{ marginBottom: 300 }}>
+                    <Spacer size="lg" position="bottom">
+                        {/* <Row>
 
-                    <Row>
+                            <Space50>
+                                <BuyAGiftButton mode="contained" color={step1AddGiftType === "NoGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("WithGiftCode"); console.log("Step2:", "Public"); setGiftStep(3); }} >
+                                    <Row>
+                                        <BuyAGiftIcon source={require("../../../../assets/nogiftcode.png")} resizeMode="contain" />
+                                        <Col><Text variant="label" style={{ color: step1AddGiftType === "NoGiftCode" ? "#000" : "#fff" }}>New gift</Text><Text variant="caption">Gift opened before</Text></Col>
+                                    </Row>
+                                </BuyAGiftButton>
+                            </Space50>
 
-                        <Space50>
-                            <BuyAGiftButton mode="contained" color={step1AddGiftType === "NoGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("WithGiftCode"); console.log("Step2:", "Public"); setGiftStep(3); }} >
-                                <Row>
-                                    <BuyAGiftIcon source={require("../../../../assets/nogiftcode.png")} resizeMode="contain" />
-                                    <Col><Text variant="label" style={{ color: step1AddGiftType === "NoGiftCode" ? "#000" : "#fff" }}>New gift</Text><Text variant="caption">Gift opened before</Text></Col>
-                                </Row>
-                            </BuyAGiftButton>
-                        </Space50>
+                            <Space50>
+                                <BuyAGiftButton mode="contained" color={step1AddGiftType === "WithGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("NoGiftCode"); console.log("Step2:", "privately"); setGiftStep(3); }} >
+                                    <Row>
+                                        <BuyAGiftIcon source={require("../../../../assets/withcode.png")} resizeMode="contain" />
+                                        <Col><Text variant="label" style={{ color: step1AddGiftType === "WithGiftCode" ? "#000" : "#fff" }}>Add to a gift</Text><Text variant="caption">No one else added a gift</Text></Col>
 
-                        <Space50>
-                            <BuyAGiftButton mode="contained" color={step1AddGiftType === "WithGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("NoGiftCode"); console.log("Step2:", "privately"); setGiftStep(3); }} >
-                                <Row>
-                                    <BuyAGiftIcon source={require("../../../../assets/withcode.png")} resizeMode="contain" />
-                                    <Col><Text variant="label" style={{ color: step1AddGiftType === "WithGiftCode" ? "#000" : "#fff" }}>Add to a gift</Text><Text variant="caption">No one else added a gift</Text></Col>
+                                    </Row>
 
-                                </Row>
+                                </BuyAGiftButton>
 
-                            </BuyAGiftButton>
+                            </Space50>
 
-                        </Space50>
+                        </Row> */}
+                        <Row><Text>Describe the person who you are going to buy a gift for:</Text></Row>
+                        <Row><MultilineTextInput placeholder="My mom, she is a 75 year old traditional spanish woman who loves cooking, cleaning and playing with her cat"
+                            onTextChange={setPersonDescription}
+                        ></MultilineTextInput></Row>
+                        {/* <Text>{personDescription}</Text> */}
+                        <BuyAGiftButton mode="contained" color={"white"} onPress={() => { handlePersonDescription(personDescription); }} >
+                            <Row>
 
-                    </Row>
+                                <Col><Text variant="button" style={{ color: "#fff" }}>Check my description</Text><Text variant="caption">Then think about that</Text></Col>
+                            </Row>
+                        </BuyAGiftButton>
+                    </Spacer>
+                    <>
+                        {(isGiftsIsLoading) ? (
+                            <LoadingContainer>
+                                <ActivityIndicator size={50} animating={true} color={standardcolors.red} />
+                            </LoadingContainer>
+                        ) : <PersonGifCat catItems={personToBuyGiftCategories} navigation={navigation}></PersonGifCat>}
 
-
-
-                )}
+                    </>
+                </View>)}
             </>
         )
     }

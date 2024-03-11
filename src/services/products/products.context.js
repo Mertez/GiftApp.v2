@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-
 import {
     getProductsRequest,
     getProductsTransform,
@@ -16,11 +15,11 @@ import {
     getProductBrandsRequest,
     getProductBrandsTransform,
 
-    getSingleProductsRequest,
-    getSingleProductsTransform,
+    // getSingleProductsRequest,
+    // getSingleProductsTransform,
 
-    searchProductsRequest,
-    searchProductsTransform,
+    // searchProductsRequest,
+    // searchProductsTransform,
 } from "./products.service";
 
 export const ProductsContext = createContext();

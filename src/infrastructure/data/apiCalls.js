@@ -9,7 +9,7 @@ const get = async (apiRoute) => {
     // var data = res.json();
 
     var data = fetch(apiRoute).then((res) => {
-        //console.log("Done get :: " + apiRoute, "\r\n", data);
+        //console.log("Done get :: " + apiRoute, "\r\n", res);
         return res.json();
     });
 

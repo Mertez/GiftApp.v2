@@ -36,12 +36,12 @@ const PiggyBankContainerFull = styled.View`
 `
 
 const PiggyBankContainer = styled.View`
-  border-radius: 10px;
+  border-radius: 0px;
   border: 0px solid #ff7bac;
-  width: ${WidthPercent(100, -70)}px;
-  margin: 60px 10px 10px 5px;
-  padding: 5px 10px 5px 0;
-  //background-color: ${standardcolors.t50};
+  //width: ${WidthPercent(100, -70)}px;
+  margin: 0px 0px 0px 0px;
+  padding: 5px 60px 10px 0px;
+  background-color: ${standardcolors.white};
 `
 
 const Line = styled(Row)`

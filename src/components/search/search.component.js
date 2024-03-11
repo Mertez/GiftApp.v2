@@ -12,6 +12,7 @@ import { Row } from "../../features/gifts/components/gift-info-card.styles";
 const SearchContainer = styled.View`
   padding: ${(props) => props.theme.spaces[0]};
   flex-direction: row;
+  height:60px;
 `;
 
 const SearchbarX = styled(Searchbar)`
@@ -169,7 +170,7 @@ export const Search = (props) => {
         >
           <AvatarImage size={42} source={{ uri: `${host}/images/users/${user?.userId ?? 'null'}.jpg?time=${new Date().toLocaleString()}` }} icon="folder" />
         </FloatBtn>
-        <Piggy variant={"mini"} refreshing={refreshing} onRefreshingFinished={() => setRefreshing(false)} />
+        {/* <Piggy variant={"mini"} refreshing={refreshing} onRefreshingFinished={() => setRefreshing(false)} /> */}
       </SearchContainer >
       {openSettings && (
         <View>

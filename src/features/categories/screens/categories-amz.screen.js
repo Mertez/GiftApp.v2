@@ -327,7 +327,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
     <>
       <Vm2>
 
-        <CompactView ><LoadingIndicator color={'red'} size={50} /><RedText>WISHAPP</RedText></CompactView>
+        <CompactView ><LoadingIndicator color={'red'} size={50} /><RedText>GIFTAPP</RedText></CompactView>
         <AmLogoContainer ><AmLogo source={AmLogoFile} resizeMode='contain' />
           <ProgressBar progress={loadingPercent} color={'red'} /></AmLogoContainer>
         <TimesBtn

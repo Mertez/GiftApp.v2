@@ -1,5 +1,7 @@
 import camelize from "camelize";
 import { host, useMock } from "../../utils/env";
+import ApiRoutes from '../../infrastructure/data/apiRoutes';
+import { authGet, authPost, get, post } from '../../infrastructure/data/apiCalls';
 
 export const giftsRequest = (location) => {
 
@@ -42,3 +44,26 @@ export const giftsTransform = ({ results = [] }) => {
 //         console.log("giftservice.transformedResponse", transformedResponse);
 //     })
 //     .catch((err) => { console.log("Error:", err); });
+
+
+export const getPersonToBuyGiftCategoriesTransform = (output) => {
+    //console.log("getPersonToBuyGiftCategoriesTransform", output);
+
+    const result = output.map(item => ({
+        original: item.trim(),
+        modified: (item.trim().replace(/&/g, '+')).trim() + '+gifts'
+    }));
+
+    return result;
+};
+
+export const getPersonToBuyGiftCategoriesRequest = async (personDescription) => {
+    return new Promise((resolve, reject) => {
+        var url = ApiRoutes.getPersonToBuyGiftCategories(personDescription);
+        //console.log("getPersonToBuyGiftCategories", url);
+        const categories = get(url);
+        //console.log("getPersonToBuyGiftCategoriesRequest", categories);
+        if (!categories) { reject("No categories found!"); }
+        else { resolve(categories); }
+    })
+};

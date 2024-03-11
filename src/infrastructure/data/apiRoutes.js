@@ -24,6 +24,8 @@ module.exports = {
     changeName: `${host}/account/changeName`,
     changePassword: `${host}/account/changePassword`,
 
+    getPersonToBuyGiftCategories: (personDescription) => `${host}/Chat/Answer?question=${personDescription}`,
+
     getProducts: (productType, hot, special, categoryId, brandId) => `${host}/Products/GetProducts?productType=${productType}${hot >= 0 ? "&hot=" + hot : ""}${special >= 0 ? "&special=" + special : ""}${categoryId > 0 ? "&categoryId=" + categoryId : ""}${brandId != '' ? "&brandId=" + brandId : ""}`,
     getProductsHot: getProductsUrl(productTypeEnum.Product, 1, -1, -1, ''),
     getProductsSpecial: getProductsUrl(productTypeEnum.Product, -1, 1, -1, ''),
