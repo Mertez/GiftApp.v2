@@ -8,7 +8,7 @@ import { BuyAGiftButton, Col, Row, BuyAGiftIcon, Space50 } from "../../gifts/com
 import { width, host } from "../../../utils/env";
 
 
-export const ProductDetailScreen = ({ route }) => {
+export const ProductDetailScreen = ({ route, navigation }) => {
     const { product, isGiftCard } = route.params;
     //console.log(product.hot);
     return (
@@ -23,7 +23,7 @@ export const ProductDetailScreen = ({ route }) => {
                     <Text variant="title" >{`${product.name}`}</Text>
                     <Text variant="title" style={{ color: 'red' }}>${`${product.price}`}</Text>
                     <Text variant="body" style={{ color: 'purple' }}>{`${product.brand}`}</Text>
-                    <BuyAGiftButton mode="contained" style={{ width: (width / 2), height: 60, marginTop: 20 }} color={false ? "white" : null} onPress={() => { }} >
+                    <BuyAGiftButton mode="contained" style={{ width: (width / 2), height: 60, marginTop: 20 }} color={false ? "white" : null} onPress={() => navigation.navigate('MainAppFeature', { extraDescription: 'You will able to buy this product for yourself or as a gift.' })} >
                         <Row>
                             <BuyAGiftIcon source={require("../../../../assets/carty.png")} resizeMode="contain" style={{ marginTop: 3, marginBottom: 0, marginRight: 10, marginLeft: 0 }} />
                             <Text variant="title" style={{ marginTop: 5, marginBottom: 0 }}>Buy it now!</Text>

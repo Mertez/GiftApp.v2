@@ -23,7 +23,7 @@ const isToggled = false;
 
 
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ navigation, route }) => {
     const { isLoading: isCategoriesLoading, categories, error: categoriesError } = useContext(CategoriesContext);
     const { isLoading: isGiftCardsLoading, giftCards, error: giftcardError } = useContext(GiftCardsContext);
     const { isLoading: isProductHotsLoading, productHots: productHots, error: productHotsError, onGetProductsHot } = useContext(ProductsContext);
@@ -40,7 +40,7 @@ export const HomeScreen = ({ navigation }) => {
     return (
         <SafeArea>
             <PiggyBank variant={"mini"} refreshing={false} onRefreshingFinished={() => { }} />
-            <ScrollView>
+            <ScrollView nestedScrollEnabled={true}>
 
                 {(isCategoriesLoading || isGiftCardsLoading || isProductHotsLoading) ? (
                     <LoadingContainer>
@@ -52,7 +52,7 @@ export const HomeScreen = ({ navigation }) => {
                 onFavouritesToggle={() => setIsToggled(!isToggled)}
             /> */}
 
-                <HomeHeaderBanner />
+
 
                 <></>
                 {isToggled && (
@@ -67,7 +67,7 @@ export const HomeScreen = ({ navigation }) => {
                         <Text variant="error">Something went wrong retrieving the categories</Text>
                     </Spacer>
                 )}
-
+                <HomeHeaderBanner />
                 {!categoriesError && (
                     <>
                         <CategoriesBar
@@ -98,6 +98,7 @@ export const HomeScreen = ({ navigation }) => {
                     //     keyExtractor={(item) => item.name}
                     // />
                 )}
+
                 {productHotsError && (
                     <Spacer position="left" size="large">
                         <Text variant="error">Something went wrong retrieving the hot product </Text>
@@ -114,6 +115,10 @@ export const HomeScreen = ({ navigation }) => {
                 <BrandBar
                     brands={dealBrands && dealBrands.result}
                     onNavigate={navigation.navigate}
+                    onBrandPressed={(item) => {
+                        //console.log(brand); 
+                        navigation.navigate('Market', { brand: item });
+                    }}
                 //onBrandPressed={onBrandPressed}
                 />
                 {giftcardError && (

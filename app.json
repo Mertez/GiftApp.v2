@@ -23,8 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.arianexir.GiftApp",
+      "associatedDomains": ["applinks:arianexir.com"]      
     },
+    "scheme": "giftapp://arianexir.com",
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

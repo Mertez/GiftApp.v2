@@ -12,7 +12,7 @@ export const LogoImg = styled(Image)`
   width:80px;
   height:70px;
   margin: 0px auto 20px;
-  overflow:hidden;
+  overflow: visible;
   
 `;
 

@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Text as Txt, StyleSheet, SafeAreaView, Platform, TextInput, Button, View, BackHandler, Image, TouchableOpacity } from "react-native";
 import { ActivityIndicator, ProgressBar } from "react-native-paper";
 import WebView from "react-native-webview";
 import styled from 'styled-components';
 import { WidthPercent, HeightPercent, isAndroid } from "../../../utils/env";
 import LottieView from "lottie-react-native";
+import { AmazonContext } from "../../../services/amazon/amazon.context";
+import { standardcolors } from "../../../infrastructure/theme/colors";
+import { BlurView } from "expo-blur";
 
 //import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -18,11 +21,10 @@ const Text = styled(Txt)`
 
 const RedText = styled(Txt)`
   text-align: center;
-  color:red;
+  color:white;
   font-size: ${WidthPercent(5)}px;
-  margin-top: ${isAndroid ? HeightPercent(16) : HeightPercent(15)}px;
+  
   letter-spacing: 40px;
-  //text-decoration: underline;
   margin-left: ${isAndroid ? 0 : WidthPercent(10)}px;
 `
 
@@ -38,8 +40,16 @@ const Vm1 = styled(View)`
   flex:2;
   width:90%;
   margin: auto;
-  overflow: hidden;
+  overflow: visible;
 `
+
+const AppLogoFile = require("../../../../assets/icon.png");
+const AppLogo = styled(Image)`
+  height:90px;
+  width: 90px;
+  margin: ${isAndroid ? HeightPercent(16) : HeightPercent(15)}px auto 20px;
+`
+
 const AmLogoFile = require("../../../../assets/amlogo.png");
 const AmLogo = styled(Image)`
   height:28px;
@@ -59,7 +69,7 @@ const TimesLogo = styled(Image)`
 export const LottieCheckLogo = styled(LottieView)`
   height:${2 * btnSize}px;
   width: ${2 * btnSize}px;
-  margin: auto -20px -13px;
+  margin: auto -45px -38px;
   opacity: .8;
 `
 export const LottieTimesLogo = styled(LottieView)`
@@ -94,7 +104,7 @@ const AmLogoContainer = styled(View)`
   background-color:#232f3e;
   height:48px;
   width:100%;
-  overflow:hidden;
+  overflow: visible;
   z-index:9999;
   text-align:center;
 `
@@ -102,13 +112,13 @@ const AmLogoContainer = styled(View)`
 const Vm2 = styled(View)`
   flex:1;
   width:100%;
-  overflow: hidden;
+  overflow: visible;
 `
 const CompactWebview = styled(WebView)`
     width:100%;
     height:100%;
     flex:1;
-    overflow: hidden;
+    overflow: visible;
 `;
 
 
@@ -127,18 +137,23 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
   var params = route.params;
   var keyword = params.keyword;
+  var isAGift = params.isagift;
 
   //changeScreenOrientation();
 
   const webViewRef = useRef(null);
   const [loadingPercent, setLoadingPercent] = useState(0);
   const [title, setTitle] = useState('');
+  const [brand, setBrand] = useState('');
   const [url, setUrl] = useState('');
   const [asin, setAsin] = useState('');
   const [imgSrc, setImgSrc] = useState('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
   const [price, setPrice] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [checkShow, setCheckShow] = useState(false);
+  const ActivityUniqueKey = 'x';
+
+  const { onGetAsinDataRequest, asinData, error: amazonError, isLoading: isAmazonIsLoading } = useContext(AmazonContext);
 
   const onAndroidBackPress = () => {
     if (webViewRef.current) {
@@ -148,17 +163,41 @@ export const CategoriesAmazon = ({ route, navigation }) => {
     return false;
   };
 
+  const onAsinDetected = (asi) => {
+    //console.log("asin (detected): ", asin);
+    //console.log("asi (parameter): ", asi);
+    onGetAsinDataRequest(asi);
+  }
 
-  const CompactView = styled(View)`
+
+  useEffect(() => {
+    if (asinData) {
+      //console.log("asinData: ", asinData);
+      //console.log("Amazon Url: ", `https://amazon.com/dp/${asin}`);
+
+      console.log("isAGift AMZ: ", isAGift);
+      setImgSrc(asinData.image);
+      setTitle(asinData.title);
+      setPrice(asinData.price);
+      setBrand(asinData.brand);
+
+      setCheckShow(true);
+    } else {
+      setCheckShow(false);
+    }
+  }, [asinData]);
+
+
+  const CompactView = styled(BlurView)`
     ${!isLoading ? "display: none;" : ""};
     width:100%;
     height:100%;
-    overflow: hidden;
+    overflow: visible;
     position: absolute;
     left: 0;
     top:48px;
     z-index:99999;
-    background-color: #232f3eF6;
+    background-color: #232f3eA6;
     flex:1;
 `;
 
@@ -189,9 +228,8 @@ export const CategoriesAmazon = ({ route, navigation }) => {
         const asi = result[0].replace("/", "")
         setAsin(asi);
         // setAsin(.substring(1, 10));
-        console.log(`https://amazon.com/dp/${asi}`);
-        const img = `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asi}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL250`
-        setImgSrc(img);
+        //console.log("asin: ", asi);
+        onAsinDetected(asi);
       }
 
       if (isLoading)
@@ -201,20 +239,35 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
 
   _onMessage = event => {
-    console.log("Messag received", event.nativeEvent);
-    try {
-      var values = JSON.parse(event.nativeEvent.data)
-      setTitle(values.title);
-      setPrice(values.price);
-      setCheckShow(values.price != '');
-      //console.log(values.price);
-      // setAsin(values.asin);
-      // const img = `https://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=GB&ASIN=${values.asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL500`
-      // setImgSrc(img);
-    } catch (e) {
-      setCheckShow(false);
-    }
+    //console.log("Messag received", event.nativeEvent);
+    // try {
+    //   var values = JSON.parse(event.nativeEvent.data)
+    //   setTitle(values.title);
+    //   setPrice(values.price);
+    //   setCheckShow(values.price != '');
+    //   //console.log(values.price);
+    //   // setAsin(values.asin);
+    //   // const img = `https://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=GB&ASIN=${values.asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL500`
+    //   // setImgSrc(img);
+    // } catch (e) {
+    //   setCheckShow(false);
+    // }
   };
+
+  const jsAvoidVideo = `
+  
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const videos = document.querySelectorAll('video');
+    videos.forEach((video) => {
+        //alert(video);
+        // Attempt to pause any video that might auto-play
+        video.pause();
+        // To prevent auto-playing, you might also want to remove the 'autoplay' attribute
+        video.removeAttribute('autoplay');
+        //video.hide();
+    });
+  });
+  `
 
   const jsCode = `
       
@@ -327,9 +380,14 @@ export const CategoriesAmazon = ({ route, navigation }) => {
     <>
       <Vm2>
 
-        <CompactView ><LoadingIndicator color={'red'} size={50} /><RedText>GIFTAPP</RedText></CompactView>
-        <AmLogoContainer ><AmLogo source={AmLogoFile} resizeMode='contain' />
-          <ProgressBar progress={loadingPercent} color={'red'} /></AmLogoContainer>
+        <CompactView intensity={20}>
+          {/* <LoadingIndicator color={'red'} size={50} key={isLoading} /> */}
+          <AppLogo source={AppLogoFile} /><RedText>GIFTAPP</RedText></CompactView>
+
+        <AmLogoContainer >
+          <AmLogo source={AmLogoFile} resizeMode='contain' />
+          <ProgressBar progress={loadingPercent} color={standardcolors.red} />
+        </AmLogoContainer>
         <TimesBtn
           onPress={() => { navigation.goBack() }}
         >
@@ -340,19 +398,20 @@ export const CategoriesAmazon = ({ route, navigation }) => {
           <CheckBtn
             onPress={() => {
               navigation.navigate('giftAddConfirmStack', {
+                isagift: isAGift,
                 gift: {
                   productId: null,
                   name: title,
                   icon: imgSrc,
-                  price: price,
-                  brand: asin,
+                  price: price.value,
+                  brand: brand,
                   amzUrl: url,
-
+                  asin: asin,
                 }, navigation
               })
             }}
           >
-            <CheckLogo source={CheckLogoFile} resizeMode='contain' />
+            {/* <CheckLogo source={CheckLogoFile} resizeMode='contain' /> */}
             <LottieCheckLogo
               key="animation"
               autoPlay
@@ -365,6 +424,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
 
         <CompactWebview
+          style={{ marginTop: 48, }}
           nestedScrollEnabled
           ref={webViewRef}
           injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
@@ -377,11 +437,12 @@ export const CategoriesAmazon = ({ route, navigation }) => {
             //html: "<h1>Hello</h1>"
           }}
           //javaScriptEnabledAndroid={true}
-          injectedJavaScript={jsCode}
+          //injectedJavaScript={jsCode}
+          injectedJavaScript={jsAvoidVideo}
           onMessage={_onMessage}
           onLoadEnd={({ nativeEvent }) => {
 
-            //console.log("End: " + nativeEvent.url) 
+            //console.log("Amazon loading ended: " + nativeEvent.url)
           }}
           onLoadStart={({ nativeEvent }) => {
             if (!isLoading)
@@ -410,7 +471,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
           }}
         // renderLoading={() => {
         //   return (
-        //     <CompactView ><LoadingIndicator color={'red'} size={20} /><RedText>WishApp</RedText></CompactView>
+        //     <CompactView ><LoadingIndicator color={'red'} size={20} /><RedText>GiftApp</RedText></CompactView>
         //   )
         // }}
         />

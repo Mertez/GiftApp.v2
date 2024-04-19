@@ -10,6 +10,9 @@ import { ProductDetailScreen } from "../../features/products/screens/product-det
 import { isAndroid } from "../../utils/env";
 import { CategoriesAmazon } from "../../features/categories/screens/categories-amz.screen";
 import { GiftAddConfirm } from "../../features/gifts/screens/gift-add-confirm.screen";
+import { MarketScreen } from "../../features/markets/screens/market.screen";
+import { CameraScreen } from "../../features/settings/screens/camera.screen";
+import { MainAppFeature } from "../../components/animations/mainappfeature.component";
 
 
 const homesStack = createStackNavigator();
@@ -36,7 +39,7 @@ export const HomesNavigator = () => {
                 component={CategoryProductsScreen}
             />
             <homesStack.Screen
-                options={({ route }) => ({ title: '🛍️', headerShown: isAndroid })}
+                options={({ route }) => ({ title: 'Amazon 🛍️', headerShown: isAndroid })}
                 name="categoryAmazonStack"
                 component={CategoriesAmazon}
             />
@@ -55,6 +58,15 @@ export const HomesNavigator = () => {
             //     ),
             // }}
             />
+            <homesStack.Screen
+                options={{
+                    header: () => null,
+                }}
+                name="Market"
+                component={MarketScreen}
+            />
+            <homesStack.Screen name="Camera" component={CameraScreen} options={({ route }) => ({ title: `Profile Photo` })} />
+            <homesStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
         </homesStack.Navigator>
     );
 };

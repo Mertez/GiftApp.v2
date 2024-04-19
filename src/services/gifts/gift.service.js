@@ -47,7 +47,8 @@ export const giftsTransform = ({ results = [] }) => {
 
 
 export const getPersonToBuyGiftCategoriesTransform = (output) => {
-    //console.log("getPersonToBuyGiftCategoriesTransform", output);
+    console.log("getPersonToBuyGiftCategoriesTransform", output);
+    if (output.length === 1 && output.every(item => item === "")) { alert('Please describe someone you are willing to buy her/him a present. The entered description doesn`t give us any useful information.'); return null; }
 
     const result = output.map(item => ({
         original: item.trim(),

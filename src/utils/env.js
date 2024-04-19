@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Dimensions, Platform, LogBox } from 'react-native';
 
 const localHost = 'http://192.168.2.104:5000/api';
-const globalHost = 'https://cbca-2003-eb-8f07-7691-ac88-ead1-4aef-6fbc.ngrok-free.app/api'
+const globalHost = 'https://partially-mint-grizzly.ngrok-free.app/api'
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export const useFirebaseAuthentication = false;
 export const host = globalHost; //App.host;
+export const hostOnline = false ? `https://giftapp.techschau.de/api` : host; //App.host;
 export const isAndroid = (Platform.OS === "android");
 export const isDevelopment = process.env.NODE_ENV === "development";
 //export const host = isDevelopment ? localHost : liveHost;
@@ -18,6 +19,8 @@ export const blackMenu = false;
 
 export function WidthPercent(percent, fix = 0) { return Math.round(width * percent / 100) + fix; }
 export function HeightPercent(percent, fix = 0) { return Math.round(height * percent / 100) + fix; }
+export function GetNWords(text, n) { return text.split(' ').slice(0, n).join(' '); }
+
 export function IgnoreWarnings() {
     LogBox.ignoreLogs([`AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`]);
     LogBox.ignoreLogs([`Require cycle: src\\infrastructure\\navigation\\gifts.navigator.js -> src\\features\\gifts\\screens\\gifts.screen.js -> src\\features\\products\\components\\products-hot-bar.component.js -> src\\infrastructure\\navigation\\gifts.navigator.js`]);

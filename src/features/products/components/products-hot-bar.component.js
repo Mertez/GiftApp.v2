@@ -28,19 +28,19 @@ export const ProductsHotBar = ({ products, onNavigate }) => {
                 <Text variant="caption">Hot Products of the week</Text>
             </Spacer>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {products.map((product) => {
-                    const key = product.id;
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
+                {products.map((product, index) => {
+                    const key = product.id + "_" + index;
                     return (
-                        <Spacer key={key} position="left" size="md">
-                            <TouchableOpacity
+                        <Spacer key={"Spacer" + key} position="left" size="md">
+                            <TouchableOpacity key={"TouchableOpacity" + key}
                                 onPress={() =>
                                     onNavigate("productDetailStack", {
                                         product: product, isGiftCard: false
                                     })
                                 }
                             >
-                                <ProductHotCardShow product={product} variant="barHot" variantCover="barHotCover" />
+                                <ProductHotCardShow key={"ProductHotCardShow" + key} product={product} variant="barHot" variantCover="barHotCover" />
                             </TouchableOpacity>
                         </Spacer>
                     );

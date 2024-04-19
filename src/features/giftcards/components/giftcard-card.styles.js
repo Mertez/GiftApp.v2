@@ -40,7 +40,7 @@ export const GiftCardsWrapper = styled(Card)`
   background-color: ${standardcolors.t60};
   border-radius:0;
   shadow:none;
-  padding-bottom:70px;
+  padding-bottom:160px;
 `;
 
 export const GiftCardCardCover = styled(Image)`

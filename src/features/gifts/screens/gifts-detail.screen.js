@@ -14,7 +14,7 @@ export const giftDetailScreen = ({ route }) => {
 
   //console.log(route);
   return (<><giftInfoCard gift={gift} showButtons={false} />
-    <ScrollView>
+    <ScrollView nestedScrollEnabled={true}>
 
       <List.Section title="Menu">
         <List.Accordion

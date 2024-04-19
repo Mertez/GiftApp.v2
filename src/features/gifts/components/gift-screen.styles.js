@@ -41,8 +41,6 @@ export const BuyAGiftIcon = styled.Image`
 export const BuyAGiftIconS = styled.Image`
   width: 30px;
   height: 30px;
-  float: left;
-  //margin-right: 3px;
   margin-left:-3px;
   margin-top:5px;
   padding-left:0;
@@ -107,7 +105,7 @@ export const SearchResult = styled(View)`
 export const LoadingIndicator = styled(ActivityIndicator)`
   margin-left: -25px;
   top: 50%;
-  left: 50%;
+  left: ${WidthPercent(50, -25)}px;
   z-index: 1000;
   position: absolute;
 `
@@ -115,6 +113,6 @@ export const LoadingIndicator = styled(ActivityIndicator)`
 export const LoadingContainer = styled(View)`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: ${WidthPercent(50, -25)}px;
   z-index: 1000;
 `

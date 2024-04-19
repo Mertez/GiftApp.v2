@@ -18,18 +18,18 @@ export const ProductsList = ({ products, navigation, variant, variantCover }) =>
         return null;
     }
     return (
-        <ProductList elevation={5}
+        <ProductList elevation={5} scrollEnabled={true} nestedScrollEnabled={true}
             data={products}
             renderItem={({ item }) => {
                 //console.log("ProductList", products, item);
                 return (
-                    <TouchableOpacity
+                    <TouchableOpacity key={"TouchableOpacity" + item.id}
                         onPress={() => Linking.openURL(item.url)
                         }
                     >
-                        <Spacer position="bottom" size="large">
-                            <FadeInView duration={500}>
-                                <ProductInfoCard product={item} variant={variant} variantCover={variantCover} navigation={navigation} />
+                        <Spacer position="bottom" size="large" key={"Spacer" + item.id}>
+                            <FadeInView duration={500} key={"FadeInView" + item.id}>
+                                <ProductInfoCard key={"ProductInfoCard" + item.id} product={item} variant={variant} variantCover={variantCover} navigation={navigation} />
                             </FadeInView>
                         </Spacer>
                     </TouchableOpacity>

@@ -1,7 +1,7 @@
 import { host } from "../../utils/env";
 import { BannerImage, SwiperDot, SwiperSlide, SwiperWrapper } from "./banners.styles";
 
-const StaticBanners = [`b1.webp`, `b2.webp`];
+const StaticBanners = [require("../../../assets/banners/b1.jpg"), require("../../../assets/banners/b3.jpg"), require("../../../assets/banners/b4.jpg")];
 
 export const HomeHeaderBanner = ({ userBanners = [] }) => {
 
@@ -9,8 +9,9 @@ export const HomeHeaderBanner = ({ userBanners = [] }) => {
 
     return (
         <SwiperWrapper showsButtons={false} autoplay={true} autoplayTimeout={5} activeDot={<SwiperDot />} loop={true}>
-            {banners.map((thisBanner) => {
-                return (<SwiperSlide key={thisBanner}><BannerImage source={{ uri: `${host}/images/banners/${thisBanner}` }} /></SwiperSlide>)
+            {banners.map((thisBanner, index) => {
+                return (<SwiperSlide key={thisBanner + "_" + index}><BannerImage source={thisBanner} /></SwiperSlide>)
+                //return (<SwiperSlide key={thisBanner + "_" + index}><BannerImage source={{ uri: `${host}/images/banners/${thisBanner}` }} /></SwiperSlide>)
             })}
         </SwiperWrapper>
     )

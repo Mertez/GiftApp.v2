@@ -9,6 +9,8 @@ import {
     createStackNavigator,
     CardStyleInterpolators,
 } from "@react-navigation/stack";
+import { Search } from "../../components/search/search.component";
+import { MainAppFeature } from "../../components/animations/mainappfeature.component";
 
 const SettingsStack = createStackNavigator();
 
@@ -50,8 +52,8 @@ export const SettingsNavigator = ({ route, navigation }) => {
             // }}
 
             />
-            <SettingsStack.Screen name="Favourites" component={FavouritesScreen} />
             <SettingsStack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
+            <SettingsStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
         </SettingsStack.Navigator>
     );
 };

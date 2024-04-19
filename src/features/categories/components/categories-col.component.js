@@ -5,10 +5,12 @@ import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { CategoryInfoCard } from "./category-card.component";
 import { Text } from "../../../components/typography/text.component";
+import { standardcolors } from "../../../infrastructure/theme/colors";
 
 const CategoriesWrapper = styled(Card)`
-  padding: 5px;
-  z-index: 999;
+    padding: 5px 5px 200px 5px;
+    z-index: 999;
+    background-color: ${standardcolors.t60};
 `;
 
 export const CategoriesCol = ({ categories, onNavigate, navigation, variant = '', variantCover = '' }) => {
@@ -25,17 +27,17 @@ export const CategoriesCol = ({ categories, onNavigate, navigation, variant = ''
     return (
         <CategoriesWrapper elevation={5}>
             <Spacer variant="left.large">
-                <Text variant="caption">Categories</Text>
+                <Text variant="caption">Categories...</Text>
             </Spacer>
 
             <View style={styles.container}>
-                {categories.map((category) => {
-                    const key = category.name;
+                {categories.map((category, index) => {
+                    const key = category.name + "_" + index;
 
                     //console.log("categories col component", onNavigate)
                     return (
-                        <Spacer key={key} position="top" size="sm" style={styles.item}>
-                            <TouchableOpacity
+                        <Spacer key={"Spacer_" + key} position="top" size="sm" style={styles.item}>
+                            <TouchableOpacity key={"TouchableOpacity_" + key}
                                 onPress={() => {
                                     //navigation.setOptions({ title: 'Gifts 🎁' })
                                     onNavigate("categoryProductStack", { categoryId: category.id, categoryName: category.name })
@@ -45,7 +47,7 @@ export const CategoriesCol = ({ categories, onNavigate, navigation, variant = ''
                                     // console.log(onNavigate)
                                 }}
                             >
-                                <CategoryInfoCard category={category}
+                                <CategoryInfoCard key={"CategoryInfoCard" + key} category={category}
                                     variant={variant} variantCover={variantCover}
                                 //variant="bar" variantCover="barCover"
                                 />

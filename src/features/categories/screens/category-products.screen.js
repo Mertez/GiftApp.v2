@@ -72,12 +72,12 @@ export const CategoryProductsScreen = ({ route, navigation }) => {
                         style={{ backgroundColor: 'white', paddingTop: 10, marginTop: 0 }}
                         onPress={() =>
                             //navigation.setParams({"x":1})
-                            navigation.navigate("categoryAmazonStack", { keyword: categoryName }, navigation)
+                            navigation.navigate("categoryAmazonStack", { keyword: categoryName, isagift: false }, navigation)
                         }
                     >
                         <Image source={require('../../../../assets/Shop-Now-on-Amazon-button.png')} style={{ width: (WidthPercent(60)), height: (WidthPercent(15)), alignSelf: 'center', padding: 0, margin: 0 }} resizeMode={"contain"} />
                     </TouchableOpacity>
-                    <ScrollView>
+                    <ScrollView nestedScrollEnabled={true}>
                         <ProductsCol products={products.result} variant="col3" variantCover="col3Cover" navigation={navigation} />
                     </ScrollView>
                 </>

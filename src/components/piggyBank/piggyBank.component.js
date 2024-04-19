@@ -50,25 +50,25 @@ const Line = styled(Row)`
 `
 const W30 = styled.View`
   width: 16%;
-  overflow:hidden;
+  overflow: visible;
 `
 const W50 = styled.View`
   width: 50%;
-  overflow:hidden;
+  overflow: visible;
 `
 const W70 = styled.View`
   width: 84%;
-  overflow:hidden;
+  overflow: visible;
 `
 const PiggyBankIconFull = styled(Image)`
   height:120px;
   margin:auto;  
-  overflow:hidden;
+  overflow: visible;
 `
 const PiggyBankIcon = styled(Image)`
   height:40px;
   margin:auto;  
-  overflow:hidden;
+  overflow: visible;
 `
 
 const PiggyProgressBarFull = styled(ProgressBar)`

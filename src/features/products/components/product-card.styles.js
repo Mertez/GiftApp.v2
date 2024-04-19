@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { Card, Button } from "react-native-paper";
 import { Image, FlatList } from "react-native";
-import { colors } from "../../../infrastructure/theme/colors";
+import { colors, standardcolors } from "../../../infrastructure/theme/colors";
 import { width } from "../../../utils/env";
 
 
@@ -17,7 +17,7 @@ export const OfferIcon = styled(Image)`
   top: -100px;
   width:50px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -27,7 +27,7 @@ export const OfferIconDetail = styled(Image)`
   top: -70px;
   width:100px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -37,7 +37,7 @@ export const OfferIconCol2 = styled(Image)`
   top: -110px;
   width:60px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -47,7 +47,7 @@ export const OfferIconList = styled(Image)`
   top: -115px;
   width:45px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -89,7 +89,11 @@ export const ProductList = styled(FlatList).attrs({
   contentContainerStyle: {
     padding: 16,
   },
-})``;
+})`
+  background-color: ${standardcolors.t60};
+  margin-bottom: 100px;
+  padding-bottom:100px;
+`;
 
 export const SelectButton = styled(Button).attrs({
   color: colors.brand.primary,
@@ -129,7 +133,7 @@ const defaultProductCardCoverStyles = (theme) => `
   width:50px;
   height:50px;
   margin: auto;
-  overflow:hidden;
+  overflow: visible;
 `;
 
 const defaultProductHotCardCoverStyles = (theme) => `
@@ -138,7 +142,7 @@ const defaultProductHotCardCoverStyles = (theme) => `
   width:80px;
   height:80px;
   margin: 0 auto;
-  overflow:hidden;
+  overflow: visible;
 `;
 
 
@@ -171,7 +175,7 @@ const col3OnlineDeal = (theme) => `width: ${(width / 3) - 45}px;`;
 const barCover = (theme) => ``;
 const col2Cover = (theme) => `width: 120px; height:120px`;
 const col3Cover = (theme) => ``;
-const listCoverOnlineDeal = (theme) => `width: 70px;height: 70px; margin-top: -12px;margin-left:8px; border-radius: 10px; overflow:hidden; border: 1px solid #ccc; padding:0;`;
+const listCoverOnlineDeal = (theme) => `width: 70px;height: 70px; margin-top: -12px;margin-left:8px; border-radius: 10px; overflow: visible; border: 1px solid #ccc; padding:0;`;
 const col2CoverOnlineDeal = (theme) => `width: 180px; height:180px;`;
 const col3CoverOnlineDeal = (theme) => `width: 20px;`;
 const barHotCover = (theme) => ``;
@@ -182,7 +186,7 @@ const detailCover = (theme) => `
   height: 250px;
   margin: 20px auto;
   border-radius: 10px;
-  overflow:hidden;
+  overflow: visible;
 `;
 
 const variants = {

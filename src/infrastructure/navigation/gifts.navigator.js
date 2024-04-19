@@ -9,6 +9,8 @@ import { ProductDetailScreen } from "../../features/products/screens/product-det
 import { isAndroid } from "../../utils/env";
 import { GiftAddConfirm } from "../../features/gifts/screens/gift-add-confirm.screen";
 import { PaymentComponent } from "../../features/payment/components/payment.component";
+import { CameraScreen } from "../../features/settings/screens/camera.screen";
+import { MainAppFeature } from "../../components/animations/mainappfeature.component";
 
 const giftsStack = createStackNavigator();
 
@@ -40,7 +42,7 @@ export const GiftsNavigator = (navigation) => {
             <giftsStack.Screen
                 //options={({ route }) => ({ title: `${route.params.categoryName} Amazon` })}
                 options={{ title: 'Amazon 🛍️', headerShown: isAndroid }}
-                name="categoryAmazonStack"
+                name="categoryAmazonStackGift"
                 component={CategoriesAmazon}
             />
             <giftsStack.Screen
@@ -63,6 +65,8 @@ export const GiftsNavigator = (navigation) => {
                 options={({ route }) => ({ title: `Payment` })}
                 name="CreditCardPaymentStack"
                 component={PaymentComponent} />
+            <giftsStack.Screen name="Camera" component={CameraScreen} options={({ route }) => ({ title: `Profile Photo` })} />
+            <giftsStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
         </giftsStack.Navigator>
     );
 };

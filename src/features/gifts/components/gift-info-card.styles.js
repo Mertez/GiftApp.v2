@@ -64,7 +64,7 @@ export const CardCover = styled(Card.Cover)`
   background-color: ${(props) => props.theme.standardcolors.white};
   margin: ${(props) => props.theme.sizes[2]};
   border-radius: ${(props) => props.theme.sizes[2]};
-  overflow: hidden;
+  overflow: visible;
 `;
 
 export const AvatarIcon = styled(Avatar.Icon)`

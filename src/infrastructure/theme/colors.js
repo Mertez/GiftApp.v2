@@ -21,6 +21,22 @@ export const standardcolors = {
   t20: "#f8f6f1",
   t10: "#fcfaf8",
 
+  toEE: "#e0d6c1ee",
+  toCC: "#e0d6c1cc",
+  toAA: "#e0d6c1aa",
+  to88: "#e0d6c188",
+  to66: "#e0d6c166",
+  to44: "#e0d6c144",
+  to22: "#e0d6c122",
+
+  amazonYellow: "#ffb300ff",
+  amazonYellowee: "#ffb300ee",
+  amazonYellowcc: "#ffb300cc",
+  amazonYellowaa: "#ffb300aa",
+  amazonYellow88: "#ffb30088",
+  amazonYellow66: "#ffb30066",
+  amazonYellow44: "#ffb30044",
+  amazonYellow22: "#ffb300ff",
 
   muted: "#6c757d",
   white: "#fff",

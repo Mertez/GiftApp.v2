@@ -115,7 +115,7 @@ export const ProductGiftWizard = () => {
                 }}>
                     {stepList.map((val, index) => (
                         <View
-                            key={"step-indicator-" + index}
+                            key={"step-indicator-" + "_" + index}
                             style={{
                                 width: 30,
                                 marginHorizontal: 6,
@@ -126,7 +126,7 @@ export const ProductGiftWizard = () => {
                                 alignItems: 'center',
 
                             }}
-                        ><Text>{currentStep + 1}</Text></View>
+                        ><Text key={"Text-" + "_" + index}>{currentStep + 1}</Text></View>
                     ))}
                 </View>
             </View>

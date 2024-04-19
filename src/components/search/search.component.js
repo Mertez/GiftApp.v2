@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthenticationContext } from "../../services/authentication/authectication.context";
 import { PiggyBank } from "../piggyBank/piggyBank.component";
 import { Row } from "../../features/gifts/components/gift-info-card.styles";
+import { CameraScreen } from "../../features/settings/screens/camera.screen";
 
 const SearchContainer = styled.View`
   padding: ${(props) => props.theme.spaces[0]};
@@ -44,7 +45,7 @@ const LogoImage = styled(Avatar.Image)`
   width: 44px;
   height: 44px;
   left: 10px;
-  top: 10;
+  top: 10px;
   position: absolute;
   background-color: transparent;
   border:1px solid transparent;
@@ -57,8 +58,8 @@ const Piggy = styled(PiggyBank)`
 
 export const Search = (props) => {
 
-  const { isFavouritesToggled, onFavouritesToggle, updatePhoto } = props;
-  //console.log(updatePhoto);
+  const { isFavouritesToggled, onFavouritesToggle, updatePhoto, onNavigate, navigation } = props;
+  //console.log(navigation);
 
   const searchPlaceholders = ["Search anything...", "Search gifts...", "Search giftcards...", "Search deals...", "Search events..."]
   const { keyword, search } = useContext(ProductsContext);
@@ -152,7 +153,12 @@ export const Search = (props) => {
         /> */}
         <FloatBtn
 
-        // onPress={() => {
+          onPress={(itemx) => {
+            //console.log(itemx);
+            navigation.navigate("Camera");
+          }}
+
+        //</SearchContainer>onPress={() => {
         //   backCount++;
         //   if (backCount == 5) {
         //     clearTimeout(backTimer)
@@ -164,7 +170,7 @@ export const Search = (props) => {
         //     backTimer = setTimeout(() => {
         //       backCount = 0;
         //     }, 3000)
-        //   }
+        //}
 
         // }}
         >

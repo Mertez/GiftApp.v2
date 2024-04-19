@@ -11,7 +11,7 @@ const ProductsWrapper = styled(Card)`
   z-index: 999;
   flex:1;
   //background-color:yellow;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 export const ProductsCol = ({ products, navigation, variant, variantCover }) => {
@@ -26,11 +26,11 @@ export const ProductsCol = ({ products, navigation, variant, variantCover }) => 
     return (
         <ProductsWrapper elevation={5}>
             <View style={styles.container}>
-                {products.map((product) => {
-                    const key = product.id;
+                {products.map((product, index) => {
+                    const key = product.id + "_" + index;
                     return (
-                        <Spacer key={key} position="left" size="md" style={styles.item}>
-                            <TouchableOpacity
+                        <Spacer key={"Spacer" + key} position="left" size="md" style={styles.item}>
+                            <TouchableOpacity key={"TouchableOpacity" + key}
                                 onPress={() =>
 
                                     navigation.navigate("productDetailStack", {
@@ -38,7 +38,7 @@ export const ProductsCol = ({ products, navigation, variant, variantCover }) => 
                                     })
                                 }
                             >
-                                <ProductInfoCard product={product} variant={variant} variantCover={variantCover} navigation={navigation} />
+                                <ProductInfoCard key={"ProductInfoCard" + key} product={product} variant={variant} variantCover={variantCover} navigation={navigation} />
                             </TouchableOpacity>
                         </Spacer>
                     );

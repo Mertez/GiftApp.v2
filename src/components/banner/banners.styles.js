@@ -7,7 +7,7 @@ import { host, height, width, isAndroid, bannerHeight } from "../../utils/env";
 export const BannerImage = styled.Image`
   width: 100%;
   height: ${bannerHeight}px;
-  overflow:hidden;
+  overflow: visible;
   background-color: black;
 `;
 

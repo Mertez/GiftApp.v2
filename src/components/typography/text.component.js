@@ -27,7 +27,7 @@ const warning = (theme) => `
     background-color: ${theme.standardcolors.darkestgray};
     font-family: ${theme.fonts.monospace};
     padding: 3px 5px;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 3px;
 `;
 

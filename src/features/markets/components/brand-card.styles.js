@@ -17,7 +17,7 @@ export const OfferIcon = styled(Image)`
   top: -100px;
   width:50px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -27,7 +27,7 @@ export const OfferIconDetail = styled(Image)`
   top: -70px;
   width:100px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -37,7 +37,7 @@ export const OfferIconCol2 = styled(Image)`
   top: -110px;
   width:60px;
   z-index:99999;
-  overflow: hidden;
+  overflow: visible;
   opacity: 1;
 `
 
@@ -119,8 +119,9 @@ const defaultBrandCardCoverStyles = (theme) => `
   width:120px;
   height:120px;
   margin: auto;
-  overflow:hidden;
+  
   border-radius: 20px;
+  
 `;
 
 const defaultBrandHotCardCoverStyles = (theme) => `
@@ -129,7 +130,7 @@ const defaultBrandHotCardCoverStyles = (theme) => `
   width:80px;
   height:80px;
   margin: 0 auto;
-  overflow:hidden;
+  overflow: visible;
 `;
 
 
@@ -152,7 +153,7 @@ const col3Hot = (theme) => ``;
 const barCover = (theme) => ``;
 const col2Cover = (theme) => `width: 120px; height:120px`;
 const col3Cover = (theme) => ``;
-const barHotCover = (theme) => `width:80px; height:80px; border-radius: 15px`;
+const barHotCover = (theme) => `width:80px; height:80px; border-radius: 15px; background-color: #fffff0`;
 const col2HotCover = (theme) => ``;
 const col3HotCover = (theme) => ``;
 const detailCover = (theme) => `
@@ -160,7 +161,7 @@ const detailCover = (theme) => `
   height: 250px;
   margin: 20px auto;
   border-radius: 10px;
-  overflow:hidden;
+  overflow: visible;
 `;
 
 const variants = {

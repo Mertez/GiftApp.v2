@@ -32,19 +32,19 @@ export const BrandsHotBar = ({ brands, onNavigate }) => {
                 <Text variant="caption">Hot Brands of the weeks</Text>
             </Spacer>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {brands.map((brand) => {
-                    const key = brand.id;
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
+                {brands.map((brand, index) => {
+                    const key = brand.id + "_" + index;
                     return (
-                        <Spacer key={key} position="left" size="md">
-                            <TouchableOpacity
+                        <Spacer key={"Spacer" + key} position="left" size="md">
+                            <TouchableOpacity key={"TouchableOpacity" + key}
                                 onPress={() =>
                                     onNavigate("brandDetailStack", {
                                         brand: brand
                                     })
                                 }
                             >
-                                <BrandHotCardShow brand={brand} variant="barHot" variantCover="barHotCover" />
+                                <BrandHotCardShow key={"BrandHotCardShow" + key} brand={brand} variant="barHot" variantCover="barHotCover" />
                             </TouchableOpacity>
                         </Spacer>
                     );

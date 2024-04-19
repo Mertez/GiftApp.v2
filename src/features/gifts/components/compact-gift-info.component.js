@@ -9,7 +9,7 @@ const CompactImage = styled.Image`
     border-radius: 10px;
     width:120px;
     height:80px;
-    overflow: hidden;
+    overflow: visible;
 `
 
 
@@ -18,7 +18,7 @@ const CompactWebview = styled(WebView)`
     border-radius: 10px;
     width:120px;
     height:80px;
-    overflow: hidden;
+    overflow: visible;
 `;
 
 const Item = styled.View`

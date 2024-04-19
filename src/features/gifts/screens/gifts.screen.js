@@ -1,6 +1,9 @@
 import React, { useContext, useState, useRef, useEffect, createRef } from "react";
 import { ActivityIndicator, Button, TextInput } from "react-native-paper";
-import { StyleSheet, View, ScrollView, Image, Modal, Styles, Pressable, Switch, findNodeHandle, InteractionManager, TouchableOpacity as ButtonX } from "react-native";
+import {
+    StyleSheet, View, ScrollView, Image, Modal, Styles, Pressable, Switch,
+    findNodeHandle, InteractionManager, TouchableOpacity as ButtonX, Vibration
+} from "react-native";
 import styled from "styled-components/native";
 import { Search } from "../components/search.component";
 import { giftInfoCard } from "../components/gift-info-card.component";
@@ -23,7 +26,19 @@ import { WidthPercent } from "../../../utils/env";
 import { BlurView } from "expo-blur";
 import MultilineTextInput from "../../../components/controls/MultilineTextInput";
 import { PersonGifCat } from "../components/gift-personCategories";
+import { simpleHaptic, triggerHapticPattern } from "../../../utils/haptic";
 
+const pattern = [
+    //500, // Vibrate for 500ms
+    //300, // Pause for 300ms
+    //400, // Vibrate for 400ms
+    //300, // Pause for 300ms
+    //300, // Vibrate for 300ms
+    //300, // Pause for 300ms
+    200, // Vibrate for 200ms
+    300, // Pause for 300ms
+    100, // Vibrate for 100ms
+];;
 const InputCurrency = styled(CurrencyInput)`
         font-size: 20px;
         border: 1px solid purple;
@@ -35,7 +50,6 @@ const InputCurrency = styled(CurrencyInput)`
 const EMailInput = styled(TextInput)`
         font-size: 17px;
         border: 1px solid purple;
-        //border-radious: 10px;
         padding: 0px 10px;
         background-color: white;
         margin-bottom: 20px;
@@ -68,33 +82,37 @@ export const GiftsScreen = ({ navigation }) => {
 
     const { onGetPersonToBuyGiftCategories, personToBuyGiftCategories, error: giftsError, isLoading: isGiftsIsLoading } = useContext(GiftsContext);
 
-    const getPersonToBuyGiftCategories = () => {
-        setModalVisible(true);
-    };
+    // const getPersonToBuyGiftCategories = () => {
+    //     setModalVisible(true);
+    // };
 
     const showDialog = () => {
         setModalVisible(true);
     };
 
-    const handleCancel = () => {
-        setModalVisible(false);
-    };
+    // const handleCancel = () => {
+    //     setModalVisible(false);
+    // };
 
-    const handleDelete = () => {
-        // The user has pressed the "Delete" button, so here you can do your own logic.
-        // ...Your logic
-        setModalVisible(false);
-    };
+    // const handleDelete = () => {
+    //     // The user has pressed the "Delete" button, so here you can do your own logic.
+    //     // ...Your logic
+    //     setModalVisible(false);
+    // };
 
     const handlePersonDescription = (description) => {
-        console.log(description);
+        //console.log(description);
         onGetPersonToBuyGiftCategories(description);
+        //Vibration.vibrate(pattern);
+        //triggerHapticPattern();
     }
 
 
-    useEffect(() => {
-        console.log("personToBuyGiftCategories: ", personToBuyGiftCategories);
-    }, [personToBuyGiftCategories]);
+    // useEffect(() => {
+    //     if (personToBuyGiftCategories)
+    //         console.log("personToBuyGiftCategories: ", personToBuyGiftCategories);
+
+    // }, [personToBuyGiftCategories]);
 
     const scrollViewRef = useRef();
     var Step0, Step1, Step2, Step3 = '';
@@ -109,7 +127,12 @@ export const GiftsScreen = ({ navigation }) => {
                 <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title" color={standardcolors.black} style={{ color: standardcolors.black }}>What do you want to send as a gift?</Text></View>
                 <Row>
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step0Answer === "Send Money" ? "white" : null} onPress={() => { setStep0Answer("Buy a product"); console.log("Step0:", "Buy a product"); setGiftStep(1); setStep1Answer(''); }} >
+                        <BuyAGiftButton key={"S01"} mode="contained" color={step0Answer === "Send Money" ? "white" : null}
+                            onPress={() => {
+                                setStep0Answer("Buy a product");
+                                simpleHaptic();
+                                console.log("Step0:", "Buy a product"); setGiftStep(1); setStep1Answer('');
+                            }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" />
                                 <Col><Text variant="button" style={{ color: step0Answer === "Send Money" ? "#000" : "#fff" }}>Buy a gift 🎁</Text><Text variant="caption">For yourself or any other</Text></Col>
@@ -118,10 +141,18 @@ export const GiftsScreen = ({ navigation }) => {
                     </Space50>
 
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step0Answer === "Buy a product" ? "white" : null} onPress={() => { setStep0Answer("Send Money"); console.log("Step0:", "Send Money"); setGiftStep(1); setStep1Answer(''); }} >
+                        <BuyAGiftButton key={"S02"} mode="contained" color={step0Answer === "Buy a product" ? "white" : null}
+                            onPress={() => {
+                                setStep0Answer("Send Money");
+                                simpleHaptic();
+                                //Haptics.selectionAsync();
+                                console.log("Step0:", "Send Money");
+                                setGiftStep(1);
+                                setStep1Answer('');
+                            }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/money.png")} resizeMode="contain" />
-                                <Col><Text variant="button" style={{ color: step0Answer === "Buy a product" ? "#000" : "#fff" }}>Send money 💵</Text><Text variant="caption">To yourself or any other</Text></Col>
+                                <Col><Text variant="button" style={{ color: step0Answer === "Buy a product" ? "#000" : "#fff" }}>Send money 💵</Text><Text variant="caption">For yourself or any other</Text></Col>
                             </Row>
                         </BuyAGiftButton>
                     </Space50>
@@ -140,19 +171,31 @@ export const GiftsScreen = ({ navigation }) => {
                 <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title" color={standardcolors.black} style={{ color: standardcolors.black }}>Who do you want to buy this gift for?</Text></View>
                 <Row>
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step1Answer === "to others" ? "white" : null} onPress={() => { setStep1Answer("to yourself"); console.log("Step1:", "to yourself"); setGiftStep(2); setStep2Answer(''); }} >
+                        <BuyAGiftButton key={"S11"} mode="contained" color={step1Answer === "for others" ? "white" : null} onPress={() => {
+                            simpleHaptic();
+                            setStep1Answer("for yourself");
+                            console.log("Step1:", "for yourself");
+                            setGiftStep(2);
+                            setStep2Answer('');
+                        }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/myself.png")} resizeMode="contain" />
-                                <Col><Text variant="label" style={{ color: step1Answer === "to others" ? "#000" : "#fff" }}>To yourself 🧑‍🦰</Text><Text variant="caption">.................</Text></Col>
+                                <Col><Text variant="label" style={{ color: step1Answer === "for others" ? "#000" : "#fff" }}>For yourself 🧑‍🦰</Text><Text variant="caption">.................</Text></Col>
                             </Row>
                         </BuyAGiftButton>
                     </Space50>
 
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step1Answer === "to yourself" ? "white" : null} onPress={() => { setStep1Answer("to others"); console.log("Step1:", "to others"); setGiftStep(1); setStep2Answer(''); }} >
+                        <BuyAGiftButton key={"S21"} mode="contained" color={step1Answer === "for yourself" ? "white" : null} onPress={() => {
+                            simpleHaptic();
+                            setStep1Answer("for others");
+                            console.log("Step1:", "for others");
+                            setGiftStep(1);
+                            setStep2Answer('');
+                        }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/group.png")} resizeMode="contain" />
-                                <Col><Text variant="label" style={{ color: step1Answer === "to yourself" ? "#000" : "#fff" }}>To others 🧑‍🤝‍🧑</Text><Text variant="caption">.................</Text></Col>
+                                <Col><Text variant="label" style={{ color: step1Answer === "for yourself" ? "#000" : "#fff" }}>To others 🧑‍🤝‍🧑</Text><Text variant="caption">.................</Text></Col>
                             </Row>
                         </BuyAGiftButton>
                     </Space50>
@@ -185,7 +228,12 @@ export const GiftsScreen = ({ navigation }) => {
 
                                         <Row>
                                             <Space50>
-                                                <BuyAGiftButton mode="contained" color={step1AddGiftType === "NoGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("WithGiftCode"); console.log("Step2:", "Public"); setGiftStep(3); }} >
+                                                <BuyAGiftButton key={"S21"} mode="contained" color={step1AddGiftType === "NoGiftCode" ? "white" : null} onPress={() => {
+                                                    simpleHaptic();
+                                                    setStep1AddGiftType("WithGiftCode");
+                                                    console.log("Step2:", "Public");
+                                                    setGiftStep(3);
+                                                }} >
                                                     <Row>
                                                         <BuyAGiftIconS source={require("../../../../assets/nogiftcode.png")} resizeMode="contain" />
                                                         {/* <Col> */}
@@ -196,7 +244,12 @@ export const GiftsScreen = ({ navigation }) => {
                                                 </BuyAGiftButton>
                                             </Space50>
                                             <Space50>
-                                                <BuyAGiftButton mode="contained" color={step1AddGiftType === "WithGiftCode" ? "white" : null} onPress={() => { setStep1AddGiftType("NoGiftCode"); console.log("Step2:", "privately"); setGiftStep(3); }} >
+                                                <BuyAGiftButton key={"S22"} mode="contained" color={step1AddGiftType === "WithGiftCode" ? "white" : null} onPress={() => {
+                                                    simpleHaptic();
+                                                    setStep1AddGiftType("NoGiftCode");
+                                                    console.log("Step2:", "privately");
+                                                    setGiftStep(3);
+                                                }} >
                                                     <Row>
                                                         <BuyAGiftIconS source={require("../../../../assets/withcode.png")} resizeMode="contain" />
                                                         {/* <Col> */}
@@ -270,10 +323,10 @@ export const GiftsScreen = ({ navigation }) => {
                     <Dialog.Button label="Delete" onPress={handleDelete} />
                 </Dialog.Container> */}
 
-                <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099' }} >Select one of my friends</Button>
+                <Button title="Show dialog" onPress={showDialog} style={{ color: '#880099', display: 'none' }} >Select one of my friends</Button>
 
-                {(step1Answer == "to others") && (<View style={{ marginBottom: 300 }}>
-                    <Spacer size="lg" position="bottom">
+                {(step1Answer == "for others") && (<View style={{ marginBottom: 300 }}>
+                    <Spacer size="md" position="bottom">
                         {/* <Row>
 
                             <Space50>
@@ -300,7 +353,7 @@ export const GiftsScreen = ({ navigation }) => {
                         </Row> */}
                         <Row><Text>Describe the person who you are going to buy a gift for:</Text></Row>
                         <Row><MultilineTextInput placeholder="My mom, she is a 75 year old traditional spanish woman who loves cooking, cleaning and playing with her cat"
-                            onTextChange={setPersonDescription}
+                            onTextChange={setPersonDescription} value={personDescription}
                         ></MultilineTextInput></Row>
                         {/* <Text>{personDescription}</Text> */}
                         <BuyAGiftButton mode="contained" color={"white"} onPress={() => { handlePersonDescription(personDescription); }} >
@@ -313,9 +366,11 @@ export const GiftsScreen = ({ navigation }) => {
                     <>
                         {(isGiftsIsLoading) ? (
                             <LoadingContainer>
-                                <ActivityIndicator size={50} animating={true} color={standardcolors.red} />
+                                <ActivityIndicator size={50} animating={true} color={standardcolors.purple} />
                             </LoadingContainer>
-                        ) : <PersonGifCat catItems={personToBuyGiftCategories} navigation={navigation}></PersonGifCat>}
+                        ) : (
+                            (triggerHapticPattern()),
+                            <PersonGifCat catItems={personToBuyGiftCategories} navigation={navigation}></PersonGifCat>)}
 
                     </>
                 </View>)}
@@ -323,14 +378,19 @@ export const GiftsScreen = ({ navigation }) => {
         )
     }
 
-    if (giftStep >= 2) {
+    if (giftStep >= 20) {
         Step2 = (
             <>
                 <Spacer size="md" position="top" />
                 <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title" color={standardcolors.black} style={{ color: standardcolors.black }}>Who do you want to buy this gift for?</Text></View>
                 <Row>
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step2Answer === "privately" ? "white" : null} onPress={() => { setStep2Answer("public"); console.log("Step2:", "Public"); setGiftStep(3); }} >
+                        <BuyAGiftButton mode="contained" color={step2Answer === "privately" ? "white" : null} onPress={() => {
+                            simpleHaptic();
+                            setStep2Answer("public");
+                            console.log("Step2:", "Public");
+                            setGiftStep(3);
+                        }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/boxopened.png")} resizeMode="contain" />
                                 <Col><Text variant="label" style={{ color: step2Answer === "privately" ? "#000" : "#fff" }}>Public</Text><Text variant="caption">Open to your contact</Text></Col>
@@ -339,7 +399,12 @@ export const GiftsScreen = ({ navigation }) => {
                     </Space50>
 
                     <Space50>
-                        <BuyAGiftButton mode="contained" color={step2Answer === "public" ? "white" : null} onPress={() => { setStep2Answer("privately"); console.log("Step2:", "privately"); setGiftStep(3); }} >
+                        <BuyAGiftButton mode="contained" color={step2Answer === "public" ? "white" : null} onPress={() => {
+                            simpleHaptic();
+                            setStep2Answer("privately");
+                            console.log("Step2:", "privately");
+                            setGiftStep(3);
+                        }} >
                             <Row>
                                 <BuyAGiftIcon source={require("../../../../assets/boxclosed.png")} resizeMode="contain" />
                                 <Col><Text variant="label" style={{ color: step2Answer === "public" ? "#000" : "#fff" }}>Private</Text><Text variant="caption">Close to all</Text></Col>
@@ -352,7 +417,7 @@ export const GiftsScreen = ({ navigation }) => {
         )
     }
 
-    if (giftStep >= 3) {
+    if (giftStep >= 2) {
         if (step0Answer == "Send Money") {
             // navigation.navigate("CreditCardPaymentStack")
             Step3 = (
@@ -392,12 +457,12 @@ export const GiftsScreen = ({ navigation }) => {
             Step3 = (
                 <>
 
-                    <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title">{`You are going to ${step0Answer} ${step1Answer} ${step2Answer}`}</Text></View>
+                    <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title">{`${step0Answer} ${step1Answer} ${step2Answer}`}</Text></View>
                     <BuyAGiftButton mode="contained" onPress={() => { navigation.navigate("CreditCardPaymentStack") }} >
                         <Row>
                             <BuyAGiftIcon source={require("../../../../assets/amlogo.png")} resizeMode="contain" />
                             <BuyAGiftIcon source={require("../../../../assets/iconw.png")} resizeMode="contain" />
-                            <Col><Text variant="label">Select your product</Text><Text variant="caption">From WishApp or Amazon</Text></Col>
+                            <Col><Text variant="label">Select your product</Text><Text variant="caption">From GiftApp or Amazon</Text></Col>
                         </Row>
                     </BuyAGiftButton>
                     <Spacer size="md" position="top" />
@@ -417,8 +482,8 @@ export const GiftsScreen = ({ navigation }) => {
                                     categories={categories}
                                     onNavigate={navigation.navigate}
                                     navigation={navigation}
-                                    variant="col2"
-                                    variantCover="col2Cover"
+                                    variant="col3"
+                                    variantCover="col3Cover"
                                 />
                             </>
 
@@ -432,7 +497,7 @@ export const GiftsScreen = ({ navigation }) => {
     return (
         <SafeArea>
 
-            <ScrollView
+            <ScrollView nestedScrollEnabled={true}
                 ref={scrollViewRef}
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
@@ -578,7 +643,7 @@ const styles = StyleSheet.create({
 //                     <BuyAGiftButton mode="contained" color={step0Answer === "Buy a product" ? "white" : null} onPress={() => { setStep0Answer("Send Money"); console.log("Step0:", "Send Money"); setGiftStep(1); setStep1Answer(''); }} >
 //                         <Row>
 //                             <BuyAGiftIcon source={require("../../../../assets/money.png")} resizeMode="contain" />
-//                             <Col><Text variant="button">Send money 💵</Text><Text variant="caption">To yourself or any other</Text></Col>
+//                             <Col><Text variant="button">Send money 💵</Text><Text variant="caption">For yourself or any other</Text></Col>
 //                         </Row>
 //                     </BuyAGiftButton>
 //                 </Space50>
@@ -595,16 +660,16 @@ const styles = StyleSheet.create({
 //             <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title" color={standardcolors.black} style={{ color: standardcolors.black }}>Who do you want to buy this gift for?</Text></View>
 //             <Row>
 //                 <Space50>
-//                     <BuyAGiftButton mode="contained" color={step1Answer === "to others" ? "white" : null} onPress={() => { setStep1Answer("to yourself"); console.log("Step1:", "to yourself"); setGiftStep(2); setStep2Answer(''); }} >
+//                     <BuyAGiftButton mode="contained" color={step1Answer === "for others" ? "white" : null} onPress={() => { setStep1Answer("for yourself"); console.log("Step1:", "for yourself"); setGiftStep(2); setStep2Answer(''); }} >
 //                         <Row>
 //                             <BuyAGiftIcon source={require("../../../../assets/myself.png")} resizeMode="contain" />
-//                             <Col><Text variant="label" color={standardcolors.black} style={{ color: standardcolors.black }}>To yourself 🧑‍🦰</Text><Text variant="caption">.................</Text></Col>
+//                             <Col><Text variant="label" color={standardcolors.black} style={{ color: standardcolors.black }}>For yourself 🧑‍🦰</Text><Text variant="caption">.................</Text></Col>
 //                         </Row>
 //                     </BuyAGiftButton>
 //                 </Space50>
 
 //                 <Space50>
-//                     <BuyAGiftButton mode="contained" color={step1Answer === "to yourself" ? "white" : null} onPress={() => { setStep1Answer("to others"); console.log("Step1:", "to others"); setGiftStep(2); setStep2Answer(''); }} >
+//                     <BuyAGiftButton mode="contained" color={step1Answer === "for yourself" ? "white" : null} onPress={() => { setStep1Answer("for others"); console.log("Step1:", "for others"); setGiftStep(2); setStep2Answer(''); }} >
 //                         <Row>
 //                             <BuyAGiftIcon source={require("../../../../assets/group.png")} resizeMode="contain" />
 //                             <Col><Text variant="label" color={standardcolors.white} style={{ color: standardcolors.black }}>To others 🧑‍🤝‍🧑</Text><Text variant="caption">.................</Text></Col>
@@ -696,7 +761,7 @@ const styles = StyleSheet.create({
 //                     <Row>
 //                         <BuyAGiftIcon source={require("../../../../assets/amlogo.png")} resizeMode="contain" />
 //                         <BuyAGiftIcon source={require("../../../../assets/iconw.png")} resizeMode="contain" />
-//                         <Col><Text variant="label">Select your product</Text><Text variant="caption">From WishApp or Amazon</Text></Col>
+//                         <Col><Text variant="label">Select your product</Text><Text variant="caption">From GiftApp or Amazon</Text></Col>
 //                     </Row>
 //                 </BuyAGiftButton>
 //                 <Spacer size="md" position="top" />

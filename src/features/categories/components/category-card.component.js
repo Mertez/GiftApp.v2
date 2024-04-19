@@ -30,7 +30,7 @@ export const CategoryInfoCard = ({ category = {}, variant = '', variantCover = '
         <CategoryCard variant={variant} elevation={2}>
             <View>
                 {/* <Favourite restaurant={restaurant} /> */}
-                <CategoryCardCover variant={variantCover} key={name} source={{ uri: `${host}/images/categories/${icon}` }} />
+                <CategoryCardCover variant={variantCover} key={name + id} source={{ uri: `${host}/images/categories/${icon}` }} />
             </View>
             <Info>
                 <Text variant="caption" style={{ textAlign: 'center', color: 'black' }}>{name}</Text>

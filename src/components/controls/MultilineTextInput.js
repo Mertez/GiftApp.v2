@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-const MultilineTextInput = ({ placeholder, onTextChange }) => {
-    const [text, setText] = useState('');
+const MultilineTextInput = ({ placeholder, onTextChange, value }) => {
+    const [text, setText] = useState(value);
 
     const handleTextChange = (newText) => {
         setText(newText);

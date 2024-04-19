@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View, Image, TouchableOpacity, Button } from "react-native";
 import { Text } from "../../components/typography/text.component";
@@ -13,6 +14,7 @@ import { ProductsContextProvider } from "../../services/products/products.contex
 import { CategoriesContextProvider } from "../../services/categories/categories.context";
 import { GiftCardsContextProvider } from "../../services/giftcards/giftcards.context";
 import { GiftsContextProvider } from "../../services/gifts/gifts.context";
+import { AmazonContextProvider } from "../../services/amazon/amazon.context";
 // import { FavouritesContextProvider } from "../../services/favourites/favourites.context";
 
 import { theme } from "../theme";
@@ -26,6 +28,7 @@ import styled from "styled-components/native";
 import { blackMenu } from "../../utils/env";
 import { Search } from "../../components/search/search.component";
 import { WidthPercent as W, HeightPercent } from "../../utils/env";
+import { simpleHaptic } from "../../utils/haptic";
 
 
 
@@ -175,8 +178,9 @@ const textVariant = (focused) => {
     return focused ? 'button' : 'caption';
 }
 
-export const AppNavigator = (route) => {
-
+export const AppNavigator = ({ route }) => {
+    const navigation = useNavigation();
+    //console.log("Navigation:", navigation);
     const [isToggled, setIsToggled] = useState(false);
     const [isPhotoChanged, setIsPhotoChanged] = useState(false);
 
@@ -194,83 +198,96 @@ export const AppNavigator = (route) => {
                 <ProductsContextProvider>
                     <GiftsContextProvider>
                         <GiftCardsContextProvider>
-                            {/* <Button title="Update Data" onPress={() => updatePhotoStatus(true)} /> */}
-                            <Search
-                                updatePhoto={isPhotoChanged} updateData={updatePhotoStatus}
-                                isFavouritesToggled={isToggled}
-                                onFavouritesToggle={() => setIsToggled(!isToggled)}
-                            />
-                            <Tab.Navigator screenOptions={createScreenOptions}
-                                initialRouteName="Home"
-                                screenListeners={{
-                                    state: (e) => {
-                                        // Do something with the state
-                                        //console.log('app state changed', e.data);
-                                    },
-                                }}
-                            >
+                            <AmazonContextProvider>
+                                {/* <Button title="Update Data" onPress={() => updatePhotoStatus(true)} /> */}
+                                <Search
+                                    updatePhoto={isPhotoChanged} updateData={updatePhotoStatus}
+                                    isFavouritesToggled={isToggled}
+                                    onFavouritesToggle={() => setIsToggled(!isToggled)}
+                                    navigation={navigation}
+                                />
+                                <Tab.Navigator screenOptions={createScreenOptions}
+                                    initialRouteName="Home"
+                                    screenListeners={{
+                                        state: (e) => {
+                                            // Do something with the state
+                                            //console.log('app state changed', e.data);
+                                        },
+                                    }}
+                                >
 
-                                <Tab.Screen name="Gift" component={GiftsNavigator} options={{
-                                    tabBarIcon: ({ focused }) => (
-                                        <View style={styles.botView}>
-                                            <Ionicons name={TAB_ICON["Gift"]} style={styles.botIcons} />
-                                            <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Gift"]}</Text>
-                                        </View>
-                                    ),
-                                    tabBarButton: (props, focused) => <CustomTabBarButton {...props}
-                                    //isFocused={focused} 
-                                    />
-                                }} />
-                                <Tab.Screen name="WishList" component={WishlistsNavigator} options={{
-                                    tabBarIcon: ({ focused }) => (
-                                        <View style={styles.botView}>
-                                            <Ionicons name={TAB_ICON["WishList"]} style={styles.botIcons} />
-                                            <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["WishList"]}</Text>
-                                        </View>
-                                    ),
-                                    tabBarButton: (props, focused) => <CustomTabBarButton {...props}
-                                    //isFocused={focused} 
-                                    />
-                                }} />
-                                <Tab.Screen name="Home" component={HomesNavigator} options={{
-                                    tabBarIcon: ({ focused }) => (
-                                        <View style={styles.botView}>
-                                            <Ionicons name={TAB_ICON["Home"]} style={styles.botIcons} />
-                                            <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Home"]}</Text>
-                                        </View>
-                                    ),
-                                    tabBarButton: (props, focused) => <CustomTabBarButton {...props}
-                                    //isFocused={focused} 
-                                    />
-                                }} />
-                                <Tab.Screen name="Markets" component={MarketsNavigator} options={{
-                                    tabBarIcon: ({ focused }) => (
-                                        <View style={styles.botView}>
-                                            <Ionicons name={TAB_ICON["Market"]} style={styles.botIcons} />
-                                            <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Market"]}</Text>
-                                        </View>
-                                    ),
-                                    tabBarButton: (props, focused) => <CustomTabBarButton {...props}
-                                    //isFocused={focused} 
-                                    />
-                                }} />
-                                <Tab.Screen name="Settings" component={SettingsNavigator} options={{
-                                    //tabBarBadge: `${isDevelopment ? "D" : "P"}${appVersion}`,
-                                    tabBarIcon: ({ focused }) => (
-                                        <View style={styles.botView}>
-                                            <Ionicons name={TAB_ICON["Settings"]} style={styles.botIcons} />
-                                            <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Settings"]}</Text>
-                                        </View>
-                                    ),
-                                    tabBarButton: (props, focused) => <CustomTabBarButton {...props}
-                                    //isFocused={focused} 
-                                    //onPhotoUpdated={() => alert("oh")}
-                                    />
-                                }} />
+                                    <Tab.Screen name="Gift" component={GiftsNavigator} options={{
+                                        tabBarIcon: ({ focused }) => (
+                                            <View style={styles.botView}>
+                                                <Ionicons name={TAB_ICON["Gift"]} style={styles.botIcons} />
+                                                <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Gift"]}</Text>
+                                            </View>
+                                        ),
+                                        tabBarButton: (props, focused) => <CustomTabBarButton
+                                            onPress={simpleHaptic()}
+                                            {...props}
+                                        //isFocused={focused} 
+                                        />
+                                    }} />
+                                    <Tab.Screen name="WishList" component={WishlistsNavigator} options={{
+                                        tabBarIcon: ({ focused }) => (
+                                            <View style={styles.botView}>
+                                                <Ionicons name={TAB_ICON["WishList"]} style={styles.botIcons} />
+                                                <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["WishList"]}</Text>
+                                            </View>
+                                        ),
+                                        tabBarButton: (props, focused) => <CustomTabBarButton
+                                            onPress={simpleHaptic()}
+                                            {...props}
+                                        //isFocused={focused} 
+                                        />
+                                    }} />
+                                    <Tab.Screen name="Home" component={HomesNavigator} options={{
+                                        tabBarIcon: ({ focused }) => (
+                                            <View style={styles.botView}>
+                                                <Ionicons name={TAB_ICON["Home"]} style={styles.botIcons} />
+                                                <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Home"]}</Text>
+                                            </View>
+                                        ),
+                                        tabBarButton: (props, focused) => <CustomTabBarButton
+                                            onPress={simpleHaptic()}
+                                            {...props}
+                                        //isFocused={focused} 
+                                        />
+                                    }} />
+                                    <Tab.Screen name="Markets" component={MarketsNavigator} options={{
+                                        tabBarIcon: ({ focused }) => (
+                                            <View style={styles.botView}>
+                                                <Ionicons name={TAB_ICON["Market"]} style={styles.botIcons} />
+                                                <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Market"]}</Text>
+                                            </View>
+                                        ),
+                                        tabBarButton: (props, focused) => <CustomTabBarButton
+                                            onPress={simpleHaptic()}
+                                            {...props}
+                                        //isFocused={focused} 
+                                        />
+                                    }} />
+                                    <Tab.Screen name="Settings" component={SettingsNavigator} options={{
+                                        //tabBarBadge: `${isDevelopment ? "D" : "P"}${appVersion}`,
+                                        tabBarIcon: ({ focused }) => (
+                                            <View style={styles.botView}>
+                                                <Ionicons name={TAB_ICON["Settings"]} style={styles.botIcons} />
+                                                <Text variant={textVariant(focused)} style={styles.botText}>{TAB_NAMES["Settings"]}</Text>
+                                            </View>
+                                        ),
+                                        tabBarButton: (props, focused) => <CustomTabBarButton
+                                            onPress={simpleHaptic()}
+                                            {...props}
+                                        //isFocused={focused} 
+                                        //onPhotoUpdated={() => alert("oh")}
+                                        />
+                                    }} />
 
 
-                                {/* <Tab.Screen name="Settings" component={SettingsNavigator}/> */}
-                            </Tab.Navigator>
+                                    {/* <Tab.Screen name="Settings" component={SettingsNavigator}/> */}
+                                </Tab.Navigator>
+                            </AmazonContextProvider>
                         </GiftCardsContextProvider>
                     </GiftsContextProvider>
                 </ProductsContextProvider>

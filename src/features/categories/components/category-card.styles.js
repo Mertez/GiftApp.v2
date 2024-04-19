@@ -85,7 +85,7 @@ const defaultCategoryCardCoverStyles = (theme) => `
   width:50px;
   height:50px;
   margin: auto;
-  overflow:hidden;
+  overflow: visible;
   
 `;
 
@@ -96,7 +96,7 @@ const barCover = (theme) => `
   width:50px;
   height:50px;
   margin: auto;
-  overflow:hidden;
+  overflow: visible;
   
 `;
 
@@ -106,7 +106,7 @@ const col2Cover = (theme) => `
   width:80px;
   height:80px;
   margin: auto;
-  overflow:hidden;
+  overflow: visible;
   
 `;
 
@@ -117,7 +117,7 @@ const col3Cover = (theme) => `
   width:50px;
   height:50px;
   margin: auto;
-  overflow:hidden;
+  overflow: visible;
   
 `;
 

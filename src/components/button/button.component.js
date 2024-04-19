@@ -1,5 +1,6 @@
 import { TextInput, Button as Btn } from "react-native-paper";
 import styled from "styled-components/native";
+import { WidthPercent } from "../../utils/env";
 
 const variants = {
     selected,
@@ -11,11 +12,14 @@ const variants = {
 const ButtonX = styled(Btn)`
   ${({ theme }) => defaultButtontyles(theme)}
   ${({ variant, theme }) => variants[variant](theme)} 
+  padding:0;
+  margin-left: ${WidthPercent(2)}px;
+  margin-right: ${WidthPercent(2)}px;
 `;
 
 export const Button = ({ children }) => {
     <ButtonX>
-        <Text></Text>
+        <Text>{children.Text}</Text>
     </ButtonX>
 }
 

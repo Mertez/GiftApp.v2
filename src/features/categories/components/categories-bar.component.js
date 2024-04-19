@@ -28,17 +28,17 @@ export const CategoriesBar = ({ categories, onNavigate }) => {
                 <Text variant="caption">Categories</Text>
             </Spacer>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {categories.map((category) => {
-                    const key = category.name;
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
+                {categories.map((category, index) => {
+                    const key = category.name + "_" + index;
                     return (
-                        <Spacer key={key} position="left" size="md">
-                            <TouchableOpacity
+                        <Spacer key={"Spacer" + key} position="left" size="md">
+                            <TouchableOpacity key={"TouchableOpacity" + key}
                                 onPress={() =>
                                     onNavigate("categoryProductStack", { categoryId: category.id, categoryName: category.name })
                                 }
                             >
-                                <CategoryInfoCard category={category} variant="bar" variantCover="barCover" />
+                                <CategoryInfoCard key={"CategoryInfoCard" + key} category={category} variant="bar" variantCover="barCover" />
                             </TouchableOpacity>
                         </Spacer>
                     );

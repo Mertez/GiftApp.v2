@@ -56,13 +56,13 @@ export const AuthenticationContextProvider = ({ children }) => {
 
 
     const onLogin = async (email, password) => {
-        console.log("xxxxxxxxxxxxxxxxxxxxxxx onLogin");
+        //console.log("xxxxxxxxxxxxxxxxxxxxxxx onLogin");
         setIsLoading(true);
 
         await serverLoginRequest(email, password)
             //.then(serverLoginTransform)
             .then((result) => {
-                console.log("serverLoginRequest", result);
+                //console.log("serverLoginRequest", result);
                 setError(null);
                 setLoggedInUser(result);
             })

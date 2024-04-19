@@ -23,8 +23,8 @@ const LottieCheckLogo = styled(LottieView)`
 
 export const PaymentComponent = ({ route, navigation }) => {
 
-    console.log(route);
-    console.log(navigation);
+    //console.log(route);
+    //console.log(navigation);
 
     const [paymentFinished, setPaymentFinished] = useState(false);
 
@@ -48,7 +48,7 @@ export const PaymentComponent = ({ route, navigation }) => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView nestedScrollEnabled={true}>
             {(!paymentFinished) && (
 
                 <FormProvider {...formMethods}>

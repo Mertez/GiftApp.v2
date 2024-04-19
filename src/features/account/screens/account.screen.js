@@ -12,6 +12,7 @@ import {
     Lottie
 } from "../components/account.styles";
 import { ScrollView, View, StyleSheet, Image } from 'react-native';
+import { simpleHaptic } from "../../../utils/haptic";
 
 export const AccountScreen = ({ navigation }) => {
 
@@ -31,7 +32,10 @@ export const AccountScreen = ({ navigation }) => {
                     <AuthButton
                         icon="lock-open-outline"
                         mode="contained"
-                        onPress={() => navigation.navigate("Login")}
+                        onPress={() => {
+                            simpleHaptic();
+                            navigation.navigate("Login");
+                        }}
                     >
                         Login
                     </AuthButton>
@@ -39,7 +43,10 @@ export const AccountScreen = ({ navigation }) => {
                     <AuthButton
                         icon="email"
                         mode="contained"
-                        onPress={() => navigation.navigate("Register")}
+                        onPress={() => {
+                            simpleHaptic();
+                            navigation.navigate("Register");
+                        }}
                     >
                         Register
                     </AuthButton>
@@ -67,7 +74,7 @@ export const AccountScreen = ({ navigation }) => {
                     source={require("../../../../assets/anims/gifts.json")}
                 />
             </AnimationWrapper>
-            <ScrollView contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                 <BlurView intensity={20} style={{ width: 300 }}>
 
                     <AccountContainer style={{ alignContent: 'center' }}>

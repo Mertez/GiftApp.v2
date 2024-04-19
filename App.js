@@ -13,6 +13,7 @@ import { IgnoreWarnings, HeightPercent } from "./src/utils/env";
 import { GlobalContextProvider } from "./src/GlobalVariables";
 //import { AppBackground } from "./src/features/account/components/account.styles";
 
+
 const isAndroid = Platform.OS === "android";
 
 const SafeArea = styled(SafeAreaView)`
@@ -106,7 +107,7 @@ export default function App() {
     console.log(Platform.OS);
     return (
       <>
-        {/* <CompactWebview source={{ uri: "http://192.168.2.104:5001/WishApp-83239/us-central1/geocode?city=antwerp&v=3" }} /> */}
+        {/* <CompactWebview source={{ uri: "http://192.168.2.104:5001/GiftApp-83239/us-central1/geocode?city=antwerp&v=3" }} /> */}
         {/* <AppBackground></AppBackground> */}
         <SafeArea>
           <GlobalContextProvider>

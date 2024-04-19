@@ -23,26 +23,44 @@ const BannerContainer = styled.View`
     height: ${bannerHeight}px;
 `
 
-export const MarketScreen = ({ navigation }) => {
+export const MarketScreen = ({ navigation, route }) => {
     const { isLoading: isCategoriesLoading, categories, error: categoriesError } = useContext(CategoriesContext);
     const { isLoading: isGiftCardsLoading, giftCards, error: giftcardError } = useContext(GiftCardsContext);
     const { isLoading: isDealBrandsLoading, dealBrands, error: dealBrandsError, onGetDealBrands } = useContext(ProductsContext);
     const { isLoading: isProductsHotByBrandsLoading, deals: deals, error: brandProductsError, onGetProducts } = useContext(ProductsContext);
-    const [showItems, setShowItems] = useState('');
+    const [showItems, setShowItems] = useState('wishappCats');
     const [isLoading, setIsLoading] = useState(false);
 
+    //const navigation = useNavigation();
+    //const route = useRoute();
+
+
     useEffect(() => {
-        setIsLoading(true);
-        onGetDealBrands();
-        //setIsLoading(false);
-    }, []);
+
+        if (route.params?.brand) {
+            onBrandPressed(route.params.brand);
+        }
+        //console.log(showItems);
+    }, [route.params?.brand]);
+
+    // useEffect(() => {
+    //     setIsLoading(true);
+    //     onGetDealBrands();
+    //     setShowItems('wishappCats');
+    //     setIsLoading(false);
+    // }, []);
+
+
+    // useEffect(() => {
+    //     console.log(showItems);
+    // }, [showItems]);
 
     // useEffect(() => {
     //     setIsLoading(false);
     // }, [dealBrands]);
 
     const onBrandPressed = (brand) => {
-
+        //console.log(brand);
         setIsLoading(true);
 
         switch (brand.id) {
@@ -74,9 +92,6 @@ export const MarketScreen = ({ navigation }) => {
 
     return (
         <SafeArea>
-
-
-
             {(isDealBrandsLoading) ? (
                 <LoadingContainer>
                     <Loading size={50} animating={true} color={standardcolors.blue300} />
@@ -99,9 +114,11 @@ export const MarketScreen = ({ navigation }) => {
                 </>
             )}
 
-            <ScrollView>
+            <ScrollView nestedScrollEnabled={true} scrollEnabled={false}>
                 <BannerContainer>
-                    <HomeHeaderBanner userBanners={[`samsung1.jpg`, `walmart1.jpg`, `amazonsmile.jpg`]} />
+                    <HomeHeaderBanner
+                    //userBanners={[`samsung1.jpg`, `walmart1.jpg`, `amazonsmile.jpg`]}
+                    />
                 </BannerContainer>
 
                 {(deals || !isLoading) && (showItems === 'onlineDeals') && (

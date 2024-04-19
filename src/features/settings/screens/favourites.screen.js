@@ -10,6 +10,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 
 import { giftList } from "../../gifts/components/gift-list.styles";
 import { giftInfoCard } from "../../gifts/components/gift-info-card.component";
+import { MainAppFeature } from "../../../components/animations/mainappfeature.component";
 
 const NoFavouritesArea = styled(View)`
   align-items: center;
@@ -17,6 +18,7 @@ const NoFavouritesArea = styled(View)`
   padding-top:30px;
 `;
 export const FavouritesScreen = ({ navigation }) => {
+    return (<MainAppFeature extraDescription={"Market products can be listed as favourites too."} />);
     const { favourites } = useContext(FavouritesContext);
 
     return favourites.length ? (

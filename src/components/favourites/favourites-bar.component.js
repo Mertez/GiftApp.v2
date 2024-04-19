@@ -11,13 +11,13 @@ const FavouriteWrapper = styled.View`
 export const FavouritesBar = ({ favourites, onNavigate }) => {
     return (
         <FavouriteWrapper>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexGrow: 0 }}
+            <ScrollView nestedScrollEnabled={true} horizontal showsHorizontalScrollIndicator={false} style={{ flexGrow: 0 }}
             >
-                {favourites.map((gift) => {
+                {favourites.map((gift, index) => {
                     return (
-                        <Spacer key={gift.placeId} position="right" size="xs" >
-                            <TouchableOpacity onPress={() => onNavigate("gifts Detail Stack", { gift })}>
-                                <CompactgiftInfo gift={gift} />
+                        <Spacer key={"Spacer" + gift.placeId + "_" + index} position="right" size="xs" >
+                            <TouchableOpacity key={"TouchableOpacity" + gift.placeId + "_" + index} onPress={() => onNavigate("gifts Detail Stack", { gift })}>
+                                <CompactgiftInfo gift={gift} key={"CompactgiftInfo" + gift.placeId + "_" + index} />
                             </TouchableOpacity>
                         </Spacer>
                     )

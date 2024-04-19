@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { View, TouchableOpacity, ScrollView } from "react-native";
 import { List, Avatar } from "react-native-paper";
@@ -9,6 +9,7 @@ import { AuthenticationContext } from "../../../services/authentication/authecti
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
 import { host } from "../../../utils/env";
+import { MainAppFeature } from "../../../components/animations/mainappfeature.component";
 
 const TransparentSafeArea = styled(View)`
   background-color: transparent;
@@ -23,7 +24,7 @@ const SettingsBackground = styled.ImageBackground.attrs({
 
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.spaces[3]};
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(213, 203, 186, 0.6);
 `;
 const AvatarContainer = styled.View`
   align-items: center;
@@ -49,8 +50,8 @@ export const SettingScreen = ({ navigation, route }) => {
     const getProfilePicture = async () => {
         const photoUri = await AsyncStorage.getItem(`${user.userId}-photo`);
         //console.log(photoUri);
-        setPhoto(photoUri);
-        //setPhoto(`${host}/images/users/${user?.uid ?? 'null'}.png`);
+        //setPhoto(photoUri);
+        setPhoto(`${host}/images/users/${user?.userId ?? 'null'}.jpg?time=${new Date().toLocaleString()}`);
     }
 
     // useEffect(() => {
@@ -67,7 +68,7 @@ export const SettingScreen = ({ navigation, route }) => {
     return (
         <SettingsBackground>
             <TransparentSafeArea>
-                <ScrollView style={{ marginBottom: 90 }}>
+                <ScrollView style={{ marginBottom: 90 }} nestedScrollEnabled={true}>
                     <AvatarContainer>
                         <TouchableOpacity
                             onPress={() => navigation.navigate("Camera", { 'updatePhoto': 0 })}
@@ -80,7 +81,7 @@ export const SettingScreen = ({ navigation, route }) => {
                                 //     margin={20} />
                                 <Avatar.Image
                                     size={120}
-                                    source={{ uri: `${host}/images/users/${user?.uid ?? 'null'}.jpg` }}
+                                    source={{ uri: `${host}/images/users/${user?.userId ?? 'null'}.jpg?time=${new Date().toLocaleString()}` }}
                                     backgroundColor={colors.ui.tertiary}
                                     margin={20}
                                 />}
@@ -104,7 +105,7 @@ export const SettingScreen = ({ navigation, route }) => {
                             left={(props) => (
                                 <List.Icon {...props} color={colors.ui.error} icon="heart" />
                             )}
-                            onPress={() => navigation.navigate("Favourites")}
+                            onPress={() => navigation.navigate('MainAppFeature', { extraDescription: 'Market products can be listed as favourites too.' })}
                         />
                         <Spacer />
                         <SettingsItem
@@ -112,7 +113,8 @@ export const SettingScreen = ({ navigation, route }) => {
                             left={(props) => (
                                 <List.Icon {...props} color={colors.ui.secondary} icon="cart" />
                             )}
-                            onPress={() => null}
+                            onPress={() => navigation.navigate('MainAppFeature', { extraDescription: 'Payments log will be seen here.' })}
+
                         />
                         <Spacer />
                         <SettingsItem
@@ -124,7 +126,7 @@ export const SettingScreen = ({ navigation, route }) => {
                                     icon="history"
                                 />
                             )}
-                            onPress={() => null}
+                            onPress={() => navigation.navigate('MainAppFeature', { extraDescription: 'Orders log will be seen here.' })}
                         />
                         <Spacer />
                         <SettingsItem

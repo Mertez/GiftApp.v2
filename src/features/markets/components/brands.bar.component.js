@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Card } from "react-native-paper";
 import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
@@ -33,17 +33,17 @@ export const BrandBar = ({ brands, onNavigate, onBrandPressed }) => {
     return (
         <BrandsWrapper elevation={5}>
             <Spacer variant="left.large">
-                <Text variant="caption">Hot Brands of the week</Text>
+                <Text variant="caption">Hot Brands of the week...</Text>
             </Spacer>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true} scrollEnabled={false}>
 
                 <Spacer key="wishappCats" position="left" size="sm">
                     <TouchableOpacity
                         onPress={() => onBrandPressed({ id: "wishappCats" })}
                     >
                         <Spacer position="top" size="sm"><Spacer position="bottom" size="sm">
-                            <BrandCardCover variant="barHotCover" key="p0" source={require("../../../../assets/wishappBtn.png")} resizeMode={"contain"} />
+                            <View style={{ borderWidth: 1, borderRadius: 15, borderColor: standardcolors.lightgray, }}><BrandCardCover variant="barHotCover" key="p0" source={require("../../../../assets/giftappBtn.png")} resizeMode={"contain"} /></View>
                         </Spacer></Spacer>
 
                     </TouchableOpacity>
@@ -60,15 +60,15 @@ export const BrandBar = ({ brands, onNavigate, onBrandPressed }) => {
                     </TouchableOpacity>
                 </Spacer>
 
-                {brands.map((brand) => {
+                {brands.map((brand, index) => {
                     //console.log(brand);
-                    const key = brand.id;
+                    const key = brand.id + "_" + index;
                     return (
-                        <Spacer key={key} position="left" size="sm">
-                            <TouchableOpacity
+                        <Spacer key={"Spacer" + key} position="left" size="sm">
+                            <TouchableOpacity key={"TouchableOpacity" + key}
                                 onPress={() => onBrandPressed(brand)}
                             >
-                                <BrandCardShow brand={brand} variant="barHot" variantCover="barHotCover" />
+                                <BrandCardShow key={"BrandCardShow" + key} brand={brand} variant="barHot" variantCover="barHotCover" />
                             </TouchableOpacity>
                         </Spacer>
                     );

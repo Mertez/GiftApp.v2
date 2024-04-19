@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import {
     AccountBackground,
@@ -26,69 +26,72 @@ export const RegisterScreen = ({ navigation }) => {
     return (
         <AccountBackground>
             <AccountCover />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" is usually suitable for iOS, "height" or undefined for Android
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+            >
+                <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                    <BlurView intensity={20}>
 
-            <ScrollView contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                <BlurView intensity={20}>
-
-                    <AccountContainer>
-                        <LogoImg source={require("../../../../assets/icon.png")} />
-                        <AuthInput
-                            label="E-mail"
-                            value={email}
-                            textContentType="emailAddress"
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                            onChangeText={(u) => setEmail(u)}
-                        />
-                        <Spacer size="sm">
+                        <AccountContainer>
+                            <LogoImg source={require("../../../../assets/icon.png")} />
                             <AuthInput
-                                label="Password"
-                                value={password}
-                                textContentType="password"
-                                secureTextEntry
+                                label="E-mail"
+                                value={email}
+                                textContentType="emailAddress"
+                                keyboardType="email-address"
                                 autoCapitalize="none"
-                                onChangeText={(p) => setPassword(p)}
+                                onChangeText={(u) => setEmail(u)}
                             />
-                        </Spacer>
-                        <Spacer size="sm">
-                            <AuthInput
-                                label="Repeat Password"
-                                value={repeatedPassword}
-                                textContentType="password"
-                                secureTextEntry
-                                autoCapitalize="none"
-                                onChangeText={(p) => setRepeatedPassword(p)}
-                            />
-                        </Spacer>
-                        {error && (
-                            <ErrorContainer size="sm">
-                                <Text variant="error">{error}</Text>
-                            </ErrorContainer>
-                        )}
-                        <Spacer size="sm">
-                            {!isLoading ? (
-                                <AuthButton style={{ backgroundColor: 'purple' }}
-                                    icon="email"
-                                    mode="contained"
-                                    onPress={() => onRegister(email, password, repeatedPassword)}
-                                >
-                                    Register
-                                </AuthButton>
-                            ) : (
-                                <ActivityIndicator animating={true} color={standardcolors.blue300} />
+                            <Spacer size="sm">
+                                <AuthInput
+                                    label="Password"
+                                    value={password}
+                                    textContentType="password"
+                                    secureTextEntry
+                                    autoCapitalize="none"
+                                    onChangeText={(p) => setPassword(p)}
+                                />
+                            </Spacer>
+                            <Spacer size="sm">
+                                <AuthInput
+                                    label="Repeat Password"
+                                    value={repeatedPassword}
+                                    textContentType="password"
+                                    secureTextEntry
+                                    autoCapitalize="none"
+                                    onChangeText={(p) => setRepeatedPassword(p)}
+                                />
+                            </Spacer>
+                            {error && (
+                                <ErrorContainer size="sm">
+                                    <Text variant="error">{error}</Text>
+                                </ErrorContainer>
                             )}
-                        </Spacer>
-                    </AccountContainer>
+                            <Spacer size="sm">
+                                {!isLoading ? (
+                                    <AuthButton style={{ backgroundColor: 'purple' }}
+                                        icon="email"
+                                        mode="contained"
+                                        onPress={() => onRegister(email, password, repeatedPassword)}
+                                    >
+                                        Register
+                                    </AuthButton>
+                                ) : (
+                                    <ActivityIndicator animating={true} color={standardcolors.blue300} />
+                                )}
+                            </Spacer>
+                        </AccountContainer>
 
-                </BlurView>
-                <Spacer size="sm">
-                    <AuthButton mode="contained" icon="keyboard-backspace" onPress={() => navigation.goBack()} style={{ backgroundColor: 'transparent' }}>
-                        Back
-                    </AuthButton>
-                </Spacer>
-            </ScrollView>
+                    </BlurView>
+                    <Spacer size="sm">
+                        <AuthButton mode="contained" icon="keyboard-backspace" onPress={() => navigation.goBack()} style={{ backgroundColor: 'transparent' }}>
+                            Back
+                        </AuthButton>
+                    </Spacer>
+                </ScrollView>
 
-
+            </KeyboardAvoidingView>
 
         </AccountBackground>
     );
