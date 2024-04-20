@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Dimensions, Platform, LogBox } from 'react-native';
 
-const localHost = 'http://192.168.2.104:5000/api';
-const globalHost = 'https://partially-mint-grizzly.ngrok-free.app/api';
+const localHost = false ? `http://192.168.2.104:5000/api` : `https://partially-mint-grizzly.ngrok-free.app/api`;
+const globalHost = `https://giftapp.techschau.de/api`;
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export const asinDataKey = 'C3094239F63243DBA2505340DF56F4D6';
+export const asinDataTestMode = false;
 export const useFirebaseAuthentication = false;
 export const host = globalHost; //App.host;
-export const hostOnline = false ? `https://giftapp.techschau.de/api` : host; //App.host;
+export const hostOnline = true ? globalHost : host; //App.host;
 export const isAndroid = (Platform.OS === "android");
 export const isDevelopment = process.env.NODE_ENV === "development";
 //export const host = isDevelopment ? localHost : liveHost;
