@@ -22,6 +22,7 @@ export const WishItems = ({ wishItems, onIconPress }) => {
                 //         product: product, isGiftCard: false
                 //     })
                 // }
+
                 >
                     <CompactWishInfo wish={item} />
 
