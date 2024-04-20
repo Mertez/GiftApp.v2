@@ -85,7 +85,7 @@ export const GiftAddConfirm = ({ route, navigation }) => {
 
     useEffect(() => {
         setWishAdded(0);
-        console.log('isAGift AddConfirm: ', isAGift);
+        //console.log('isAGift AddConfirm: ', isAGift);
     }, []);
 
     return (
@@ -148,40 +148,46 @@ export const GiftAddConfirm = ({ route, navigation }) => {
                                         {(() => {
 
                                             if (isAGift) {
-                                                return (<Text variant="label" style={{ color: standardcolors.red }}>This is a gift</Text>)
+                                                return (
+                                                    <>
+                                                        <Text variant="label" style={{ color: standardcolors.red }}>Add this Gift to my {(selectedWishlist) && selectedWishlist.name} wishlist</Text>
+
+                                                    </>
+
+                                                )
                                             } else {
                                                 return (
                                                     <>
                                                         <Text variant="label" style={{ color: standardcolors.purple }}>Add this item to my {(selectedWishlist) && selectedWishlist.name} wishlist</Text>
-                                                        <WishlistSelector onIconPress={(item) => { setSelectedWishlist(item); }} />
-
-                                                        <Spacer position={"top"} size="md"></Spacer>
-                                                        <Row>
-                                                            <Btn mode="contained" color={"white"}
-                                                                onPress={() => { setWishAdded(0); navigation.goBack(); }} >
-                                                                <Text variant="label" style={{ color: standardcolors.white }}>❌ Cancel</Text>
-                                                            </Btn>
-                                                            {(selectedWishlist != null) &&
-                                                                <Btn mode="contained" color={null}
-                                                                    onPress={() => {
-
-                                                                        if (selectedWishlist == null) { alert("Select a wishlist") } else {
-                                                                            onCreateWish(gift.name, null, gift.price, gift.asin, gift.amzUrl, gift.icon, selectedWishlist.id);
-                                                                            setWishAdded(1)
-                                                                            //console.log(gift.name, null, gift.price, gift.asin, gift.amzUrl, gift.icon, selectedWishlist.id);
-                                                                            //navigation.popToTop();
-                                                                        }
-                                                                    }} >
-                                                                    <Text variant="label" style={{ color: standardcolors.white }}>✅ Confirm</Text>
-                                                                </Btn>
-                                                            }
-
-                                                        </Row>
                                                     </>
                                                 )
                                             }
 
                                         })()}
+                                        <WishlistSelector onIconPress={(item) => { setSelectedWishlist(item); }} />
+
+                                        <Spacer position={"top"} size="md"></Spacer>
+                                        <Row>
+                                            <Btn mode="contained" color={"white"}
+                                                onPress={() => { setWishAdded(0); navigation.goBack(); }} >
+                                                <Text variant="label" style={{ color: standardcolors.white }}>❌ Cancel</Text>
+                                            </Btn>
+                                            {(selectedWishlist != null) &&
+                                                <Btn mode="contained" color={null}
+                                                    onPress={() => {
+
+                                                        if (selectedWishlist == null) { alert("Select a wishlist") } else {
+                                                            onCreateWish(gift.name, null, gift.price, gift.asin, gift.amzUrl, gift.icon, selectedWishlist.id, isAGift);
+                                                            setWishAdded(1)
+                                                            //console.log(gift.name, null, gift.price, gift.asin, gift.amzUrl, gift.icon, selectedWishlist.id);
+                                                            //navigation.popToTop();
+                                                        }
+                                                    }} >
+                                                    <Text variant="label" style={{ color: standardcolors.white }}>✅ Confirm</Text>
+                                                </Btn>
+                                            }
+
+                                        </Row>
                                     </>
 
 

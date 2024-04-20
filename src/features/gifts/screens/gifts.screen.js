@@ -2,7 +2,8 @@ import React, { useContext, useState, useRef, useEffect, createRef } from "react
 import { ActivityIndicator, Button, TextInput } from "react-native-paper";
 import {
     StyleSheet, View, ScrollView, Image, Modal, Styles, Pressable, Switch,
-    findNodeHandle, InteractionManager, TouchableOpacity as ButtonX, Vibration
+    findNodeHandle, InteractionManager, Platform, TouchableWithoutFeedback,
+    TouchableOpacity as ButtonX, Vibration, Keyboard, KeyboardAvoidingView,
 } from "react-native";
 import styled from "styled-components/native";
 import { Search } from "../components/search.component";
@@ -100,9 +101,19 @@ export const GiftsScreen = ({ navigation }) => {
     //     setModalVisible(false);
     // };
 
-    const handlePersonDescription = (description) => {
+    const handleKeyPress = (e) => {
+        if (e.nativeEvent.key === 'Enter') {
+            // Optionally do something with the 'Enter' key
+            //console.log('Enter key pressed');
+            handlePersonDescription();
+            return false;  // Prevent default behavior (optional)
+        }
+    };
+
+    const handlePersonDescription = () => {
         //console.log(description);
-        onGetPersonToBuyGiftCategories(description);
+        Keyboard.dismiss();
+        onGetPersonToBuyGiftCategories(personDescription);
         //Vibration.vibrate(pattern);
         //triggerHapticPattern();
     }
@@ -327,6 +338,8 @@ export const GiftsScreen = ({ navigation }) => {
 
                 {(step1Answer == "for others") && (<View style={{ marginBottom: 300 }}>
                     <Spacer size="md" position="bottom">
+
+
                         {/* <Row>
 
                             <Space50>
@@ -354,14 +367,19 @@ export const GiftsScreen = ({ navigation }) => {
                         <Row><Text>Describe the person who you are going to buy a gift for:</Text></Row>
                         <Row><MultilineTextInput placeholder="My mom, she is a 75 year old traditional spanish woman who loves cooking, cleaning and playing with her cat"
                             onTextChange={setPersonDescription} value={personDescription}
+                            returnKeyType="done"
+                            onKeyPress={handleKeyPress}
+                        //onSubmitEditing={() => { console.log("x") }}
                         ></MultilineTextInput></Row>
                         {/* <Text>{personDescription}</Text> */}
-                        <BuyAGiftButton mode="contained" color={"white"} onPress={() => { handlePersonDescription(personDescription); }} >
+                        <BuyAGiftButton mode="contained" color={"white"} onPress={() => { handlePersonDescription() }} >
                             <Row>
 
                                 <Col><Text variant="button" style={{ color: "#fff" }}>Check my description</Text><Text variant="caption">Then think about that</Text></Col>
                             </Row>
                         </BuyAGiftButton>
+
+
                     </Spacer>
                     <>
                         {(isGiftsIsLoading) ? (
@@ -369,11 +387,14 @@ export const GiftsScreen = ({ navigation }) => {
                                 <ActivityIndicator size={50} animating={true} color={standardcolors.purple} />
                             </LoadingContainer>
                         ) : (
-                            (triggerHapticPattern()),
+                            // (
+                            //     //triggerHapticPattern()
+                            // ),
                             <PersonGifCat catItems={personToBuyGiftCategories} navigation={navigation}></PersonGifCat>)}
 
                     </>
-                </View>)}
+                </View >)
+                }
             </>
         )
     }
@@ -456,9 +477,9 @@ export const GiftsScreen = ({ navigation }) => {
 
             Step3 = (
                 <>
-
+                    {/* navigation.navigate("categoryAmazonStackGift", {keyword: item.modified, isagift: true }, navigation) */}
                     <View style={{ alignContent: 'center', alignItems: 'center' }}><Text variant="title">{`${step0Answer} ${step1Answer} ${step2Answer}`}</Text></View>
-                    <BuyAGiftButton mode="contained" onPress={() => { navigation.navigate("CreditCardPaymentStack") }} >
+                    <BuyAGiftButton mode="contained" onPress={() => { navigation.navigate("categoryAmazonStack", { keyword: "", isagift: false }) }} >
                         <Row>
                             <BuyAGiftIcon source={require("../../../../assets/amlogo.png")} resizeMode="contain" />
                             <BuyAGiftIcon source={require("../../../../assets/iconw.png")} resizeMode="contain" />
@@ -495,63 +516,60 @@ export const GiftsScreen = ({ navigation }) => {
     }
 
     return (
-        <SafeArea>
-
-            <ScrollView nestedScrollEnabled={true}
-                ref={scrollViewRef}
-                onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
-            >
-
-                {(isProductHotsLoading) ? (
-                    <LoadingContainer>
-                        <ActivityIndicator size={50} animating={true} color={standardcolors.aliceblue} />
-                    </LoadingContainer>
-                ) : <></>}
 
 
-                {productHotsError && (
-                    <Spacer position="left" size="large">
-                        <Text variant="error">Something went wrong retrieving the hot products</Text>
-                    </Spacer>
-                )}
-                {!productHotsError && (
-                    <>
-                        <ProductsHotBar
-                            products={productHots && productHots.result}
-                            onNavigate={navigation.navigate}
-                        />
-                    </>
-                )}
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" is usually suitable for iOS, "height" or undefined for Android
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
 
-                {/* 
-                {(giftStep >= 0) && (
-                    <Step0AndAbove />
-                )}
-                {(giftStep >= 1) && (
-                    <Step1AndAbove />
-                )}
-                {(giftStep >= 2) && (
-                    <Step2AndAbove />
-                )}
-                {(giftStep >= 3) && (
-                    <>{Step3}</>
-                )} */}
+            <SafeArea>
+                <ScrollView keyboardShouldPersistTaps='handled' nestedScrollEnabled={true}
+                    ref={scrollViewRef}
+                    onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+                >
+                    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                        <>
+                            {(isProductHotsLoading) ? (
+                                <LoadingContainer>
+                                    <ActivityIndicator size={50} animating={true} color={standardcolors.aliceblue} />
+                                </LoadingContainer>
+                            ) : <></>}
 
-                <>{Step0}{Step1}{Step2}{Step3}</>
+                            {productHotsError && (
+                                <Spacer position="left" size="large">
+                                    <Text variant="error">Something went wrong retrieving the hot products</Text>
+                                </Spacer>
+                            )}
+                            {!productHotsError && (
+                                <>
+                                    <ProductsHotBar
+                                        products={productHots && productHots.result}
+                                        onNavigate={navigation.navigate}
+                                    />
+                                </>
+                            )}
+
+                            <>{Step0}{Step1}{Step2}{Step3}</>
+
+                            {(giftStep === 0) && (
+                                <Lottie
+                                    key="animation"
+                                    autoPlay
+                                    loop
+                                    resizeMode="cover"
+                                    source={require("../../../../assets/anims/116772-presents.json")}
+                                />
+                            )}
+                            <Spacer position='bottom' size='l' />
+                        </>
+                    </TouchableWithoutFeedback>
+                </ScrollView>
+            </SafeArea>
+
+        </KeyboardAvoidingView>
 
 
-                {(giftStep === 0) && (
-                    <Lottie
-                        key="animation"
-                        autoPlay
-                        loop
-                        resizeMode="cover"
-                        source={require("../../../../assets/anims/116772-presents.json")}
-                    />
-                )}
-                <Spacer position='bottom' size='xxl' />
-            </ScrollView>
-        </SafeArea>
     )
 }
 

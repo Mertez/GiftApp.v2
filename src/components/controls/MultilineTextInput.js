@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-const MultilineTextInput = ({ placeholder, onTextChange, value }) => {
+const MultilineTextInput = ({ placeholder, onTextChange, value, returnKeyType, onSubmitEditing, onKeyPress }) => {
     const [text, setText] = useState(value);
 
     const handleTextChange = (newText) => {
         setText(newText);
         if (onTextChange) {
+
             onTextChange(newText); // Call the callback function with the new text
         }
     };
@@ -16,6 +17,9 @@ const MultilineTextInput = ({ placeholder, onTextChange, value }) => {
             <TextInput
                 style={styles.input}
                 placeholder={placeholder}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
+                onKeyPress={onKeyPress}
                 multiline
                 numberOfLines={4}
                 value={text}

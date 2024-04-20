@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Modal, View, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, Animated } from 'react-native';
+import { Modal, View, StyleSheet, Dimensions, KeyboardAvoidingView, Platform, Animated, ScrollView } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { HeightPercent, WidthPercent, height } from '../../../utils/env';
 import { Text } from '../../../components/typography/text.component';
@@ -90,6 +90,7 @@ const CreateWishListModalForm = (props) => {
                     <BackBlur2 intensity={30} >
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
+
                                 <Text variant="title" style={{ color: standardcolors.white }}>Enter the new Wishlist name</Text>
                                 <WishlistNameInput
                                     onChangeText={setName}
@@ -99,11 +100,13 @@ const CreateWishListModalForm = (props) => {
                                 {/* {selectedIcon && (
                                     <Text>Selected Icon ID: {selectedIcon}</Text>
                                 )} */}
+
                                 <Spacer position='top' size='md' />
                                 <Row>
                                     <BuyAGiftButton mode="contained" onPress={onClose} ><Text>Cancel ❌</Text></BuyAGiftButton>
                                     <BuyAGiftButton mode="contained" onPress={handleOkClick} ><Text>Ok, Create 👌🏻</Text></BuyAGiftButton>
                                 </Row>
+
                                 {/* <Row>
                                 <ButtonX mode="contained" onPress={onClose} variant="selected" ><Text>Cancel ❌</Text></ButtonX>
                                 <ButtonX mode="contained" onPress={handleOkClick} Text="Ok, Create 👌🏻" ><Text>Ok, Create 👌🏻</Text></ButtonX>
@@ -117,7 +120,7 @@ const CreateWishListModalForm = (props) => {
                     </BackBlur2>
                 </KeyboardAvoidingView>
             </Modal>
-        </View>
+        </View >
     );
 };
 

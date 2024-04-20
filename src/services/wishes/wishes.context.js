@@ -160,9 +160,10 @@ export const WishesContextProvider = ({ children }) => {
             });
     };
 
-    const onCreateWish = (name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId) => {
+    const onCreateWish = (name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift) => {
+        //console.log("onCreateWish / IsAGift:", isAGift);
         setIsCreating(true);
-        createWishRequest(name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId)
+        createWishRequest(name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift)
             .then(createWishTransform)
             .then((result) => {
                 //console.log("result from createWishRequest.Context: ", result);
@@ -177,9 +178,9 @@ export const WishesContextProvider = ({ children }) => {
             });
     };
 
-    const onUpdateWish = (id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId) => {
+    const onUpdateWish = (id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift) => {
         setIsLoading(true);
-        updateWishRequest(id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId)
+        updateWishRequest(id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift)
             .then(updateWishTransform)
             .then((result) => {
                 console.log("result from updateWishRequest.Context: ", result);

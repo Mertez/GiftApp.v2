@@ -126,7 +126,7 @@ export const getWishesTransform = (result) => {
 };
 
 
-export const createWishRequest = async (name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId) => {
+export const createWishRequest = async (name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift) => {
     var body = {
         "name": name,
         "productId": productId,
@@ -134,7 +134,8 @@ export const createWishRequest = async (name, productId, currentPrice, amazonAsi
         "amazonAsin": amazonAsin,
         "sourceUrl": sourceUrl,
         "sourceImageUrl": sourceImageUrl,
-        "wishlistId": wishlistId
+        "wishlistId": wishlistId,
+        "isAGift": isAGift
     }
     //console.log(ApiRoutes.getPiggyBank);
     return new Promise((resolve, reject) => {
@@ -151,7 +152,7 @@ export const createWishTransform = (result) => {
 };
 
 
-export const updateWishRequest = async (id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId) => {
+export const updateWishRequest = async (id, name, productId, currentPrice, amazonAsin, sourceUrl, sourceImageUrl, wishlistId, isAGift) => {
     var body = {
         "id": id,
         "name": name,
@@ -160,7 +161,8 @@ export const updateWishRequest = async (id, name, productId, currentPrice, amazo
         "amazonAsin": amazonAsin,
         "sourceUrl": sourceUrl,
         "sourceImageUrl": sourceImageUrl,
-        "wishlistId": wishlistId
+        "wishlistId": wishlistId,
+        "isAGift": isAGift
     }
     //console.log(ApiRoutes.getPiggyBank);
     return new Promise((resolve, reject) => {

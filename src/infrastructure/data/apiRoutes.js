@@ -1,4 +1,4 @@
-import { host, hostOnline } from "../../utils/env";
+import { host, hostOnline, asinDataKey } from "../../utils/env";
 // import App from "../../../App";
 // const host = App.host;
 import { productTypeEnum } from "../models/enums";
@@ -40,7 +40,7 @@ module.exports = {
     deleteWish: (id) => `${host}/Wishes/${id}`,
 
 
-    getAmazonAsinData: (asin) => `${hostOnline}/Amazons/GetAmazonProduct?asin=${asin}&key=4E108E76B9E54371B8526DE6DB6E8119&testMode=false`,
+    getAmazonAsinData: (asin) => `${hostOnline}/Amazons/GetAmazonProduct?asin=${asin}&key=${asinDataKey}&testMode=true`,
     getPersonToBuyGiftCategories: (personDescription) => `${hostOnline}/Chat/Answer?question=${personDescription}`,
 
     getProducts: (productType, hot, special, categoryId, brandId) => `${host}/Products/GetProducts?productType=${productType}${hot >= 0 ? "&hot=" + hot : ""}${special >= 0 ? "&special=" + special : ""}${categoryId > 0 ? "&categoryId=" + categoryId : ""}${brandId != '' ? "&brandId=" + brandId : ""}`,

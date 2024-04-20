@@ -8,6 +8,7 @@ import { WishesScreen } from "../../features/wishes/screens/wishes.screen";
 import { WishItemsScreen } from "../../features/wishes/screens/wishItems.screen";
 import { isAndroid } from "../../utils/env";
 import { MainAppFeature } from "../../components/animations/mainappfeature.component";
+import { CategoriesAmazon } from "../../features/categories/screens/categories-amz.screen";
 
 const WishlistsStack = createStackNavigator();
 
@@ -46,6 +47,12 @@ export const WishlistsNavigator = ({ route, navigation }) => {
             {/* <WishlistsStack.Screen name="Favourites" component={FavouritesScreen} /> */}
 
             <WishlistsStack.Screen name="Camera" component={CameraScreen} options={({ route }) => ({ title: `Profile Photo` })} />
+            <WishlistsStack.Screen
+                //options={({ route }) => ({ title: `${route.params.categoryName} Amazon` })}
+                options={{ title: 'Amazon 🛍️', headerShown: isAndroid }}
+                name="categoryAmazonStack"
+                component={CategoriesAmazon}
+            />
             <WishlistsStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
         </WishlistsStack.Navigator>
     );

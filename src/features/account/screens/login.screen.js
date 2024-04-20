@@ -40,7 +40,7 @@ export const LoginScreen = ({ navigation }) => {
                 >
 
                     <Image source={{ logo }} style={{ zIndex: 99999, position: "absolute", top: 200, left: 100, overflow: 'hidden' }} />
-                    <ScrollView nestedScrollEnabled={true} contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                    <ScrollView keyboardShouldPersistTaps='always' nestedScrollEnabled={true} contentContainerStyle={{ flex: 1, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                         <BlurView intensity={20}>
 
                             <AccountContainer>

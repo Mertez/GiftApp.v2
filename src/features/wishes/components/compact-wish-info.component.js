@@ -59,6 +59,23 @@ const WishProgress = styled(ProgressBar)`
   width:${WidthPercent(37)}px;
 `
 
+const Gift = styled(View)`
+    position: absolute;
+    z-index:99999;
+    width: 50px; 
+    height: 50px;
+    padding: 5px;
+    text-align:center;
+    margin-top:-5px;
+    left:135px;
+    background-color: ${standardcolors.t100}66;
+    border-radius: 50%;
+`
+const GiftText = styled(Txt)`
+    text-align:center;
+    font-size: 30px;
+`
+
 // const PhotoContainer = styled(Txt)`
 //     flex: 1;
 //     margin-top: -25px;
@@ -78,6 +95,11 @@ export const CompactWishInfo = ({ wish }) => {
     return (
         <Item>
             {/* <PhotoContainer> */}
+            {
+                (wish.isAGift) && <><Gift><GiftText>🎁</GiftText></Gift></>
+            }
+            {/* ((wish.isAGift) && <><Txt>🎁</Txt></>) */}
+
             <Img source={{ uri: wish.sourceImageUrl }} resizeMode="contain" preserveAspectRatio="xMidYMid slice" />
             {/* </PhotoContainer> */}
             <Caption variant="caption" numberOfLines={1} style={{ color: 'black' }}>{wish.name}</Caption>

@@ -19,6 +19,19 @@ const Text = styled(Txt)`
   text-align: center;
 `
 
+const VLoading = styled(View)`
+  background-color: #000000AA;
+  height:${1.7 * btnSize}px;
+  width: 90%;
+  left: 5%;
+  opacity: 1;
+  position: absolute;
+  z-index:99999;
+  bottom: ${isAndroid ? "100px" : "40px"};
+  border-radius: 15%;
+  padding: 3% 30%;
+`
+
 const RedText = styled(Txt)`
   text-align: center;
   color:white;
@@ -78,14 +91,25 @@ export const LottieTimesLogo = styled(LottieView)`
   margin: auto auto 20px 20px;
   opacity: .8;
 `
+
+export const LottieLoading = styled(LottieView)`
+  height:${2.5 * btnSize}px;
+  width: ${2.5 * btnSize}px;
+  margin: auto -55px -55px;
+  opacity: .8;
+  position: absolute;
+  z-index:99999;
+  bottom: ${isAndroid ? "100px" : "80px"};
+  right: 7%;
+`
 const TimesBtn = styled(TouchableOpacity)`
   height:${btnSize}px;
   width: ${btnSize}px;
   margin: auto auto 4px 10px;
   position: absolute;
-  z-index:99999;
+  z-index:999999;
   bottom: ${isAndroid ? "100px" : "80px"};
-  left: ${marginLeft}px;
+  left: 5%;
   opacity: .6;
 `
 
@@ -96,7 +120,7 @@ const CheckBtn = styled(TouchableOpacity)`
   position: absolute;
   z-index:99999;
   bottom: ${isAndroid ? "100px" : "80px"};
-  right: ${marginLeft}px;
+  right: 7%;
 `
 
 const AmLogoContainer = styled(View)`
@@ -153,7 +177,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
   const [checkShow, setCheckShow] = useState(false);
   const ActivityUniqueKey = 'x';
 
-  const { onGetAsinDataRequest, asinData, error: amazonError, isLoading: isAmazonIsLoading } = useContext(AmazonContext);
+  const { onGetAsinDataRequest, asinData, error: amazonError, isLoading: isAmazonLoading } = useContext(AmazonContext);
 
   const onAndroidBackPress = () => {
     if (webViewRef.current) {
@@ -375,8 +399,11 @@ export const CategoriesAmazon = ({ route, navigation }) => {
       window.ReactNativeWebView.postMessage(JSON.stringify({title: title, asin : '', price: price}));
       true;
     `;
+
+  //console.log(isAmazonLoading);
   //console.log(keyword);
   return (
+
     <>
       <Vm2>
 
@@ -393,6 +420,20 @@ export const CategoriesAmazon = ({ route, navigation }) => {
         >
           <TimesLogo source={TimesLogoFile} resizeMode='contain' />
         </TimesBtn>
+
+        {isAmazonLoading && !checkShow &&
+
+          <>
+            <VLoading><Text style={{ color: '#fff' }}>Wait until loading the product content</Text></VLoading>
+            <LottieLoading
+              key="animation"
+              autoPlay
+              loop
+              resizeMode="cover"
+              source={require("../../../../assets/anims/loading.json")}
+            />
+          </>
+        }
 
         {checkShow &&
           <CheckBtn
