@@ -40,9 +40,9 @@ export const GiftsContextProvider = ({ children }) => {
         //console.log("onGetPersonToBuyGiftCategories input:", personDescription);
         setIsLoading(true);
         getPersonToBuyGiftCategoriesRequest(personDescription)
-            .then(getPersonToBuyGiftCategoriesTransform)
+            //.then(getPersonToBuyGiftCategoriesTransform)
             .then((result) => {
-                //console.log("onGetPersonToBuyGiftCategories", result);
+                console.log("onGetPersonToBuyGiftCategories", result);
                 setError(null);
                 setIsLoading(false);
                 setPersonToBuyGifCategories(result);
