@@ -1,7 +1,12 @@
 import { host } from "../../utils/env";
 import { BannerImage, SwiperDot, SwiperSlide, SwiperWrapper } from "./banners.styles";
 
-const StaticBanners = [require("../../../assets/banners/b1.jpg"), require("../../../assets/banners/b3.jpg"), require("../../../assets/banners/b4.jpg")];
+const StaticBanners = [
+    require("../../../assets/banners/b2.jpg"),
+    require("../../../assets/banners/bcards1.jpg"),
+    require("../../../assets/banners/bwed1.jpg"),
+    require("../../../assets/banners/b4.jpg"),
+    require("../../../assets/banners/bclass1.jpg")];
 
 export const HomeHeaderBanner = ({ userBanners = [] }) => {
 
