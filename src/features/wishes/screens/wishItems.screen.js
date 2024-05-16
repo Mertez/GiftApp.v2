@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { simpleHaptic } from "../../../utils/haptic";
 import { RandomImagesComponent } from "../../account/components/getrandomimages.component";
 import { standardcolors } from "../../../infrastructure/theme/colors";
-
+import { AnimatedText } from "../../../components/animations/animatedtext.component";
 
 const Header = styled.View`
   background-color: white;
@@ -102,7 +102,7 @@ export const WishItemsScreen = ({ route, navigation }) => {
             ) : (
                 <>
                     <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
-                    <Text style={{ textAlign: 'center', color: 'gray', fontSize: 25, padding: 0, margin: 0 }}>{formatCurrency(Math.round(wishlist.price * percent * 100) / 100)}  ----  {formatCurrency(wishlist.price)}</Text>
+                    <Text style={{ textAlign: 'center', color: 'gray', fontSize: 25, padding: 0, margin: 0 }}>{formatCurrency(Math.round(wishlist.price * percent * 100) / 100)}  <AnimatedText />  {formatCurrency(wishlist.price)}</Text>
                     <RandomImagesComponent />
                 </>
             )}

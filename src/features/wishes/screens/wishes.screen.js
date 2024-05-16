@@ -108,7 +108,7 @@ export const WishesScreen = ({ navigation }) => {
                 <Spacer position="bottom" size="sm" />
                 <WishLists wishLists={myWishLists} onIconPress={(item, percent) => {
                     //var wishItems = item.wishes;
-                    console.log("Percent:", percent);
+                    //console.log("Percent:", percent);
                     navigation.navigate("WishItems", { Wistlist: item, Percent: percent });
                     //console.log(wishItems);
                 }} />
