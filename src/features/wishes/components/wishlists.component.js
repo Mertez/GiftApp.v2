@@ -19,17 +19,18 @@ export const WishLists = ({ wishLists, onIconPress }) => {
         // const opacity = (index === selectedId || !isTouched) ? 1 : 0.3;
         // const imageSource = WishListIcons[item]; // Use the mapping to get the image source
         const key = item.id;
+        const percent = Math.random();
         //console.log(item);
         return (
             <Spacer key={key} position="left" size="md">
-                <TouchableOpacity onPress={() => { onIconPress(item) }}
+                <TouchableOpacity onPress={() => { onIconPress(item, percent) }}
                 // onPress={() =>
                 //     onNavigate("productDetailStack", {
                 //         product: product, isGiftCard: false
                 //     })
                 // }
                 >
-                    <CompactWishListInfo itemsInRow={2} wishlist={item}></CompactWishListInfo>
+                    <CompactWishListInfo itemsInRow={2} wishlist={item} percent={percent}></CompactWishListInfo>
 
                 </TouchableOpacity>
             </Spacer>

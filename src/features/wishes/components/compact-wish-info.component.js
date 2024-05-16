@@ -104,7 +104,7 @@ export const CompactWishInfo = ({ wish }) => {
             {/* </PhotoContainer> */}
             <Caption variant="caption" numberOfLines={1} style={{ color: 'black' }}>{wish.name}</Caption>
             <Price numberOfLines={2}>${wish.currentPrice}</Price>
-            <WishProgress progress={Math.random()} color={standardcolors.t10} />
+            {/* <WishProgress progress={Math.random()} color={standardcolors.t10} /> */}
         </Item>
     )
 }

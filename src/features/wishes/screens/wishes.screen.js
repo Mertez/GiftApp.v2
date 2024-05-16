@@ -106,9 +106,10 @@ export const WishesScreen = ({ navigation }) => {
                     onSubmit={handleCreateWishList}
                 />
                 <Spacer position="bottom" size="sm" />
-                <WishLists wishLists={myWishLists} onIconPress={(item) => {
+                <WishLists wishLists={myWishLists} onIconPress={(item, percent) => {
                     //var wishItems = item.wishes;
-                    navigation.navigate("WishItems", { Wistlist: item });
+                    console.log("Percent:", percent);
+                    navigation.navigate("WishItems", { Wistlist: item, Percent: percent });
                     //console.log(wishItems);
                 }} />
                 <Spacer position="bottom" size="xxl" />

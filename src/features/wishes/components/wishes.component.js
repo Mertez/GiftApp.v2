@@ -12,6 +12,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 export const WishItems = ({ wishItems, onIconPress }) => {
     const renderItem = ({ item, index }) => {
 
+
         const key = item.id;
         //console.log(item);
         return (

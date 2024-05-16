@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ScrollView, RefreshControl, View, TouchableOpacity, Image, Share } from "react-native";
 import styled from "styled-components/native";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, ProgressBar } from "react-native-paper";
 import { Text } from "../../../components/typography/text.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
-import { host, height, width, bannerHeight } from "../../../utils/env";
+import { host, height, width, bannerHeight, WidthPercent, formatCurrency } from "../../../utils/env";
 import { HomeHeaderBanner } from "../../../components/banner/banners.component";
 import { PiggyBank } from "../../../components/piggyBank/piggyBank.component";
 import { WishesContext } from "../../../services/wishes/wishes.context";
@@ -18,6 +18,9 @@ import { WishItems } from "../components/wishes.component";
 import { WishListIcons } from "../components/wishlist-iconset.component";
 import { Ionicons } from "@expo/vector-icons";
 import { simpleHaptic } from "../../../utils/haptic";
+import { RandomImagesComponent } from "../../account/components/getrandomimages.component";
+import { standardcolors } from "../../../infrastructure/theme/colors";
+
 
 const Header = styled.View`
   background-color: white;
@@ -27,13 +30,20 @@ const Header = styled.View`
   margin-bottom:10px;
 `
 
-
+const WishProgress = styled(ProgressBar)`
+  margin: 10px ${WidthPercent(10)}px 20px ${WidthPercent(10)}px;
+  height: 15px;
+  border-radius: 10px;
+  border: 3px solid ${standardcolors.pink};
+  width:${WidthPercent(80)}px;
+`
 
 
 export const WishItemsScreen = ({ route, navigation }) => {
 
     var params = route.params;
     var wishlist = params.Wistlist;
+    var percent = params.Percent;
 
     const shareContent = async () => {
         simpleHaptic();
@@ -86,6 +96,17 @@ export const WishItemsScreen = ({ route, navigation }) => {
                     navigation.navigate('MainAppFeature', { extraDescription: `This product name is "${item.name}" and it costs about $${item.currentPrice}, You will able to view this product's detail, move it to another wishlist, buy this gift or completely remove it from the wish list.` });
                 }} />
             </ScrollView>
+
+            {wishlist.wishes.length === 0 ? (
+                <Text>No images to display</Text>
+            ) : (
+                <>
+                    <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
+                    <Text style={{ textAlign: 'center', color: 'gray', fontSize: 25, padding: 0, margin: 0 }}>{formatCurrency(Math.round(wishlist.price * percent * 100) / 100)}  ----  {formatCurrency(wishlist.price)}</Text>
+                    <RandomImagesComponent />
+                </>
+            )}
+
         </>
 
     )

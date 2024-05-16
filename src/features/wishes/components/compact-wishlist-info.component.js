@@ -13,9 +13,9 @@ import { ActivityIndicator, ProgressBar, MD3Colors } from "react-native-paper";
 //const imgSize = WidthPercent(18) + "px";
 
 
-export const CompactWishListInfo = ({ wishlist, itemsInRow }) => {
+export const CompactWishListInfo = ({ wishlist, itemsInRow, percent }) => {
     //console.log(wishlist.icon, WishListIcons[wishlist.icon]);
-    console.log(wishlist);
+    //console.log(wishlist);
 
     const imgSize = (100 / itemsInRow) + "%";
 
@@ -76,7 +76,7 @@ export const CompactWishListInfo = ({ wishlist, itemsInRow }) => {
                 <Text style={{ color: 'red', textAlign: 'center', marginTop: -5, marginBottom: -2 }}>${wishlist.price}</Text>
             </Spacer>
 
-            <WishProgress progress={wishlist.price === 0 ? 0 : Math.random()} color={standardcolors.t10} />
+            <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
             {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {wishlist.wishes.map((wish, index) => {
                     const key = wish.id;

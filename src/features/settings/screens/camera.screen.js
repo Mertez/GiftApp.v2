@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Camera, CameraType } from 'expo-camera';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { View, Image } from 'react-native';
 import styled from "styled-components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,7 +35,7 @@ const CameraIcon = styled(Image)`
     height:25px;
 `;
 
-const ProfileCamera = styled(Camera)`
+const ProfileCamera = styled(CameraView)`
         width: 100%;
         height: 100%;
         flex: 1;
@@ -43,31 +43,40 @@ const ProfileCamera = styled(Camera)`
 
 export const CameraScreen = ({ navigation }) => {
 
-    const [type, setType] = useState(CameraType.front);
-    const [permission, requestPermission] = Camera.useCameraPermissions();
-    const [hasPermission, setHasPermission] = useState(null);
+    const [cameraType, setCameraType] = useState('front');
+    const [permission, requestPermission] = useCameraPermissions();
     const [isCameraReady, setIsCameraReady] = useState(false);
     const { user } = useContext(AuthenticationContext);
 
     const cameraRef = useRef();
 
+    if (!permission) {
+        // Camera permissions are still loading.
+        return <View />;
+    }
+
+    if (!permission.granted) {
+        // Camera permissions are not granted yet.
+        return (
+            <View style={styles.container}>
+                <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+                <Button onPress={requestPermission} title="grant permission" />
+            </View>
+        );
+    }
+
+
 
     const snap = async () => {
-        //console.log(cameraRef.current);
         if (cameraRef.current) {
             const options = { quality: 0.5, base64: true, skipProcessing: true, aspect: [1, 1], allowsEditing: true };
             const data = await cameraRef.current.takePictureAsync(options);
             const source = data.uri;
             if (source) {
-                //await cameraRef.current.pausePreview();
-                //setIsPreview(true);
-                //console.log("picture", data);
-                //console.log("user", user.userId);
                 AsyncStorage.removeItem(`${user.userId}-photo`);
                 AsyncStorage.setItem(`${user.userId}-photo`, source);
 
                 postFile(ApiRoutes.uploadUserPicture, source, `${user.userId}.jpg`, 'image/jpg');
-
             } else {
                 return <Text>Not Source</Text>
             }
@@ -81,33 +90,26 @@ export const CameraScreen = ({ navigation }) => {
         setIsCameraReady(true);
     };
 
-    useEffect(() => {
-        (async () => {
-
-            console.log(type);
-            console.log(cameraRef);
-
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            console.log(status);
-
-            setHasPermission(status === 'granted');
-            console.log(hasPermission);
-
-            console.log(error);
-
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         const { status } = await requestPermission();
+    //         setHasPermission(status === 'granted');
+    //     })();
+    // }, []);
 
     function toggleCameraType() {
-        setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+        setCameraType(current => (current === 'back' ? 'front' : 'back'));
     }
+
+    // if (permission === null || !hasPermission) {
+    //     return <View />;
+    // }
 
     return (
         <View style={{ flex: 1 }}>
-
-            <Camera
+            <CameraView
                 style={{ flex: 1 }}
-                type={type}
+                facing={cameraType}
                 ref={cameraRef}
                 onCameraReady={onCameraReady}
                 onMountError={(error) => {
@@ -116,26 +118,18 @@ export const CameraScreen = ({ navigation }) => {
             >
                 <FadeInView style={{ flex: 1 }} duration={1000}>
                     <Row>
-
-                        <Btn mode="contained" textColor={"white"}
-                            onPress={() => { navigation.goBack(); }} >
-                            {/* <Text variant="label" style={{ color: standardcolors.black }}>Cancel</Text> */}
+                        <Btn mode="contained" textColor={"white"} onPress={() => { navigation.goBack(); }} >
                             <CameraIcon source={require("../../../../assets/cc.png")} />
                         </Btn>
-                        <Btn mode="contained" textColor={null} style={{ backgroundColor: '#ff000099', paddingLeft: 20, paddingRight: 20 }}
-                            onPress={snap} >
-                            {/* <Text variant="label" style={{ color: standardcolors.white }}>Shoot</Text> */}
+                        <Btn mode="contained" textColor={null} style={{ backgroundColor: '#ff000099', paddingLeft: 20, paddingRight: 20 }} onPress={snap} >
                             <CameraIcon source={require("../../../../assets/cs.png")} />
                         </Btn>
-                        <Btn mode="contained" textColor={"white"}
-                            onPress={toggleCameraType} >
-                            {/* <Text variant="label" style={{ color: standardcolors.black }}>Rotate</Text> */}
+                        <Btn mode="contained" textColor={"white"} onPress={toggleCameraType} >
                             <CameraIcon source={require("../../../../assets/cr.png")} />
                         </Btn>
-
                     </Row>
                 </FadeInView>
-            </Camera>
-        </View >
+            </CameraView>
+        </View>
     );
 }

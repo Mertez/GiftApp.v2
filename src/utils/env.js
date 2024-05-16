@@ -22,6 +22,7 @@ export const blackMenu = false;
 export function WidthPercent(percent, fix = 0) { return Math.round(width * percent / 100) + fix; }
 export function HeightPercent(percent, fix = 0) { return Math.round(height * percent / 100) + fix; }
 export function GetNWords(text, n) { return text.split(' ').slice(0, n).join(' '); }
+export const formatCurrency = (amount) => { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', }).format(amount); };
 
 export function IgnoreWarnings() {
     LogBox.ignoreLogs([`AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`]);
