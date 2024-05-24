@@ -34,14 +34,19 @@ const BadgeText = styled.Text`
   font-weight: bold;
 `;
 
-export const UserImageWithBadge = ({ person }) => {
-    var key = person.person;
-    return (
-        <UserImageContainer>
-            <UserImage key={'UserImageX' + key} source={person.person} />
-            <Badge>
-                <BadgeText key={'TextX' + key}>{formatCurrency(person.amount)}</BadgeText>
-            </Badge>
-        </UserImageContainer>
-    )
+export const UserImageWithBadge = ({ person, showBadge }) => {
+  var key = person.person;
+  return (
+    <UserImageContainer>
+      <UserImage key={'UserImageX' + key} source={person.person} />
+      {showBadge === true ? (
+        <Badge>
+          <BadgeText key={'TextX' + key}>{formatCurrency(person.amount)}</BadgeText>
+        </Badge>
+      ) : (
+        <></>
+      )}
+
+    </UserImageContainer>
+  )
 }

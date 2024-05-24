@@ -43,7 +43,7 @@ export const RegisterScreen = ({ navigation }) => {
                                 autoCapitalize="none"
                                 onChangeText={(u) => setEmail(u)}
                             />
-                            <Spacer size="sm">
+                            <Spacer size="sm" position='top'>
                                 <AuthInput
                                     label="Password"
                                     value={password}
@@ -53,7 +53,7 @@ export const RegisterScreen = ({ navigation }) => {
                                     onChangeText={(p) => setPassword(p)}
                                 />
                             </Spacer>
-                            <Spacer size="sm">
+                            <Spacer size="sm" position='top'>
                                 <AuthInput
                                     label="Repeat Password"
                                     value={repeatedPassword}
@@ -68,7 +68,7 @@ export const RegisterScreen = ({ navigation }) => {
                                     <Text variant="error">{error}</Text>
                                 </ErrorContainer>
                             )}
-                            <Spacer size="sm">
+                            <Spacer size="sm" position='top'>
                                 {!isLoading ? (
                                     <AuthButton style={{ backgroundColor: 'purple' }}
                                         icon="email"
@@ -84,7 +84,7 @@ export const RegisterScreen = ({ navigation }) => {
                         </AccountContainer>
 
                     </BlurView>
-                    <Spacer size="sm">
+                    <Spacer size="sm" position='top'>
                         <AuthButton mode="contained" icon="keyboard-backspace" onPress={() => navigation.goBack()} style={{ backgroundColor: 'transparent' }}>
                             Back
                         </AuthButton>

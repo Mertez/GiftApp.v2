@@ -53,7 +53,7 @@ export const LoginScreen = ({ navigation }) => {
                                     autoCapitalize="none"
                                     onChangeText={(u) => setEmail(u)}
                                 />
-                                <Spacer size="sm">
+                                <Spacer size="sm" position='top'>
                                     <AuthInput
                                         label="Password"
                                         value={password}
@@ -68,7 +68,7 @@ export const LoginScreen = ({ navigation }) => {
                                         <Text variant="error">{error}</Text>
                                     </ErrorContainer>
                                 )}
-                                <Spacer size="sm">
+                                <Spacer size="sm" position='top'>
                                     {!isLoading ? (
                                         <AuthButton style={{ backgroundColor: 'purple' }}
                                             icon="lock-open-outline"
@@ -93,7 +93,7 @@ export const LoginScreen = ({ navigation }) => {
                             <SelectAction />
                         </AccountContainer> */}
                         </BlurView>
-                        <Spacer size="sm">
+                        <Spacer size="sm" position='top'>
                             <AuthButton mode="contained" icon="keyboard-backspace" onPress={() => {
                                 navigation.goBack();
                                 simpleHaptic();

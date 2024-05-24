@@ -26,7 +26,7 @@ module.exports = {
     changePassword: `${host}/account/changePassword`,
 
     // Wishlist
-    getWishLists: `${host}/WishLists/GetWishLists`,
+    getWishLists: (id) => `${host}/WishLists/GetWishLists?userId=${id}`,
     getMyWishLists: (getListOnly) => `${host}/WishLists/GetMyWishLists?getListOnly=${getListOnly}`,
     updateWishList: (id) => `${host}/WishLists/${id}`,
     createWishList: `${host}/WishLists`,

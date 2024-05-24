@@ -121,7 +121,7 @@ export const RandomImagesComponent = () => {
 
 
 
-export const RandomPersonComponent = ({ totalAmount }) => {
+export const RandomPersonComponent = ({ totalAmount, showBadge }) => {
     // const [people, setPeople] = useState([]);
 
     // useEffect(() => {
@@ -129,15 +129,16 @@ export const RandomPersonComponent = ({ totalAmount }) => {
     // }, []);
 
     people = getRandomUsers(totalAmount);
-    console.log(people);
+    //console.log(people);
     return (
         <UserImageContainer>
+
             <HorizontalFlatList
                 data={people}
                 horizontal
                 keyExtractor={(item) => item.person}
                 renderItem={({ item }) => (
-                    <UserImageWithBadge person={item} />
+                    <UserImageWithBadge person={item} showBadge={showBadge} />
                 )}
             />
         </UserImageContainer>

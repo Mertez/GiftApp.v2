@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ScrollView, RefreshControl, View, TouchableOpacity, Image, Share } from "react-native";
+import { ScrollView, RefreshControl, View, TouchableOpacity, Image, Share, Modal, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { ActivityIndicator, ProgressBar } from "react-native-paper";
 import { Text } from "../../../components/typography/text.component";
@@ -21,6 +21,7 @@ import { simpleHaptic } from "../../../utils/haptic";
 import { RandomPersonComponent } from "../../account/components/getrandomimages.component";
 import { standardcolors } from "../../../infrastructure/theme/colors";
 import { AnimatedText } from "../../../components/animations/animatedtext.component";
+import { BlurView } from "expo-blur";
 
 const Header = styled.View`
   background-color: white;
@@ -42,10 +43,15 @@ const WishProgress = styled(ProgressBar)`
 export const WishItemsScreen = ({ route, navigation }) => {
 
     var params = route.params;
+
     var wishlist = params.Wistlist;
     var percent = params.Percent;
+    var showBadge = params.ShowBadge;
     var totalValue = wishlist.price;
     var paidValue = Math.round(wishlist.price * percent * 100) / 100;
+    const [giftAmount, setGiftAmout] = useState(100);
+    const [email, setEmail] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     const shareContent = async () => {
         simpleHaptic();
@@ -55,7 +61,7 @@ export const WishItemsScreen = ({ route, navigation }) => {
             const result = await Share.share({
                 message: `Hey, this is my ${wishlistName} wishlist!\r\n`,
                 // You can also add a URL
-                url: `https://giftapp.com/wishlist/share/${wishlistCode}`,
+                url: `https://gift.app/wishlist/share/${wishlistCode}`,
             });
 
             if (result.action === Share.sharedAction) {
@@ -92,28 +98,122 @@ export const WishItemsScreen = ({ route, navigation }) => {
                     </Col>
                 </Row>
             </Header>
+            {!showBadge && <Spacer position="bottom" size="md">
+                <BuyAGiftButton mode="contained" color={"white"} onPress={() => {
+                    //navigation.navigate("CreditCardPaymentStack", { giftAmount, email }) 
+                    setModalVisible(true);
+                }} style={{ margin: 0, padding: 0 }}>
+                    <Row>
 
+                        <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" />
+
+                        <Col><Text variant="button" style={{ color: "#fff", fontSize: 12 }}>Buy something for</Text>
+                            <Text variant="button" style={{ color: "#fff", fontSize: 22 }}>{wishlist.name}</Text></Col>
+
+                    </Row>
+                </BuyAGiftButton></Spacer>
+
+
+            }
+
+            {modalVisible && (
+                <Modal transparent={true} animationType="fade" visible={modalVisible}>
+                    <View style={styles.modalContainer}>
+                        <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.circularButton}
+                            //onPress={() => handleNavigate('Page1')}
+                            >
+                                <Text style={styles.buttonText}>By PiggyBank</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.circularButton}
+                                onPress={() => { setModalVisible(false); navigation.navigate("CreditCardPaymentStack", { giftAmount, email }) }}
+                            //onPress={() => handleNavigate('Page2')}
+                            >
+                                <Text style={styles.buttonText}>By Credit Card</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.circularButton}
+
+                            >
+                                <Text style={styles.buttonText}>Buy a Giftcard</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.circularButton, { color: 'white' }}
+                                onPress={() => setModalVisible(false)}
+                            >
+                                <Text style={styles.buttonText, { fontSize: 40 }}>🔙</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            )}
             <ScrollView style={{ flex: 1 }}>
+
+
                 <WishItems wishItems={wishlist.wishes} onIconPress={(item) => {
                     //console.log(item); 
                     navigation.navigate('MainAppFeature', { extraDescription: `This product name is "${item.name}" and it costs about $${item.currentPrice}, You will able to view this product's detail, move it to another wishlist, buy this gift or completely remove it from the wish list.` });
                 }} />
-            </ScrollView>
+            </ScrollView >
 
-            {wishlist.wishes.length === 0 ? (
-                <Text>No images to display</Text>
-            ) : (
+            {
+                wishlist.wishes.length === 0 ? (
+                    <Text>No images to display</Text>
+                ) : (
 
-                <View style={{ flex: .6 }}>
-                    <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
-                    <Text style={{ textAlign: 'center', color: 'gray', fontSize: 25, padding: 0, margin: 0 }}>{formatCurrency(paidValue)}  <AnimatedText />  {formatCurrency(totalValue)}</Text>
-                    {/* <RandomImagesComponent /> */}
-                    <RandomPersonComponent totalAmount={paidValue} />
-                </View>
-            )}
+                    <View style={{ flex: .6 }}>
+
+                        <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
+                        <Text style={{ textAlign: 'center', color: 'gray', fontSize: 25, padding: 0, margin: 0 }}>{formatCurrency(paidValue)}  <AnimatedText />  {formatCurrency(totalValue)}</Text>
+                        {/* <RandomImagesComponent /> */}
+                        <RandomPersonComponent totalAmount={paidValue} showBadge={showBadge} />
+                    </View>
+                )
+            }
 
         </>
 
     )
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    absolute: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
+    buttonContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    circularButton: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        backgroundColor: 'purple',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10,
+        elevation: 5,
+    },
+    buttonText: {
+        color: 'white',
+    },
+});

@@ -21,11 +21,11 @@ export const getPiggyBankTransform = (result) => {
 };
 
 
-export const getWishListsRequest = async () => {
-    //console.log(ApiRoutes.getPiggyBank);
+export const getWishListsRequest = async (id) => {
+    //console.log("getWishListsRequest id:", id);
     return new Promise((resolve, reject) => {
-        const wishList = authGet(ApiRoutes.getWishLists);
-        //console.log("ok");
+        const wishList = authGet(ApiRoutes.getWishLists(id));
+        //console.log("getWishListsRequest wishList:", wishList);
         if (!wishList) { reject("No wishList found!"); }
         else { resolve(wishList); }
     })
@@ -33,6 +33,7 @@ export const getWishListsRequest = async () => {
 
 
 export const getWishListsTransform = (result) => {
+    //console.log("getWishListsTransform", result);
     return { result };
 };
 

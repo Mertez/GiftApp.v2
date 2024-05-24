@@ -47,8 +47,11 @@ export const WishesScreen = ({ navigation }) => {
         onDeleteWishList,
     } = useContext(WishesContext);
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [showBadge, setShowBadge] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentWishLists, setCurrentWishLists] = useState(null);
+    const [currentWishListName, setCurrentWishListName] = useState('Mine');
 
     const handleCreateWishList = (name, icon) => {
         //console.log('Creating wishlist with name:', name); 
@@ -56,17 +59,29 @@ export const WishesScreen = ({ navigation }) => {
         //console.log("handleCreateWishList", name);
         onCreateWishList(name, icon);
         onGetMyWishLists(false);
+        onGetWishLists('BmO71luqPCQn6dMdlTb1Eg2N5ka2');
     };
 
     useEffect(() => {
         //onGetDealBrands();
         onGetMyWishLists(false);
+        onGetWishLists('BmO71luqPCQn6dMdlTb1Eg2N5ka2');
+        setShowBadge(true);
+
         //console.log("myWishLists:", myWishLists);
     }, []);
+
+    useEffect(() => {
+        //onGetDealBrands();
+
+        setCurrentWishLists((currentWishListName == 'Mine') ? myWishLists : wishLists);
+        //console.log("myWishLists:", myWishLists);
+    }, [myWishLists]);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         onGetMyWishLists(false);
+        onGetWishLists('BmO71luqPCQn6dMdlTb1Eg2N5ka2');
         // setTimeout(() => {
         //     setRefreshing(false);
         // }, 2000);
@@ -85,20 +100,35 @@ export const WishesScreen = ({ navigation }) => {
                 }>
 
 
-                <BannerContainer>
+                {/* <BannerContainer>
                     <HomeHeaderBanner
                     //userBanners={[`samsung1.jpg`, `walmart1.jpg`, `amazonsmile.jpg`]}
                     />
-                </BannerContainer>
+                </BannerContainer> */}
 
                 <PiggyBank variant={"full"} refreshing={refreshing} onRefreshingFinished={() => setRefreshing(false)} />
 
-                <BuyAGiftButton mode="contained" color={"white"} onPress={() => { setIsModalOpen(true); }} >
-                    <Row>
-                        <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" />
-                        <Col><Text variant="button" style={{ color: "#fff" }}>Create New Wishlist 🎁</Text><Text variant="caption">...............</Text></Col>
-                    </Row>
-                </BuyAGiftButton>
+                <Row>
+                    <BuyAGiftButton mode="contained" color={"white"} onPress={() => { setIsModalOpen(true); }} style={{ margin: 0, padding: 0 }} >
+                        <Row>
+                            {/* <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" /> */}
+                            <Col><Text variant="button" style={{ color: "#fff", fontSize: 12 }}>New Wishlist</Text><Text variant="caption">...............</Text></Col>
+                        </Row>
+                    </BuyAGiftButton>
+                    <BuyAGiftButton mode="contained" color={"white"} onPress={() => { setCurrentWishListName('Mine'); setShowBadge(true); setCurrentWishLists(myWishLists); }} style={{ margin: 0, padding: 0 }} >
+                        <Row>
+                            {/* <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" /> */}
+                            <Col><Text variant="button" style={{ color: "#fff", fontSize: 12 }}>My Wishlists</Text><Text variant="caption">...............</Text></Col>
+                        </Row>
+                    </BuyAGiftButton>
+                    <BuyAGiftButton mode="contained" color={"white"} onPress={() => { setCurrentWishListName('Shared'); setShowBadge(false); setCurrentWishLists(wishLists); }} style={{ margin: 0, padding: 0 }}>
+                        <Row>
+                            {/* <BuyAGiftIcon source={require("../../../../assets/buyagift.png")} resizeMode="contain" /> */}
+                            <Col><Text variant="button" style={{ color: "#fff", fontSize: 12 }}>Shared Wishlists</Text><Text variant="caption">...............</Text></Col>
+                        </Row>
+                    </BuyAGiftButton>
+                </Row>
+
 
                 <CreateWishListModalForm
                     isOpen={isModalOpen}
@@ -106,10 +136,10 @@ export const WishesScreen = ({ navigation }) => {
                     onSubmit={handleCreateWishList}
                 />
                 <Spacer position="bottom" size="sm" />
-                <WishLists wishLists={myWishLists} onIconPress={(item, percent) => {
+                <WishLists wishLists={currentWishLists} onIconPress={(item, percent) => {
                     //var wishItems = item.wishes;
                     //console.log("Percent:", percent);
-                    navigation.navigate("WishItems", { Wistlist: item, Percent: percent });
+                    navigation.navigate("WishItems", { Wistlist: item, Percent: percent, ShowBadge: showBadge });
                     //console.log(wishItems);
                 }} />
                 <Spacer position="bottom" size="xxl" />

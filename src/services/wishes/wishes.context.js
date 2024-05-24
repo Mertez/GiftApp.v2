@@ -56,9 +56,9 @@ export const WishesContextProvider = ({ children }) => {
             });
     };
 
-    const onGetWishLists = () => {
+    const onGetWishLists = (id) => {
         setIsLoading(true);
-        getWishListsRequest()
+        getWishListsRequest(id)
             .then(getWishListsTransform)
             .then((result) => {
                 //console.log("result from context: ", result);

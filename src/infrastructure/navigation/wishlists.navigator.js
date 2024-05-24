@@ -9,6 +9,7 @@ import { WishItemsScreen } from "../../features/wishes/screens/wishItems.screen"
 import { isAndroid } from "../../utils/env";
 import { MainAppFeature } from "../../components/animations/mainappfeature.component";
 import { CategoriesAmazon } from "../../features/categories/screens/categories-amz.screen";
+import { PaymentComponent } from "../../features/payment/components/payment.component";
 
 const WishlistsStack = createStackNavigator();
 
@@ -54,6 +55,10 @@ export const WishlistsNavigator = ({ route, navigation }) => {
                 component={CategoriesAmazon}
             />
             <WishlistsStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
+            <WishlistsStack.Screen
+                options={({ route }) => ({ title: `Payment` })}
+                name="CreditCardPaymentStack"
+                component={PaymentComponent} />
         </WishlistsStack.Navigator>
     );
 };
