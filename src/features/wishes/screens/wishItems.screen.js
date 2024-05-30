@@ -141,10 +141,16 @@ export const WishItemsScreen = ({ route, navigation }) => {
                                 <Text style={styles.buttonText}>Buy a Giftcard</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={styles.circularButton, { color: 'white' }}
+                                style={styles.circularButton
+                                    //    , { color: 'white' }
+                                }
                                 onPress={() => setModalVisible(false)}
                             >
-                                <Text style={styles.buttonText, { fontSize: 40 }}>🔙</Text>
+                                <Text
+                                    style={styles.buttonText
+                                        //    , { fontSize: 40 }
+                                    }
+                                >🔙</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

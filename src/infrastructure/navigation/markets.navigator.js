@@ -10,6 +10,7 @@ import {
     CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { MarketScreen } from "../../features/markets/screens/market.screen";
+import { ShopsScreen } from "../../features/markets/screens/shops.screen";
 import { CategoryProductsScreen } from "../../features/categories/screens/category-products.screen";
 import { CategoriesAmazon } from "../../features/categories/screens/categories-amz.screen";
 import { ProductDetailScreen } from "../../features/products/screens/product-detail.screen";
@@ -36,7 +37,7 @@ export const MarketsNavigator = ({ route, navigation }) => {
                     header: () => null,
                 }}
                 name="Market"
-                component={MarketScreen}
+                component={ShopsScreen}
             />
             <MarketsStack.Screen
                 options={({ route }) => ({ title: `${route.params.categoryName} Gifts`, headerShown: true })}
@@ -59,7 +60,7 @@ export const MarketsNavigator = ({ route, navigation }) => {
             // }}
             />
             {/* <MarketsStack.Screen name="Favourites" component={FavouritesScreen} /> */}
-
+            <MarketsStack.Screen name="Shops" component={MarketScreen} options={({ route }) => ({ title: `Favorite Shops` })} />
             <MarketsStack.Screen name="Camera" component={CameraScreen} options={({ route }) => ({ title: `Profile Photo` })} />
             <MarketsStack.Screen name="MainAppFeature" component={MainAppFeature} options={{ headerShown: true, title: 'Future option' }} />
         </MarketsStack.Navigator>
