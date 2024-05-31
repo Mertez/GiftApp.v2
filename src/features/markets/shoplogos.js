@@ -94,9 +94,9 @@ export const brandList = [
     },
     {
         Name: 'Ebay',
-        Url: 'https://www.Ebay.com',
+        Url: 'https://www.ebay.com',
         LogoFile: ShopLogosF.EbayLogo,
-        Description: 'Facebook, Inc. is an American social media conglomerate corporation. It is based in Menlo Park, California.'
+        Description: 'Ebay, Inc. is an American online shop'
     },
     {
         Name: 'Doordash',
@@ -136,7 +136,7 @@ export const brandList = [
     // },
     {
         Name: 'Casio',
-        Url: 'https://www.adidas.com',
+        Url: 'https://www.casio.com',
         LogoFile: ShopLogosF.CasioLogo,
         Description: 'Casio Computer Co., Ltd. is a Japanese multinational electronics manufacturing company. It is known for its calculators, mobile phones, digital cameras, electronic musical instruments, and watches.'
     }

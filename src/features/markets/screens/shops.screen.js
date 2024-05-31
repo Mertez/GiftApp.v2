@@ -9,14 +9,7 @@ import { CategoriesContext } from "../../../services/categories/categories.conte
 import { BrandBar } from "../components/brands.bar.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { host, height, width, bannerHeight } from "../../../utils/env";
-import { HomeHeaderBanner } from "../../../components/banner/banners.component";
-import { Loading, SafeArea, LoadingContainer } from "../components/market.styles";
-import { productTypeEnum } from "../../../infrastructure/models/enums";
-import { CategoriesCol } from "../../categories/components/categories-col.component";
-import { GiftCardsContext } from "../../../services/giftcards/giftcards.context";
-import { GiftCardsCol } from "../../giftcards/components/giftcards-col.component";
-import { standardcolors } from "../../../infrastructure/theme/colors";
-import { CategoriesBar } from "../../categories/components/categories-bar.component";
+import { BlurView } from "expo-blur";
 import { brandList } from "../shoplogos";
 
 
@@ -24,6 +17,10 @@ import { brandList } from "../shoplogos";
 export const ShopsScreen = ({ navigation, route }) => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedBrand, setSelectedBrand] = useState(null);
+
+    // useEffect(() => {
+    //     console.log(isModalVisible, selectedBrand);
+    // }, [isModalVisible]);
 
     const toggleModal = (brand) => {
         setSelectedBrand(brand);
@@ -49,17 +46,20 @@ export const ShopsScreen = ({ navigation, route }) => {
                 numColumns={3}
             />
             {selectedBrand && (
-                <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>{selectedBrand.Name}</Text>
-                        <Text style={styles.modalDescription}>{selectedBrand.Description}</Text>
-                        <TouchableOpacity onPress={() => Linking.openURL(selectedBrand.Url)}>
-                            <Text style={styles.modalLink}>Visit {selectedBrand.Name}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-                            <Text style={styles.closeButtonText}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
+                <Modal transparent={true} animationType="fade" isVisible={true} onBackdropPress={() => setModalVisible(false)} backdropOpacity={0.5} >
+                    <BlurView intensity={50} style={StyleSheet.absoluteFill}>
+                        <View style={styles.modalContent}>
+                            <Image source={selectedBrand.LogoFile} style={styles.logoOpen} resizeMode="contain" />
+                            {/* <Text style={styles.modalTitle}>{selectedBrand.Name}</Text> */}
+                            <Text style={styles.modalDescription}>{selectedBrand.Description}</Text>
+                            <TouchableOpacity onPress={() => Linking.openURL(selectedBrand.Url)}>
+                                <Text style={styles.modalLink}>Visit {selectedBrand.Name}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => toggleModal()} style={styles.closeButton}>
+                                <Text style={styles.closeButtonText}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </BlurView>
                 </Modal>
             )}
         </View>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     logoContainer: {
         width: 80,
         height: 80,
-        borderRadius: 40,
+        borderRadius: 0,
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
@@ -89,33 +89,40 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    logoOpen: {
+        marginTop: 150,
+        width: '30%',
+        height: '30%',
+    },
     name: {
         marginTop: 10,
         textAlign: 'center',
-        fontFamily: 'Inter_400Regular',
+        //fontFamily: 'Inter_400Regular',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         padding: 20,
         borderRadius: 10,
         alignItems: 'center',
+        marginHorizontal: 20,
     },
     modalTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
-        fontFamily: 'Inter_500Medium',
+        //fontFamily: 'Inter_500Medium',
     },
     modalDescription: {
         fontSize: 14,
         textAlign: 'center',
         marginBottom: 20,
-        fontFamily: 'Inter_400Regular',
+        color: 'black',
+        //fontFamily: 'Inter_400Regular',
     },
     modalLink: {
         fontSize: 16,
         color: 'blue',
-        fontFamily: 'Inter_500Medium',
+        //fontFamily: 'Inter_500Medium',
     },
     closeButton: {
         marginTop: 20,
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     closeButtonText: {
         fontSize: 16,
         color: 'black',
-        fontFamily: 'Inter_500Medium',
+        //fontFamily: 'Inter_500Medium',
     },
 });
 
