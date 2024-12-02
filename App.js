@@ -11,6 +11,7 @@ import { useFonts as useRobotoMono, RobotoMono_400Regular, RobotoMono_700Bold } 
 import { AuthenticationContextProvider } from "./src/services/authentication/authectication.context";
 import { IgnoreWarnings, HeightPercent } from "./src/utils/env";
 import { GlobalContextProvider } from "./src/GlobalVariables";
+import Toast from 'react-native-toast-message';
 //import { AppBackground } from "./src/features/account/components/account.styles";
 
 
@@ -113,9 +114,9 @@ export default function App() {
           <GlobalContextProvider>
             <ThemeProvider theme={theme}>
               <AuthenticationContextProvider>
-
-
-                <Navigation />
+                <Navigation >
+                  <Toast ref={(ref) => Toast.setRef(ref)} />
+                </Navigation>
               </AuthenticationContextProvider>
             </ThemeProvider>
           </GlobalContextProvider>

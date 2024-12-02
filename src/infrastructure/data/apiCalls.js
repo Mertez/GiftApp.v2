@@ -129,11 +129,53 @@ const authPost = async (apiRoute, body) => {
 }
 
 
+const authDelete = async (apiRoute, body) => {
+
+    try {
+        var token = await AsyncStorage.getItem("TOKEN");
+        //console.log("Start authPost :: " + apiRoute + "\r\n", token);
+        var res = await fetch(apiRoute, {
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }),
+            body: JSON.stringify(body)
+        })
+
+        var data = {};
+        if (res.status == "401") {
+            data.success = false;
+            data.errors = ["Unauthorized"];
+            return data;
+        }
+
+
+        if (res.status === 204) {
+            return {
+                success: true,
+                message: "Record deleted successfully"
+            };
+        }
+
+        data = await res.json();
+        return data;
+    }
+    catch (error) {
+        return {
+            success: false,
+            errors: [error.message]
+        };
+    }
+};
+
+
 module.exports = {
     get,
     authGet,
     post,
     authPost,
+    authDelete,
     postFile,
     authPostFile
 }

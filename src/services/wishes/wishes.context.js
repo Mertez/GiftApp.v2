@@ -196,11 +196,12 @@ export const WishesContextProvider = ({ children }) => {
     };
 
     const onDeleteWish = (id) => {
+        console.log("onDeleteWish", id);
         setIsLoading(true);
         deleteWishRequest(id)
             .then(deleteWishTransform)
             .then((result) => {
-                console.log("result from deleteWishTransform.Context: ", result);
+                //console.log("result from deleteWishTransform.Context: ", result);
                 setError(null);
                 setIsLoading(false);
                 //setPiggyBank(result.result);

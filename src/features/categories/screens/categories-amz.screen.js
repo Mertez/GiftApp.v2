@@ -413,7 +413,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
 
         <AmLogoContainer >
           <AmLogo source={AmLogoFile} resizeMode='contain' />
-          <ProgressBar progress={loadingPercent} color={standardcolors.red} />
+          <ProgressBar progress={Math.round(loadingPercent)} color={standardcolors.red} />
         </AmLogoContainer>
         <TimesBtn
           onPress={() => { navigation.goBack() }}
@@ -504,7 +504,7 @@ export const CategoriesAmazon = ({ route, navigation }) => {
           domStorageEnabled={true}
 
           onLoadProgress={({ nativeEvent }) => {
-            setLoadingPercent(nativeEvent.progress);
+            setLoadingPercent(Math.round(nativeEvent.progress));
             //if (nativeEvent.progress == 1) setIsLoading(false);
           }}
           onNavigationStateChange={(nativeEvent) => {

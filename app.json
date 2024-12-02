@@ -1,4 +1,5 @@
 {
+  "newArchEnabled": true,
   "expo": {
     "name": "GiftApp.v2",
     "slug": "gift-app",

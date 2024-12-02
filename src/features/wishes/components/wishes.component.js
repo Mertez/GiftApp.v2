@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity, Image, View, Text as Txt, Platform, FlatList } from "react-native";
 import styled from "styled-components";
 import { Text } from "../../../components/typography/text.component";
@@ -7,9 +7,26 @@ import { WishListIcons } from "./wishlist-iconset.component";
 import { CompactWishInfo } from "./compact-wish-info.component";
 import { WidthPercent } from "../../../utils/env";
 import { Spacer } from "../../../components/spacer/spacer.component";
+import Toast from 'react-native-toast-message';
 
 
 export const WishItems = ({ wishItems, onIconPress }) => {
+
+    const [currenItems, setCurrentItems] = useState(wishItems);
+
+    const deleteItem = (id) => {
+        setCurrentItems(currenItems.filter(item => item.id !== id));
+        showToast();
+    };
+
+    const showToast = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'Product Deleted',
+            text2: 'The product has been deleted successfully.',
+        });
+    };
+
     const renderItem = ({ item, index }) => {
 
 
@@ -25,7 +42,7 @@ export const WishItems = ({ wishItems, onIconPress }) => {
                 // }
 
                 >
-                    <CompactWishInfo wish={item} />
+                    <CompactWishInfo wish={item} onWishRemoved={deleteItem} />
 
                 </TouchableOpacity>
             </Spacer>
@@ -34,7 +51,7 @@ export const WishItems = ({ wishItems, onIconPress }) => {
 
     return (
         <FlatList style={{ width: WidthPercent(96), backgroundColor: 'transparent' }}
-            data={wishItems}
+            data={currenItems}
             scrollEnabled={false}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}

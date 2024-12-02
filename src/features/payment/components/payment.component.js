@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
+//import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
 import LottieView from 'lottie-react-native';
 import { FormProvider, useForm } from 'react-hook-form'
 import {
@@ -57,7 +57,7 @@ export const PaymentComponent = ({ route, navigation }) => {
                             style={styles.avoider}
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         >
-                            <CreditCardForm
+                            {/* <CreditCardForm
                                 LottieView={LottieView}
                                 horizontalStart
                                 overrides={{
@@ -65,15 +65,15 @@ export const PaymentComponent = ({ route, navigation }) => {
                                         marginTop: 16,
                                     },
                                 }}
-                            />
+                            /> */}
                         </KeyboardAvoidingView>
                         {formState.isValid && (
                             <>
-                                <Button
+                                {/* <Button
                                     style={styles.button}
                                     title={'Confirm Payment'}
                                     onPress={handleSubmit(onSubmit)}
-                                />
+                                /> */}
 
                             </>
 
@@ -91,11 +91,11 @@ export const PaymentComponent = ({ route, navigation }) => {
                         resizeMode="cover"
                         source={require("../../../../assets/anims/85185-checkmark.json")}
                     />
-                    <Button
+                    {/* <Button
                         style={styles.button}
                         title={'Payment Successful'}
                         onPress={() => { navigation.goBack(); }}
-                    />
+                    /> */}
                 </>
 
 

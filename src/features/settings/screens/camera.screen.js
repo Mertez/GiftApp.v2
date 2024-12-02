@@ -10,6 +10,7 @@ import { postFile } from "../../../infrastructure/data/apiCalls";
 import ApiRoutes from '../../../infrastructure/data/apiRoutes';
 import { FadeInView } from "../../../components/animations/fade.animation";
 import { Text } from 'react-native-paper';
+import { styles } from '../../giftcards/components/giftcard-card.styles';
 
 const Row = styled.View`
     width: 100%;
@@ -59,8 +60,8 @@ export const CameraScreen = ({ navigation }) => {
         // Camera permissions are not granted yet.
         return (
             <View style={styles.container}>
-                <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-                <Button onPress={requestPermission} title="grant permission" />
+                <Text style={{ textAlign: 'center', marginTop: 50, marginBottom: 20 }}>We need your permission to show the camera</Text>
+                <Button background={'#4488CC'} textColor='white' style={{ backgroundColor: '#4488CC', margin: 'auto', width: '50%', }} onPress={requestPermission}>Grant Permission</Button>
             </View>
         );
     }

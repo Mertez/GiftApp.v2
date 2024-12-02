@@ -45,7 +45,7 @@ export const WishItemsScreen = ({ route, navigation }) => {
     var params = route.params;
 
     var wishlist = params.Wistlist;
-    var percent = params.Percent;
+    var percent = Math.round(100 * params.Percent) / 100;
     var showBadge = params.ShowBadge;
     var totalValue = wishlist.price;
     var paidValue = Math.round(wishlist.price * percent * 100) / 100;
@@ -125,14 +125,14 @@ export const WishItemsScreen = ({ route, navigation }) => {
                                 style={styles.circularButton}
                             //onPress={() => handleNavigate('Page1')}
                             >
-                                <Text style={styles.buttonText}>By PiggyBank</Text>
+                                <Text style={styles.buttonText}>Piggy Bank</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.circularButton}
                                 onPress={() => { setModalVisible(false); navigation.navigate("CreditCardPaymentStack", { giftAmount, email }) }}
                             //onPress={() => handleNavigate('Page2')}
                             >
-                                <Text style={styles.buttonText}>By Credit Card</Text>
+                                <Text style={styles.buttonText}>Credit Card</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.circularButton}

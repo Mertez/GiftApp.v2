@@ -5,6 +5,7 @@ export const GlobalContext = createContext();
 
 export function GlobalContextProvider({ children }) {
 
+    console.log("host: ", host);
     const GlobalVariables = {
         apiUrl: host,
         userId: null, // Set this value when user logs in

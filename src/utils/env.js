@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Dimensions, Platform, LogBox } from 'react-native';
 
-const localHost = false ? `http://192.168.2.104:5000/api` : `https://partially-mint-grizzly.ngrok-free.app/api`;
+//const localHost = true ? `http://192.168.2.104:5000/api` : `https://partially-mint-grizzly.ngrok-free.app/api`;
+const localHost = false ? `http://localhost:5000/api` : `https://partially-mint-grizzly.ngrok-free.app/api`;
 const globalHost = `https://giftapp.techschau.de/api`;
 //const localRequests = true ? localHost : globalHost;
 const delay = ms => new Promise(res => setTimeout(res, ms));

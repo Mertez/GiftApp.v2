@@ -139,7 +139,7 @@ export const PiggyBank = ({ refreshing, onRefreshingFinished, variant }) => {
                   <Line><Text>Total:</Text><Text>${piggyBank.piggyBank}</Text></Line>
                   <Line><Text>SelfPaid:</Text><Text>${piggyBank.piggyBankSelfPaid}</Text></Line>
                   <Line><Text>Gift:</Text><Text>${piggyBank.piggyBankGifted}</Text></Line>
-                  <PiggyProgressBarFull progress={piggyBank.piggyBankSelfPaid / piggyBank.piggyBank} color='white' />
+                  <PiggyProgressBarFull progress={Math.round(100 * piggyBank.piggyBankSelfPaid / piggyBank.piggyBank) / 100} color='white' />
                 </W50>
               </Row>
 
@@ -168,7 +168,7 @@ export const PiggyBank = ({ refreshing, onRefreshingFinished, variant }) => {
                 </W30>
                 <W70>
                   <Line><Text>Total:</Text><Text>${piggyBank.piggyBank}</Text></Line>
-                  <PiggyProgressBar progress={piggyBank.piggyBankSelfPaid / piggyBank.piggyBank} color='white' />
+                  <PiggyProgressBar progress={Math.round(100 * piggyBank.piggyBankSelfPaid / piggyBank.piggyBank) / 100} color='white' />
                 </W70>
               </Row>
 

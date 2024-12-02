@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 import { SafeAreaView, StatusBar } from "react-native";
-import Swiper from 'react-native-swiper';
 import { ActivityIndicator } from "react-native-paper";
 import { host, height, width, isAndroid } from "../../../utils/env";
 import { standardcolors } from "../../../infrastructure/theme/colors";

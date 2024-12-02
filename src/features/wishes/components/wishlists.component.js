@@ -23,7 +23,8 @@ export const WishLists = ({ wishLists, onIconPress }) => {
         //console.log(item);
         return (
             <Spacer key={key} position="left" size="md">
-                <TouchableOpacity onPress={() => { onIconPress(item, percent) }}
+                <TouchableOpacity
+                    onPress={() => { onIconPress(item, percent) }}
                 // onPress={() =>
                 //     onNavigate("productDetailStack", {
                 //         product: product, isGiftCard: false

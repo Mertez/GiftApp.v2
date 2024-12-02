@@ -76,7 +76,7 @@ export const CompactWishListInfo = ({ wishlist, itemsInRow, percent }) => {
                 <Text style={{ color: 'red', textAlign: 'center', marginTop: -5, marginBottom: -2 }}>${wishlist.price}</Text>
             </Spacer>
 
-            <WishProgress progress={wishlist.price === 0 ? 0 : percent} color={standardcolors.t10} />
+            <WishProgress progress={wishlist.price === 0 ? 0 : Math.round(percent)} color={standardcolors.t10} />
             {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {wishlist.wishes.map((wish, index) => {
                     const key = wish.id;

@@ -98,17 +98,25 @@ const CustomTabBarButton = (props) => {
             elevation: 0,
         },
         botIcons: {
-            top: props.accessibilityState.selected ? W(1.8) : 0,
+            left: 16,
+            top: props.accessibilityState.selected ? W(6) : 20,
             fontSize: props.accessibilityState.selected ? 32 : 22,
             color: props.accessibilityState.selected ? menuForecolors[0] : menuForecolors[1],
             alignSelf: 'center',
         },
         botText: {
-            //top: props.accessibilityState.selected ? 7 : 0,
-            //fontSize: props.accessibilityState.selected ? 32 : 22,
+            left: 15,
+            top: props.accessibilityState.selected ? 7 : 20,
+            fontSize: props.accessibilityState.selected ? 32 : 12,
+            //fontSize: 10,
             color: props.accessibilityState.selected ? menuForecolors[0] : menuForecolors[1],
             opacity: props.accessibilityState.selected ? 0 : 1,
             alignSelf: 'center',
+            //backgroundColor: '#f00',
+            width: W(15),
+            alignContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
         }
     })
 

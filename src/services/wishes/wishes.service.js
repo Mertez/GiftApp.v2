@@ -1,6 +1,6 @@
 import camelize from "camelize";
 import { host, useMock } from "../../utils/env";
-import { authGet, authPost, get, post } from '../../infrastructure/data/apiCalls';
+import { authGet, authPost, authDelete, get, post } from '../../infrastructure/data/apiCalls';
 import ApiRoutes from '../../infrastructure/data/apiRoutes';
 
 
@@ -97,7 +97,7 @@ export const deleteWishListRequest = async (id) => {
 
     //console.log(ApiRoutes.getPiggyBank);
     return new Promise((resolve, reject) => {
-        const result = authPost(ApiRoutes.deleteWishList(id));
+        const result = authDelete(ApiRoutes.deleteWishList(id));
         //console.log("ok");
         if (!result) { reject("No wishList found!"); }
         else { resolve(result); }
@@ -184,8 +184,8 @@ export const deleteWishRequest = async (id) => {
 
     //console.log(ApiRoutes.getPiggyBank);
     return new Promise((resolve, reject) => {
-        const result = authPost(ApiRoutes.deleteWish(id));
-        //console.log("ok");
+        const result = authDelete(ApiRoutes.deleteWish(id));
+        //console.log("deleteWishRequest", result);
         if (!result) { reject("No wish found!"); }
         else { resolve(result); }
     })
