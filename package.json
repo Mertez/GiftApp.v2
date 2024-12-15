@@ -20,7 +20,7 @@
     "@react-navigation/stack": "^7.0.5",
     "camelize": "^1.0.1",
     "expo": "^52.0.8",
-    "expo-blur": "^14.0.1",
+    "expo-blur": "~14.0.1",
     "expo-camera": "^16.0.6",
     "expo-haptics": "^14.0.0",
     "expo-updates": "^0.26.7",
